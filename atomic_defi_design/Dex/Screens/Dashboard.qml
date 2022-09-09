@@ -105,9 +105,9 @@ Item
     // Right side
     AnimatedRectangle
     {
-        width: parent.width - sidebar.width
+        width: parent.width - 80
         height: parent.height
-        x: sidebar.width
+        x: 80
         border.color: 'transparent'
 
         // Modals
@@ -265,7 +265,6 @@ Item
     Sidebar.Main
     {
         id: sidebar
-
         enabled: loader.status === Loader.Ready
 
         onLineSelected: currentPage = lineType;
