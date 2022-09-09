@@ -44,7 +44,7 @@ MouseArea
         id: fadeInTextVerAnimation
         target: versionLabel
         properties: "opacity"
-        duration: 350
+        duration: animationDuration
         to: 1
     }
 

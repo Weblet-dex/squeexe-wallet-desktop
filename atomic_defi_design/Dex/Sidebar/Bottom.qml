@@ -39,7 +39,7 @@ MouseArea
         id: waitForSidebarExpansionAnimation
         targets: [settingsLine.label, supportLine.label, privacyLine.label]
         properties: "opacity"
-        duration: 200
+        duration: animationDuration / 2
         from: 0
         to: 0
         onFinished: labelsOpacityAnimation.start()
@@ -50,7 +50,7 @@ MouseArea
         id: labelsOpacityAnimation
         targets: [settingsLine.label, supportLine.label, privacyLine.label]
         properties: "opacity"
-        duration: 350
+        duration: animationDuration / 2
         from: 0.0
         to: 1
     }

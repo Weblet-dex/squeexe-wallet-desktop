@@ -19,6 +19,7 @@ Item
 
     property bool   isExpanded: containsMouse
     property real   lineHeight: 44
+    property int    animationDuration: 350
     property var    currentLineType: Main.LineType.Portfolio
     property alias  _selectionCursor: _selectionCursor
     property bool   containsMouse: mouseArea.containsMouse
@@ -45,7 +46,7 @@ Item
     {
         NumberAnimation
         {
-            duration: 300
+            duration: animationDuration
             targets: [width, _selectionCursor.width]
             properties: "width"
             onRunningChanged:
@@ -84,7 +85,10 @@ Item
 
         Behavior on y
         {
-            NumberAnimation { duration: 180 }
+            NumberAnimation
+            {
+                duration: animationDuration / 2
+            }
         }
     }
 

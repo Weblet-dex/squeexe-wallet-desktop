@@ -38,7 +38,7 @@ MouseArea
         id: waitForSidebarExpansionAnimation
         targets: [_portfolioLine.label, _walletLine.label, _dexLine.label, _addressBookLine.label, _fiatLine.label]
         properties: "opacity"
-        duration: 200
+        duration: animationDuration / 2
         from: 0
         to: 0
         onFinished: labelsOpacityAnimation.start()
@@ -49,7 +49,7 @@ MouseArea
         id: labelsOpacityAnimation
         targets: [_portfolioLine.label, _walletLine.label, _dexLine.label, _addressBookLine.label, _fiatLine.label]
         properties: "opacity"
-        duration: 350
+        duration: animationDuration / 2
         from: 0.0
         to: 1
     }
