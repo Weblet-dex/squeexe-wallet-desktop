@@ -43,7 +43,17 @@ Item
     // Animation when changing width.
     Behavior on width
     {
-        NumberAnimation { duration: 300; targets: [width, _selectionCursor.width]; properties: "width"; onRunningChanged: { if (!running) expanded(isExpanded); else expandStarted(isExpanded); } }
+        NumberAnimation
+        {
+            duration: 300
+            targets: [width, _selectionCursor.width]
+            properties: "width"
+            onRunningChanged:
+            {
+                if (!running) expanded(isExpanded)
+                else expandStarted(isExpanded)
+            }
+        }
     }
 
     // Selection Cursor
