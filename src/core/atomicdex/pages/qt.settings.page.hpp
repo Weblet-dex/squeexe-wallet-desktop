@@ -45,6 +45,7 @@ namespace atomic_dex
         Q_PROPERTY(QString  current_fiat_sign               READ get_current_fiat_sign                                                          NOTIFY onFiatSignChanged)
         Q_PROPERTY(QString  current_fiat                    READ get_current_fiat                   WRITE set_current_fiat                      NOTIFY onFiatChanged)
         Q_PROPERTY(bool     notification_enabled            READ is_notification_enabled            WRITE set_notification_enabled              NOTIFY onNotificationEnabledChanged)
+        Q_PROPERTY(bool     sidebar_enabled                 READ is_sidebar_enabled                 WRITE set_sidebar_enabled                   NOTIFY onSidebarEnabledChanged)
         Q_PROPERTY(QVariant custom_token_data               READ get_custom_token_data              WRITE set_custom_token_data                 NOTIFY customTokenDataChanged)
         Q_PROPERTY(bool     fetching_custom_token_data_busy READ is_fetching_custom_token_data_busy WRITE set_fetching_custom_token_data_busy   NOTIFY customTokenDataStatusChanged)
         Q_PROPERTY(bool     fetching_priv_keys_busy         READ is_fetching_priv_key_busy          WRITE set_fetching_priv_key_busy            NOTIFY privKeyStatusChanged)
@@ -80,6 +81,8 @@ namespace atomic_dex
         [[nodiscard]] QString                   get_current_currency_sign() const;
         [[nodiscard]] QString                   get_current_fiat_sign() const;
         [[nodiscard]] QString                   get_current_fiat() const;
+        [[nodiscard]] bool                      is_sidebar_enabled() const;
+        void                                    set_sidebar_enabled(bool is_enabled);
         [[nodiscard]] bool                      is_notification_enabled() const;
         void                                    set_notification_enabled(bool is_enabled);
         void                                    set_current_currency(const QString& current_currency);
@@ -124,6 +127,7 @@ namespace atomic_dex
         void onCurrencySignChanged();
         void onFiatSignChanged();
         void onFiatChanged();
+        void onSidebarEnabledChanged();
         void onNotificationEnabledChanged();
         void customTokenDataChanged();
         void customTokenDataStatusChanged();

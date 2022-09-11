@@ -48,6 +48,14 @@ namespace
         config_json_data["current_fiat_sign"]     = config.current_fiat_sign;
         config_json_data["available_signs"]       = config.available_currency_signs;
         config_json_data["notification_enabled"]  = config.notification_enabled;
+        if (config_json_data.contains("sidebar_enabled"))
+        {
+            config_json_data["sidebar_enabled"]   = config.sidebar_enabled;
+        }
+        else
+        {
+            config_json_data["sidebar_enabled"]   = true;
+        }
 
         file.close();
 
@@ -71,6 +79,20 @@ namespace atomic_dex
         j.at("available_signs").get_to(config.available_currency_signs);
         j.at("current_fiat_sign").get_to(config.current_fiat_sign);
         j.at("notification_enabled").get_to(config.notification_enabled);
+        if (j.contains("sidebar_enabled"))
+        {
+            j.at("sidebar_enabled").get_to(config.sidebar_enabled);
+        }        
+    }
+
+    void
+    change_sidebar_status(cfg& config, bool is_enabled)
+    {
+        if (config.sidebar_enabled != is_enabled)
+        {
+            config.sidebar_enabled = is_enabled;
+            upgrade_cfg(config);
+        }
     }
 
     void

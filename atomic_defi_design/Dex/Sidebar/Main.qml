@@ -23,6 +23,7 @@ Item
     property var    currentLineType: Main.LineType.Portfolio
     property alias  _selectionCursor: _selectionCursor
     property bool   containsMouse: mouseArea.containsMouse
+    property bool   sidebar_enabled: API.app.settings_pg.sidebar_enabled
 
     signal lineSelected(var lineType)
     signal settingsClicked()
@@ -31,7 +32,7 @@ Item
     signal expanded(var isExpanded)
     signal expandStarted(var isExpanding)
 
-    width: isExpanded ? 200 : 80
+    width: !sidebar_enabled ? 80 : isExpanded ? 200 : 80
     height: parent.height
 
     // Background Rectangle
@@ -97,6 +98,8 @@ Item
         id: mouseArea
         anchors.fill: parent
         hoverEnabled: true
+        propagateComposedEvents: true
+
         Top
         {
             id: top

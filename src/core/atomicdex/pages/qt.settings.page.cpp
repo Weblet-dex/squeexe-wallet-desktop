@@ -131,6 +131,20 @@ namespace atomic_dex
         emit onLangChanged();
     }
 
+    bool atomic_dex::settings_page::is_sidebar_enabled() const
+    {
+        return m_config.sidebar_enabled;
+    }
+
+    void settings_page::set_sidebar_enabled(bool is_enabled)
+    {
+        if (m_config.sidebar_enabled != is_enabled)
+        {
+            change_sidebar_status(m_config, is_enabled);
+            emit onSidebarEnabledChanged();
+        }
+    }
+
     bool atomic_dex::settings_page::is_notification_enabled() const
     {
         return m_config.notification_enabled;

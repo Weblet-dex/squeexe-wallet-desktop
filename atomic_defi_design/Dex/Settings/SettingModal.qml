@@ -307,7 +307,6 @@ Qaterial.Dialog
                         anchors.margins: 10
                     }
 
-
                     Item
                     {
                         anchors.margins: 10
@@ -392,6 +391,30 @@ Qaterial.Dialog
                                         let current = atomic_settings2.value("CurrentTheme")
                                         currentIndex = model.indexOf(current)
                                     }
+                                }
+                            }
+
+                            RowLayout
+                            {
+                                width: parent.width - 30
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                height: 50
+
+                                DexLabel
+                                {
+                                    Layout.alignment: Qt.AlignVCenter
+                                    Layout.fillWidth: true
+                                    font: DexTypo.subtitle1
+                                    text: qsTr("Disable Expanding Sidebar")
+                                }
+
+                                Item { Layout.fillWidth: true }
+
+                                DexSwitch
+                                {
+                                    Layout.alignment: Qt.AlignVCenter
+                                    Component.onCompleted: checked = !API.app.settings_pg.sidebar_enabled
+                                    onCheckedChanged: API.app.settings_pg.sidebar_enabled = !checked
                                 }
                             }
                         }

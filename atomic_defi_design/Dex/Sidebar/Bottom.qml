@@ -63,7 +63,8 @@ MouseArea
             id: settingsLine
 
             Layout.fillWidth: true
-            label.text: isExpanded ? qsTr("Settings") : ""
+            label.text: qsTr("Settings")
+            label.visible: !sidebar_enabled ? false : isExpanded ? true : false
             icon.source: General.image_path + "menu-settings-white.svg"
             onClicked: settingsClicked()
         }
@@ -73,7 +74,8 @@ MouseArea
             id: supportLine
 
             Layout.fillWidth: true
-            label.text: isExpanded ? qsTr("Support") : ""
+            label.text: qsTr("Support")
+            label.visible: !sidebar_enabled ? false : isExpanded ? true : false
             icon.source: General.image_path + "menu-support-white.png"
             onClicked: supportClicked(type)
         }
@@ -84,7 +86,7 @@ MouseArea
 
             Layout.fillWidth: true
             label.text: qsTr("Privacy")
-            label.visible: isExpanded
+            label.visible: !sidebar_enabled ? "" : isExpanded
 
             onClicked:
             {

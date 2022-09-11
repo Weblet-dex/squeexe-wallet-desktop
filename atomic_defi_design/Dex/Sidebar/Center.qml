@@ -65,7 +65,8 @@ MouseArea
 
             Layout.fillWidth: true
             type: Main.LineType.Portfolio
-            label.text: isExpanded ? qsTr("Portfolio") : ""
+            label.text: qsTr("Portfolio")
+            label.visible: !sidebar_enabled ? false : isExpanded ? true : false
             icon.source: General.image_path + "menu-assets-portfolio.svg"
             onClicked: lineSelected(type)
         }
@@ -76,7 +77,8 @@ MouseArea
 
             Layout.fillWidth: true
             type: Main.LineType.Wallet
-            label.text: isExpanded ? qsTr("Wallet") : ""
+            label.text: qsTr("Wallet")
+            label.visible: !sidebar_enabled ? false : isExpanded ? true : false
             icon.source: General.image_path + "menu-assets-white.svg"
             onClicked: lineSelected(type)
         }
@@ -87,7 +89,8 @@ MouseArea
 
             Layout.fillWidth: true
             type: Main.LineType.DEX
-            label.text: isExpanded ? qsTr("DEX") : ""
+            label.text: qsTr("DEX")
+            label.visible: !sidebar_enabled ? false : isExpanded ? true : false
             icon.source: General.image_path + "menu-exchange-white.svg"
             onClicked: lineSelected(type)
         }
@@ -98,7 +101,8 @@ MouseArea
 
             Layout.fillWidth: true
             type: Main.LineType.Addressbook
-            label.text: isExpanded ? qsTr("Address Book") : ""
+            label.text: qsTr("Address Book")
+            label.visible: !sidebar_enabled ? false : isExpanded ? true : false
             icon.source: General.image_path + "menu-news-white.svg"
             onClicked: lineSelected(type)
         }
@@ -110,7 +114,8 @@ MouseArea
             label.enabled: false
             icon.enabled: false
             Layout.fillWidth: true
-            label.text: isExpanded ? qsTr("Fiat") : ""
+            label.text: qsTr("Fiat")
+            label.visible: !sidebar_enabled ? false : isExpanded ? true : false
             icon.source: General.image_path + "bill.svg"
         }
     }

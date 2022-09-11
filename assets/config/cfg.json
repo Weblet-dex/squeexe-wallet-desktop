@@ -1,5 +1,6 @@
 {
   "notification_enabled": true,
+  "sidebar_enabled": true,
   "current_currency": "USD",
   "current_fiat": "USD",
   "current_currency_sign": "$",
