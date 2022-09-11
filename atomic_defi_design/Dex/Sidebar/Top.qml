@@ -20,7 +20,8 @@ MouseArea
             if (isExpanded)
             {
                 fadeInTextVerAnimation.start();
-                dexLogo.scale = .8;
+                dexLogo.y = 0;
+                dexLogo.scale = .63;
                 dexLogo.source = Dex.CurrentTheme.bigLogoPath;
                 dexLogo.sourceSize.width = 200;
             }
@@ -31,7 +32,8 @@ MouseArea
             if (!isExpanding)
             {
                 versionLabel.opacity = 0;
-                dexLogo.scale = .5;
+                dexLogo.y = 12;
+                dexLogo.scale = .7;
                 dexLogo.source = Dex.CurrentTheme.logoPath;
                 dexLogo.sourceSize.width = 80;
                 versionLabel.opacity = 0;
@@ -57,7 +59,8 @@ MouseArea
         {
             sourceSize.width = parent.width
             source = isExpanded ? Dex.CurrentTheme.bigLogoPath : Dex.CurrentTheme.logoPath;
-            scale = isExpanded ? .8 : .5
+            y = isExpanded ? 0 : 12
+            scale = isExpanded ? .63 : .7
         }
 
         Connections
