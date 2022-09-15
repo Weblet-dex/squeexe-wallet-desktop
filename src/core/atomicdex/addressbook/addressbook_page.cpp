@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright © 2013-2021 The Komodo Platform Developers.                      *
+ * Copyright © 2013-2022 The Komodo Platform Developers.                      *
  *                                                                            *
  * See the AUTHORS, DEVELOPER-AGREEMENT and LICENSE files at                  *
  * the top-level directory of this distribution for the individual copyright  *
@@ -14,10 +14,9 @@
  *                                                                            *
  ******************************************************************************/
 
-//! Project
-#include "qt.addressbook.page.hpp"
+#include "addressbook_page.hpp"
 
-//! Constructor(s)/destructor
+// Constructor(s)/destructor
 namespace atomic_dex
 {
     addressbook_page::addressbook_page(entt::registry& registry, ag::ecs::system_manager& system_manager, QObject* parent) :
@@ -26,16 +25,15 @@ namespace atomic_dex
         m_system_manager.create_system<addressbook_manager>(m_system_manager);
         disable();
     }
-} // namespace atomic_dex
+}
 
-//! ag::ecs::pre_update_system implem
+// ag::ecs::pre_update_system implem
 namespace atomic_dex
 {
-    void
-    addressbook_page::update() 
+    void addressbook_page::update()
     {
     }
-} // namespace atomic_dex
+}
 
 //! QML API
 namespace atomic_dex

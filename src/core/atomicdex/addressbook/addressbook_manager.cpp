@@ -19,7 +19,7 @@
 #include <stdexcept> //> std::invalid_argument.
 
 //! Project Headers.
-#include "addressbook.manager.hpp"
+#include "addressbook_manager.hpp"
 
 //! Constructors
 namespace atomic_dex

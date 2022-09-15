@@ -16,17 +16,14 @@
 
 #pragma once
 
-//! Qt
 #include <QAbstractListModel> //> QAbstractListModel
 #include <QObject>            //> QObject
 
-//! Deps
 #include <antara/gaming/ecs/system.manager.hpp> //> antara::gaming, ag::ecs::system_manager
 
-//! Project include
-#include "atomicdex/managers/addressbook.manager.hpp"             //> addressbook_manager
-#include "atomicdex/models/qt.addressbook.proxy.filter.model.hpp" //> addressbook_proxy_filter
-#include "qt.addressbook.contact.model.hpp"                       //> addressbook_contact_model
+#include "addressbook_manager.hpp"      //> addressbook_manager
+#include "addressbook_proxy_model.hpp"  //> addressbook_proxy_filter
+#include "contact_model.hpp"            //> contact_model
 
 namespace ag = antara::gaming;
 
@@ -83,6 +80,6 @@ namespace atomic_dex
         
         addressbook_proxy_model*            m_addressbook_proxy;
         
-        QVector<addressbook_contact_model*> m_model_data;
+        QVector<contact_model*> m_model_data;
     };
 } // namespace atomic_dex

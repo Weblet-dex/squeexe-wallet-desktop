@@ -18,20 +18,20 @@
 
 #include <QJsonDocument>
 
+#include "addressbook_manager.hpp" //> addressbook_manager
 #include "atomicdex/pages/qt.portfolio.page.hpp"
 #include "atomicdex/utilities/qt.utilities.hpp"
-#include "atomicdex/managers/addressbook.manager.hpp"    //> addressbook_manager
-#include "qt.addressbook.contact.model.hpp"              //> addressbook_contact_model
-#include "qt.addressbook.contact.proxy.filter.model.hpp" //> addressbook_contact_proxy_filter_model
+#include "contact_model.hpp"                             //> addressbook_contact_model
+#include "contact_proxy_model.hpp"                       //> addressbook_contact_proxy_filter_model
 
 // Ctor/Dtor
 namespace atomic_dex
 {
-    addressbook_contact_model::addressbook_contact_model(ag::ecs::system_manager& system_manager, QString name, QObject* parent) :
+    contact_model::contact_model(ag::ecs::system_manager& system_manager, QString name, QObject* parent) :
         QAbstractListModel(parent),
         m_system_manager(system_manager),
         m_name(std::move(name)),
-        m_proxy_filter(new addressbook_contact_proxy_filter_model(system_manager, this))
+        m_proxy_filter(new contact_proxy_model(system_manager, this))
     {
         populate();
         m_proxy_filter->setDynamicSortFilter(true);
@@ -39,13 +39,14 @@ namespace atomic_dex
         m_proxy_filter->sort(0);
     }
 
-    addressbook_contact_model::~addressbook_contact_model()  { clear(); }
+    contact_model::~contact_model()  { clear(); }
 }
 
 // QAbstractListModel Functions
 namespace atomic_dex
 {
-    QVariant addressbook_contact_model::data(const QModelIndex& index, int role) const
+    QVariant
+    contact_model::data(const QModelIndex& index, int role) const
     {
         if (!hasIndex(index.row(), index.column(), index.parent()))
         {
@@ -68,12 +69,14 @@ namespace atomic_dex
         }
     }
 
-    int addressbook_contact_model::rowCount([[maybe_unused]] const QModelIndex& parent) const
+    int
+    contact_model::rowCount([[maybe_unused]] const QModelIndex& parent) const
     {
         return m_address_entries.size();
     }
 
-    QHash<int, QByteArray> addressbook_contact_model::roleNames() const
+    QHash<int, QByteArray>
+    contact_model::roleNames() const
     {
         return {
             {AddressTypeRole, "address_type"},
@@ -86,12 +89,14 @@ namespace atomic_dex
 // Getters/Setters
 namespace atomic_dex
 {
-    const QString& addressbook_contact_model::get_name() const 
+    const QString&
+    contact_model::get_name() const
     {
         return m_name;
     }
     
-    void addressbook_contact_model::set_name(const QString& name) 
+    void
+    contact_model::set_name(const QString& name)
     {
         auto& addrbook_manager = m_system_manager.get_system<addressbook_manager>();
         
@@ -107,23 +112,27 @@ namespace atomic_dex
         }
     }
     
-    const QStringList& addressbook_contact_model::get_categories() const 
+    const QStringList&
+    contact_model::get_categories() const
     {
         return m_categories;
     }
     
-    void addressbook_contact_model::set_categories(QStringList categories) 
+    void
+    contact_model::set_categories(QStringList categories)
     {
         m_categories = std::move(categories);
         emit categoriesChanged();
     }
-    
-    addressbook_contact_proxy_filter_model* addressbook_contact_model::get_proxy_filter() const 
+
+    contact_proxy_model*
+    contact_model::get_proxy_filter() const
     {
         return m_proxy_filter;
     }
     
-    const QVector<addressbook_contact_model::address_entry>& addressbook_contact_model::get_address_entries() const 
+    const QVector<contact_model::address_entry>&
+    contact_model::get_address_entries() const
     {
         return m_address_entries;
     }
@@ -132,7 +141,8 @@ namespace atomic_dex
 // QML API
 namespace atomic_dex
 {
-    bool addressbook_contact_model::addCategory(const QString& category) 
+    bool
+    contact_model::addCategory(const QString& category)
     {
         if (m_categories.contains(category))
         {
@@ -143,13 +153,15 @@ namespace atomic_dex
         return true;
     }
 
-    void addressbook_contact_model::removeCategory(const QString& category) 
+    void
+    contact_model::removeCategory(const QString& category)
     {
         m_categories.removeOne(category);
         emit categoriesChanged();
     }
     
-    bool addressbook_contact_model::addAddressEntry(QString type, QString key, QString value) 
+    bool
+    contact_model::addAddressEntry(QString type, QString key, QString value)
     {
         // Returns false if the given key already exists.
         auto res = match(index(0), AddressTypeAndKeyRole, type + key, 1, Qt::MatchFlag::MatchExactly);
@@ -169,7 +181,8 @@ namespace atomic_dex
         return true;
     }
     
-    void addressbook_contact_model::removeAddressEntry(const QString& type, const QString& key) 
+    void
+    contact_model::removeAddressEntry(const QString& type, const QString& key)
     {
         auto res = match(index(0), AddressTypeAndKeyRole, type + key, 1, Qt::MatchFlag::MatchExactly);
     
@@ -181,7 +194,8 @@ namespace atomic_dex
         }
     }
 
-    void addressbook_contact_model::reload()
+    void
+    contact_model::reload()
     {
         // Clears model
         clear();
@@ -190,7 +204,8 @@ namespace atomic_dex
         populate();
     }
 
-    void addressbook_contact_model::save()
+    void
+    contact_model::save()
     {
         auto& addrbook_manager = m_system_manager.get_system<addressbook_manager>();
 
@@ -216,7 +231,7 @@ namespace atomic_dex
 namespace atomic_dex
 {
     void
-    addressbook_contact_model::populate()
+    contact_model::populate()
     {
         // Loads categories.
         {
@@ -272,7 +287,7 @@ namespace atomic_dex
     }
 
     void
-    addressbook_contact_model::clear()
+    contact_model::clear()
     {
         // Clears categories.
         m_categories.clear();

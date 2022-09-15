@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright © 2013-2021 The Komodo Platform Developers.                      *
+ * Copyright © 2013-2022 The Komodo Platform Developers.                      *
  *                                                                            *
  * See the AUTHORS, DEVELOPER-AGREEMENT and LICENSE files at                  *
  * the top-level directory of this distribution for the individual copyright  *
@@ -14,9 +14,8 @@
  *                                                                            *
  ******************************************************************************/
 
-// Project Headers
-#include "atomicdex/models/qt.addressbook.model.hpp"
-#include "atomicdex/models/qt.addressbook.proxy.filter.model.hpp"
+#include "addressbook_model.hpp"
+#include "addressbook_proxy_model.hpp"
 #include "atomicdex/pages/qt.portfolio.page.hpp"
 
 // Ctor
@@ -30,8 +29,7 @@ namespace atomic_dex
 // QSortFilterProxyModel Functions
 namespace atomic_dex
 {
-    bool
-    addressbook_proxy_model::lessThan(const QModelIndex& source_left, const QModelIndex& source_right) const
+    bool addressbook_proxy_model::lessThan(const QModelIndex& source_left, const QModelIndex& source_right) const
     {
         int      role       = sortRole();
         QVariant left_data  = sourceModel()->data(source_left, role);
@@ -39,17 +37,17 @@ namespace atomic_dex
         
         switch (static_cast<addressbook_model::AddressBookRoles>(role))
         {
-        case addressbook_model::SubModelRole:
-        {
-            auto* left_obj      = qvariant_cast<QObject*>(left_data);
-            auto* left_contact  = qobject_cast<addressbook_contact_model*>(left_obj);
-            auto* right_obj     = qvariant_cast<QObject*>(right_data);
-            auto* right_contact = qobject_cast<addressbook_contact_model*>(right_obj);
-            return left_contact->get_name().toLower() < right_contact->get_name().toLower();
-        }
-        default:
-            SPDLOG_WARN("No sort behavior on role {}", role);
-            break;
+            case addressbook_model::SubModelRole:
+            {
+                auto* left_obj      = qvariant_cast<QObject*>(left_data);
+                auto* left_contact  = qobject_cast<contact_model*>(left_obj);
+                auto* right_obj     = qvariant_cast<QObject*>(right_data);
+                auto* right_contact = qobject_cast<contact_model*>(right_obj);
+                return left_contact->get_name().toLower() < right_contact->get_name().toLower();
+            }
+            default:
+                SPDLOG_WARN("No sort behavior on role {}", role);
+                break;
         }
         return false;
     }
@@ -62,22 +60,22 @@ namespace atomic_dex
         
         switch (static_cast<addressbook_model::AddressBookRoles>(role))
         {
-        case addressbook_model::NameRoleAndCategoriesRole:
-        {
-            QStringList search_pattern = m_search_exp.split(' ', Qt::SplitBehaviorFlags::SkipEmptyParts);
-            QString     data           = idx.data(addressbook_model::NameRoleAndCategoriesRole).toString();
-
-            for (auto& word: search_pattern)
+            case addressbook_model::NameRoleAndCategoriesRole:
             {
-                if (!data.contains(word, Qt::CaseInsensitive))
+                QStringList search_pattern = m_search_exp.split(' ', Qt::SplitBehaviorFlags::SkipEmptyParts);
+                QString     data           = idx.data(addressbook_model::NameRoleAndCategoriesRole).toString();
+    
+                for (auto& word: search_pattern)
                 {
-                    return false;
+                    if (!data.contains(word, Qt::CaseInsensitive))
+                    {
+                        return false;
+                    }
                 }
             }
-        }
-        default:
-            SPDLOG_WARN("No filter behavior on role {}", role);
-            break;
+            default:
+                SPDLOG_WARN("No filter behavior on role {}", role);
+                break;
         }
         
         // If a type filter exists, checks if the contact has at least one address of equivalent type.
@@ -86,7 +84,7 @@ namespace atomic_dex
         if (!m_type_filter.isEmpty())
         {
             const auto& glb_coins_cfg = m_system_manager.get_system<portfolio_page>().get_global_cfg();
-            const auto& addresses     = qobject_cast<addressbook_contact_model*>(
+            const auto& addresses     = qobject_cast<contact_model*>(
                                             qvariant_cast<QObject*>(idx.data(addressbook_model::SubModelRole))
                                         )->get_address_entries();
             

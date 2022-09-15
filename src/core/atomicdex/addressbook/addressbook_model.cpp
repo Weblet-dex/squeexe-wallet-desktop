@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright © 2013-2021 The Komodo Platform Developers.                      *
+ * Copyright © 2013-2022 The Komodo Platform Developers.                      *
  *                                                                            *
  * See the AUTHORS, DEVELOPER-AGREEMENT and LICENSE files at                  *
  * the top-level directory of this distribution for the individual copyright  *
@@ -14,15 +14,13 @@
  *                                                                            *
  ******************************************************************************/
 
-//! Qt
 #include <QJsonArray>
 #include <QJsonDocument>
 
-//! Project headers
-#include "atomicdex/models/qt.addressbook.model.hpp"
+#include "addressbook_model.hpp"
 #include "atomicdex/utilities/qt.utilities.hpp"
 
-//! Ctor
+// Ctor
 namespace atomic_dex
 {
     addressbook_model::addressbook_model(ag::ecs::system_manager& system_manager, QObject* parent)  :
@@ -38,17 +36,15 @@ namespace atomic_dex
     }
 }
 
-//! QAbstractListModel Functions
+// QAbstractListModel Functions
 namespace atomic_dex
 {
-    int
-    atomic_dex::addressbook_model::rowCount([[maybe_unused]] const QModelIndex& parent) const
+    int atomic_dex::addressbook_model::rowCount([[maybe_unused]] const QModelIndex& parent) const
     {
         return m_model_data.count();
     }
     
-    QVariant
-    atomic_dex::addressbook_model::data(const QModelIndex& index, int role) const
+    QVariant atomic_dex::addressbook_model::data(const QModelIndex& index, int role) const
     {
         if (!hasIndex(index.row(), index.column(), index.parent()))
         {
@@ -71,10 +67,10 @@ namespace atomic_dex
         }
     }
     
-    QHash<int, QByteArray>
-    atomic_dex::addressbook_model::roleNames() const
+    QHash<int, QByteArray> atomic_dex::addressbook_model::roleNames() const
     {
-        return {
+        return
+        {
             {SubModelRole, "contacts"}
         };
     }
@@ -116,7 +112,7 @@ namespace atomic_dex
         addrbook_manager.add_contact(name.toStdString());
         addrbook_manager.save_configuration();
         beginInsertRows(QModelIndex(), rowCount(), rowCount());
-        m_model_data.push_back(new addressbook_contact_model(m_system_manager, name, this));
+        m_model_data.push_back(new contact_model(m_system_manager, name, this));
         endInsertRows();
         return true;
     }
@@ -132,10 +128,9 @@ namespace atomic_dex
         beginResetModel();
         for (const auto& contact : addrbook_manager.get_contacts())
         {
-            auto  contact_name  = contact.at("name").get<std::string>();
-            auto* contact_model = new addressbook_contact_model(m_system_manager, QString::fromStdString(contact_name), this);
+            auto contact_name = contact.at("name").get<std::string>();
     
-            m_model_data.push_back(contact_model);
+            m_model_data.push_back(new contact_model(m_system_manager, QString::fromStdString(contact_name), this));
         }
         endResetModel();
     }

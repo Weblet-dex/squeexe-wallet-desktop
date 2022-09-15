@@ -26,7 +26,7 @@ namespace ag = antara::gaming;
 
 namespace atomic_dex
 {
-    class addressbook_contact_proxy_filter_model final : public QSortFilterProxyModel
+    class contact_proxy_model final : public QSortFilterProxyModel
     {
         Q_OBJECT
         
@@ -36,8 +36,8 @@ namespace atomic_dex
         QString m_filter_type;
         
       public:
-        explicit addressbook_contact_proxy_filter_model(ag::ecs::system_manager& system_manager, QObject* parent);
-        ~addressbook_contact_proxy_filter_model() final = default;
+        explicit contact_proxy_model(ag::ecs::system_manager& system_manager, QObject* parent);
+        ~contact_proxy_model() final = default;
         
         [[nodiscard]] const QString& get_search_expression() const ;
         void                         set_search_expression(QString value) ;

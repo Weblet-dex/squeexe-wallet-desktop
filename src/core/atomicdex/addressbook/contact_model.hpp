@@ -19,11 +19,11 @@
 #include <entt/core/attribute.h>                //> ENTT_API
 #include <antara/gaming/ecs/system.manager.hpp> //> ag::ecs::system_manager
 
-#include "qt.addressbook.contact.proxy.filter.model.hpp"
+#include "contact_proxy_model.hpp"
 
 namespace atomic_dex
 {
-    class ENTT_API addressbook_contact_model final : public QAbstractListModel
+    class ENTT_API contact_model final : public QAbstractListModel
     {
         // Tells QT this class uses signal/slots mechanisms and/or has GUI elements.
         Q_OBJECT
@@ -47,8 +47,8 @@ namespace atomic_dex
         };
         Q_ENUMS(ContactRoles)
 
-        explicit addressbook_contact_model(ag::ecs::system_manager& system_manager, QString name, QObject* parent = nullptr);
-        ~addressbook_contact_model()  final;
+        explicit contact_model(ag::ecs::system_manager& system_manager, QString name, QObject* parent = nullptr);
+        ~contact_model()  final;
     
         // QAbstractListModel Functions
         [[nodiscard]] QVariant               data(const QModelIndex& index, int role) const final;
@@ -60,7 +60,7 @@ namespace atomic_dex
         void                                                  set_name(const QString& name);
         [[nodiscard]] const QStringList&                      get_categories() const;
         void                                                  set_categories(QStringList categories);
-        [[nodiscard]] addressbook_contact_proxy_filter_model* get_proxy_filter() const;
+        [[nodiscard]] contact_proxy_model* get_proxy_filter() const;
         [[nodiscard]] const QVector<address_entry>&           get_address_entries() const; // Returns contact's current addresses.
     
         // Loads this model data from the persistent data.
@@ -80,7 +80,7 @@ namespace atomic_dex
         // QML API Properties
         Q_PROPERTY(QString name READ get_name WRITE set_name NOTIFY nameChanged)
         Q_PROPERTY(QStringList categories READ get_categories WRITE set_categories NOTIFY categoriesChanged)
-        Q_PROPERTY(addressbook_contact_proxy_filter_model* proxyFilter READ get_proxy_filter NOTIFY proxyFilterChanged)
+        Q_PROPERTY(contact_proxy_model* proxyFilter READ get_proxy_filter NOTIFY proxyFilterChanged)
         
         // QML API Properties Signals
       signals:
@@ -96,7 +96,7 @@ namespace atomic_dex
         QStringList                             m_categories;
         
         QVector<address_entry>                  m_address_entries;
-    
-        addressbook_contact_proxy_filter_model* m_proxy_filter;
+
+        contact_proxy_model* m_proxy_filter;
     };
 }

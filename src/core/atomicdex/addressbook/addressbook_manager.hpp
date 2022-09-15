@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright © 2013-2021 The Komodo Platform Developers.                      *
+ * Copyright © 2013-2022 The Komodo Platform Developers.                      *
  *                                                                            *
  * See the AUTHORS, DEVELOPER-AGREEMENT and LICENSE files at                  *
  * the top-level directory of this distribution for the individual copyright  *
@@ -16,11 +16,9 @@
 
 #pragma once
 
-//! Deps
 #include <antara/gaming/ecs/system.manager.hpp>
 
-//! Project Headers
-#include "atomicdex/config/addressbook.cfg.hpp"
+#include "addressbook_config.hpp"
 #include "atomicdex/managers/qt.wallet.manager.hpp"
 
 namespace ag = antara::gaming;
