@@ -12,7 +12,7 @@ namespace atomic_dex
         return utils::get_themes_path();
     }
 
-    inline fs::path get_theme_folder(std::string theme_name)
+    inline fs::path get_theme_folder(const std::string& theme_name)
     {
         return utils::get_themes_path() / theme_name;
     }
