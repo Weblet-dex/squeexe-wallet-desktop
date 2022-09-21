@@ -13,22 +13,25 @@
  * Removal or modification of this copyright notice is prohibited.            *
  *                                                                            *
  ******************************************************************************/
+ 
+#pragma once
 
 #include <QFile>
+#include <nlohmann/json.hpp>
 
-#include "addressbook_config.hpp"
 #include "atomicdex/utilities/global.utilities.hpp"
 #include "atomicdex/utilities/qt.utilities.hpp"
 
 namespace atomic_dex
 {
-    nlohmann::json load_addressbook_cfg(const std::string& wallet_name)
+    [[nodiscard]]
+    inline nlohmann::json load_addressbook_cfg(const std::string& wallet_name)
     {
-        const fs::path source_folder{utils::get_atomic_dex_addressbook_folder()};
-        const fs::path in_path      {source_folder / wallet_name};
-        QFile          ifs;
-        QString        content;
-        nlohmann::json out;
+        const auto      source_folder{utils::get_atomic_dex_addressbook_folder()};
+        const auto      in_path      {source_folder / wallet_name};
+        QFile           ifs;
+        QString         content;
+        nlohmann::json  out;
         
         utils::create_if_doesnt_exist(source_folder);
         {
@@ -46,7 +49,7 @@ namespace atomic_dex
                 SPDLOG_WARN("Addressbook config file was invalid, use empty configuration: {}. Content was: {}", ex.what(), content.toStdString());
                 out = nlohmann::json::array();
             }
-            catch (std::exception& ex)
+            catch (const std::exception& ex)
             {
                 SPDLOG_ERROR(ex.what());
                 out = nlohmann::json::array();
@@ -55,12 +58,12 @@ namespace atomic_dex
         }
     }
     
-    void update_addressbook_cfg(const nlohmann::json& in, const std::string& wallet_name)
+    inline void update_addressbook_cfg(const nlohmann::json& in, const std::string& wallet_name)
     {
         const fs::path      out_folder{utils::get_atomic_dex_addressbook_folder()};
         const fs::path      out_path  {out_folder / wallet_name};
         QFile output;
-
+        
         utils::create_if_doesnt_exist(out_folder);
         {
             output.setFileName(std_path_to_qstring(out_path));
