@@ -10807,5 +10807,39 @@
     "active": false,
     "currently_enabled": false,
     "wallet_only": false
+  },
+  "IRIS": {
+    "coin": "IRIS",
+    "name": "Iris",
+    "nomics_id": "IRIS",
+    "coinpaprika_id": "iris-irisnet",
+    "coingecko_id": "iris-network",
+    "electrum": [
+      {"url":"http://34.80.202.172:26657"}
+    ],
+    "explorer_url": [
+      "https://nyancat.iobscan.io/#/denoms"
+    ],
+    "type": "ERC-20",
+    "active": false,
+    "currently_enabled": false,
+    "wallet_only": false
+  },
+  "ATOM": {
+    "coin": "ATOM",
+    "name": "Atom",
+    "nomics_id": "ATOM",
+    "coinpaprika_id": "atom-cosmos",
+    "coingecko_id": "cosmos",
+    "electrum": [
+      {"url":"http://34.80.202.172:26657"}
+    ],
+    "explorer_url": [
+      "https://nyancat.iobscan.io/#/denoms"
+    ],
+    "type": "ERC-20",
+    "active": false,
+    "currently_enabled": false,
+    "wallet_only": false
   }
 }
