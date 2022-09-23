@@ -20,7 +20,7 @@
 #include <doctest/doctest.h>
 
 //! Project Headers
-#include "atomicdex/managers/addressbook.manager.hpp"
+#include "atomicdex/addressbook/addressbook_manager.hpp"
 
 #include "../atomic.dex.tests.hpp"
 

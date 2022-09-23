@@ -23,16 +23,13 @@
 #include <doctest/doctest.h>
 
 //! Project
-#include "atomicdex/models/qt.addressbook.contact.model.hpp"
-#include "atomicdex/managers/addressbook.manager.hpp"
+#include "atomicdex/addressbook/contact_model.hpp"
+#include "atomicdex/addressbook/addressbook_manager.hpp"
 
 #include "../atomic.dex.tests.hpp"
 
 TEST_CASE("addressbook_contact_model")
 {
-#if defined(WIN32) || defined(_WIN32)
-    CHECK_EQ(42, 42);
-#else
     auto& addressbook_manager = g_context->system_manager().create_system<atomic_dex::addressbook_manager>(g_context->system_manager());
     {
         addressbook_manager.load_configuration();
@@ -45,7 +42,7 @@ TEST_CASE("addressbook_contact_model")
         addressbook_manager.add_contact_category(contact_name, "QA");
         addressbook_manager.add_contact_category(contact_name, "CTO");
     }
-    atomic_dex::addressbook_contact_model contact_model{g_context->system_manager(), contact_name};
+    atomic_dex::contact_model contact_model{g_context->system_manager(), contact_name};
 
     THEN("get_categories should return 4 categories")
     {
@@ -167,5 +164,4 @@ TEST_CASE("addressbook_contact_model")
     //! Teardown
     addressbook_manager.remove_all_contacts();
     addressbook_manager.save_configuration();
-#endif
 }
