@@ -115,9 +115,9 @@ namespace atomic_dex
         {
             SPDLOG_INFO("new ticker: {}", ticker.toStdString());
             m_transactions_mdl->reset();
+            emit currentTickerChanged();
             this->set_tx_fetching_busy(true);
             mm2_system.fetch_infos_thread(true, true);
-            emit currentTickerChanged();
             refresh_ticker_infos();
             check_send_availability();
         }
