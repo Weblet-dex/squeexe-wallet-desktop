@@ -256,14 +256,16 @@
         "ws_url": "elec-seeder-two.artbytecoin.org:50013"
       },
       {
-        "url": "electrum3.nav.community:40002",
+        "url": "electrumx-three.artbyte.live:50012",
         "protocol": "SSL",
-        "ws_url": "electrum3.nav.community:40004"
+        "disable_cert_verification": false,
+        "ws_url": "electrumx-three.artbyte.live:50013"
       },
       {
-        "url": "electrum4.nav.community:40002",
+        "url": "electrumx-four.artbyte.live:50012",
         "protocol": "SSL",
-        "ws_url": "electrum4.nav.community:40004"
+        "disable_cert_verification": false,
+        "ws_url": "electrumx-four.artbyte.live:50013"
       }
     ],
     "explorer_url": [
