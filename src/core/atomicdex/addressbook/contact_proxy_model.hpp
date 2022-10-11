@@ -45,7 +45,7 @@ namespace atomic_dex
         void                         set_filter_type(QString value) ;
         
         // QSortFilterProxyModel Functions
-        [[nodiscard]] bool filterAcceptsRow(int source_row, const QModelIndex& source_parent) const override;
+        [[nodiscard]] bool filterAcceptsRow(int source_row, const QModelIndex& source_parent) const final;
         [[nodiscard]] bool lessThan(const QModelIndex& source_left, const QModelIndex& source_right) const final; // Sorts address entries by type then by key.
     
         // QML API Properties
