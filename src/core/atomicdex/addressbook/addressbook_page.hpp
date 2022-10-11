@@ -38,12 +38,11 @@ namespace atomic_dex
         // ag::ecs::pre_update_system implem
         void update() final;
 
-        //! Signals
         void connect_signals();
         void disconnect_signals();
 
-        //! Events
-        void on_post_login([[maybe_unused]] const post_login& evt) ;
+        // Handler that should be called when logged in to a wallet.
+        void on_post_login([[maybe_unused]] const post_login& evt);
 
         void clear();
 
