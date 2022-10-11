@@ -58,7 +58,6 @@ namespace atomic_dex
     {
         Q_OBJECT
 
-        //! Properties
         Q_PROPERTY(addressbook_page* addressbookPg READ get_addressbook_page NOTIFY addressbookPageChanged)
         Q_PROPERTY(orders_model* orders_mdl READ get_orders NOTIFY ordersChanged)
         Q_PROPERTY(portfolio_page_ptr portfolio_pg READ get_portfolio_page NOTIFY portfolioPageChanged)
@@ -73,7 +72,6 @@ namespace atomic_dex
         Q_PROPERTY(update_checker_service* updateCheckerService READ get_update_checker_service NOTIFY updateCheckerServiceChanged)
         Q_PROPERTY(zcash_params_service* zcash_params READ get_zcash_params_service NOTIFY zcashParamsServiceChanged)
 
-        //! Private function
         void connect_signals();
         void tick();
 
@@ -179,6 +177,7 @@ namespace atomic_dex
         void internetCheckerChanged();
         void ipCheckerChanged();
         void exporterServiceChanged();
+        
       public slots:
         void exit_handler();
         void app_state_changed();
