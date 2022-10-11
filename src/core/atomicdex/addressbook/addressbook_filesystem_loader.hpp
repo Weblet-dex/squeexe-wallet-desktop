@@ -16,9 +16,11 @@
  
 #pragma once
 
-#include <QFile>
-#include <nlohmann/json.hpp>
+#include <vector>
 
+#include <QFile>
+
+#include "contact_dto.json.hpp"
 #include "atomicdex/utilities/global.utilities.hpp"
 #include "atomicdex/utilities/qt.utilities.hpp"
 
@@ -78,5 +80,15 @@ namespace atomic_dex
                 SPDLOG_ERROR(ex.what());
             }
         }
+    }
+
+    inline std::vector<contact_dto> load_addressbook_from_filesystem(const std::string& wallet_name)
+    {
+    
+    }
+    
+    inline void save_addressbook_to_filesystem(const std::vector<contact_dto>& contacts, const std::string& wallet_name)
+    {
+    
     }
 }

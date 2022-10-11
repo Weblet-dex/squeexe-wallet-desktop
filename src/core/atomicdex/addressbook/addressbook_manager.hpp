@@ -18,8 +18,8 @@
 
 #include <antara/gaming/ecs/system.manager.hpp>
 
+#include "addressbook_filesystem_loader.hpp"
 #include "atomicdex/managers/qt.wallet.manager.hpp"
-#include "config_loader.hpp"
 
 namespace ag = antara::gaming;
 
