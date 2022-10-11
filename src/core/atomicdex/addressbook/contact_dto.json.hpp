@@ -18,7 +18,7 @@
 
 #include <nlohmann/json_fwd.hpp>
 
-#include "../json.hpp" //> json_name_of
+#include "../json.hpp"
 #include "contact_dto.hpp"
 
 namespace atomic_dex
