@@ -16,7 +16,6 @@
 
 #pragma once
 
-//! QT Headers
 #include <QAbstractListModel>
 #include <QApplication>
 #include <QImage>
@@ -27,11 +26,9 @@
 #include <QTranslator>
 #include <QVariantMap>
 
-//! Deps
 #include <antara/gaming/world/world.app.hpp>
 #include <entt/core/attribute.h>
 
-//! Project Headers
 #include "atomicdex/config/app.cfg.hpp"
 #include "atomicdex/constants/qt.actions.hpp"
 #include "atomicdex/managers/notification.manager.hpp"

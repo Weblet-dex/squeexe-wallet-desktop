@@ -16,10 +16,10 @@
 
 #pragma once
 
-#include <nlohmann/json_fwd.hpp> //> nlohmann::json
+#include <nlohmann/json_fwd.hpp>
 
 #include "../json.hpp" //> json_name_of
-#include "contact_dto.hpp" //> contact_dto
+#include "contact_dto.hpp"
 
 namespace atomic_dex
 {
