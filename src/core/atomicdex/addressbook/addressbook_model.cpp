@@ -20,7 +20,6 @@
 #include "addressbook_model.hpp"
 #include "atomicdex/utilities/qt.utilities.hpp"
 
-// Ctor
 namespace atomic_dex
 {
     addressbook_model::addressbook_model(ag::ecs::system_manager& system_manager, QObject* parent)  :
@@ -34,11 +33,7 @@ namespace atomic_dex
         m_addressbook_proxy->setSourceModel(this);
         m_addressbook_proxy->sort(0);
     }
-}
 
-// QAbstractListModel Functions
-namespace atomic_dex
-{
     int atomic_dex::addressbook_model::rowCount([[maybe_unused]] const QModelIndex& parent) const
     {
         return m_model_data.count();
@@ -74,13 +69,8 @@ namespace atomic_dex
             {SubModelRole, "contacts"}
         };
     }
-} // namespace atomic_dex
-
-//! QML API
-namespace atomic_dex
-{
-    addressbook_proxy_model*
-    addressbook_model::get_addressbook_proxy_mdl() const 
+    
+    addressbook_proxy_model* addressbook_model::get_addressbook_proxy_mdl() const
     {
         return m_addressbook_proxy;
     }
@@ -116,11 +106,7 @@ namespace atomic_dex
         endInsertRows();
         return true;
     }
-} // namespace atomic_dex
-
-//! Others
-namespace atomic_dex
-{
+    
     void addressbook_model::populate()
     {
         const auto& addrbook_manager = m_system_manager.get_system<addressbook_manager>();
