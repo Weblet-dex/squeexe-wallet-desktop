@@ -1,11 +1,9 @@
 #include "main.prerequisites.hpp"
 
 #if defined(WINDOWS_RELEASE_MAIN)
-INT WINAPI
-WinMain([[maybe_unused]] HINSTANCE hInst, HINSTANCE, [[maybe_unused]] LPSTR strCmdLine, INT)
+INT WINAPI WinMain([[maybe_unused]] HINSTANCE hInst, HINSTANCE, [[maybe_unused]] LPSTR strCmdLine, INT)
 #else
-int
-main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
+int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
 #endif
 {
 #if defined(WINDOWS_RELEASE_MAIN)
