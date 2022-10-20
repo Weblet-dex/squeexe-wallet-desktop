@@ -58,9 +58,9 @@ namespace atomic_dex
         return "categories";
     }
     
-    inline void from_json(const nlohmann::json& in, contact_dto::addresses_entry& out);
-    inline void from_json(const nlohmann::json& in, contact_dto& out);
+    void from_json(const nlohmann::json& in, contact_dto::addresses_entry& out);
+    void from_json(const nlohmann::json& in, contact_dto& out);
     
-    inline void to_json(nlohmann::json& out, const contact_dto::addresses_entry& in);
-    inline void to_json(nlohmann::json& out, const contact_dto& in);
+    void to_json(nlohmann::json& out, const contact_dto::addresses_entry& in);
+    void to_json(nlohmann::json& out, const contact_dto& in);
 }

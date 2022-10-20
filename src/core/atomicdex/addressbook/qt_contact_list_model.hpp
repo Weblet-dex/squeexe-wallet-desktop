@@ -16,70 +16,73 @@
 
 #pragma once
 
-#include <QAbstractListModel> //> QAbstractListModel
-#include <QObject>            //> QObject
+#include <QAbstractListModel>
+#include <QObject>
 
 #include <antara/gaming/ecs/system.manager.hpp>
 
-#include "addressbook_manager.hpp"
-#include "addressbook_proxy_model.hpp"
-#include "contact_model.hpp"
+#include "contact_dto.hpp"
+#include "qt_contact_address_list_model.hpp"
+#include "qt_contact_list_proxy_model.hpp"
 
 namespace ag = antara::gaming;
 
 namespace atomic_dex
 {
-    class addressbook_model final : public QAbstractListModel
+    class qt_contact_list_model final : public QAbstractListModel
     {
         // Tells QT this class uses signal/slots mechanisms and/or has GUI elements.
         Q_OBJECT
         
-        Q_ENUMS(AddressBookRoles)
-
-    public:
-        enum AddressBookRoles
+        // The data type represented by this model.
+        struct element
         {
-            SubModelRole = Qt::UserRole + 1,
-            
-            NameRole,
-          
-            NameRoleAndCategoriesRole           // Used as search role.
+            QString     name;
+            QStringList tags;
+            qt_contact_address_list_model* address_list_model;
         };
-        Q_ENUM(AddressBookRoles);
 
-        explicit addressbook_model(ag::ecs::system_manager& system_registry, QObject* parent = nullptr) ;
-        ~addressbook_model()  final = default;
+      public:
+        enum roles
+        {
+            NameRole = Qt::UserRole + 1,
+            TagsRole,
+            NameWithTagsRole,
+            AddressListModelRole
+        };
+        Q_ENUM(roles);
+
+        explicit qt_contact_list_model(ag::ecs::system_manager& system_registry, QObject* parent = nullptr);
+        ~qt_contact_list_model();
         
-        // QAbstractListModel Functions
+        // `QAbstractListModel` functions
         [[nodiscard]] QVariant               data(const QModelIndex& index, int role) const final;
         [[nodiscard]] int                    rowCount(const QModelIndex& parent = QModelIndex()) const final;
         [[nodiscard]] QHash<int, QByteArray> roleNames() const final;
 
-        // Loads model data from persistent data.
-        void populate();
+        // Fills model data `model_data` from a container of type `std::vector<contact_dto>`.
+        void populate(const std::vector<contact_dto>& contact_vec);
         
-        // Unloads model data.
+        // Empties model data `model_data`.
         void clear();
         
-        // Getters/Setters
-        [[nodiscard]] addressbook_proxy_model* get_addressbook_proxy_mdl() const ;
+        // Fills an `std::vector<contact_dto>` from this model's data.
+        void fill_std_vector(std::vector<contact_dto>& out);
         
-        // QML API
+        // Returns the proxy of this model.
+        [[nodiscard]] qt_contact_list_proxy_model* get_proxy_model() const;
+        
         Q_INVOKABLE bool addContact(const QString& name);
         Q_INVOKABLE void removeContact(const QString& name);
 
-        // QML API properties
-        Q_PROPERTY(addressbook_proxy_model* proxy READ get_addressbook_proxy_mdl NOTIFY addressbookProxyChanged);
+        Q_PROPERTY(qt_contact_list_proxy_model* proxyModel READ get_proxy_model NOTIFY proxyModelChanged);
         
-        // QMl API properties signals
-    signals:
-        void addressbookProxyChanged();
+      signals:
+        void proxyModelChanged();
 
-    private:
-        ag::ecs::system_manager&            m_system_manager;
-        
-        addressbook_proxy_model*            m_addressbook_proxy;
-        
-        QVector<contact_model*> m_model_data;
+      private:
+        ag::ecs::system_manager& system_manager;
+        qt_contact_list_proxy_model* proxy_model;
+        QVector<element> model_data;
     };
 } // namespace atomic_dex

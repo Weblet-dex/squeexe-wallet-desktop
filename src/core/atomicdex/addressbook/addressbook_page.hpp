@@ -18,7 +18,8 @@
 
 #include <QObject>
 
-#include "addressbook_model.hpp"
+#include "qt_contact_list_model.hpp"
+#include "../events/events.hpp"
 
 namespace atomic_dex
 {
@@ -28,8 +29,7 @@ namespace atomic_dex
         Q_OBJECT
     
         ag::ecs::system_manager& m_system_manager;
-  
-        addressbook_model* m_model{nullptr};
+        qt_contact_list_model* m_model{nullptr};
         
       public:
         explicit addressbook_page(entt::registry& registry, ag::ecs::system_manager& system_manager, QObject* parent = nullptr);
@@ -47,11 +47,11 @@ namespace atomic_dex
         void clear();
 
       private:
-        Q_PROPERTY(addressbook_model* model READ get_model NOTIFY addressbookChanged)
-        [[nodiscard]] addressbook_model* get_model() const;
+        Q_PROPERTY(qt_contact_list_model* model READ get_model NOTIFY modelChanged)
+        [[nodiscard]] qt_contact_list_model* get_model() const;
         
       signals:
-        void addressbookChanged();
+        void modelChanged();
     };
 }
 

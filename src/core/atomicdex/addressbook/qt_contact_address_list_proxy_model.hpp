@@ -16,17 +16,15 @@
 
 #pragma once
 
-// Qt Headers
-#include <QSortFilterProxyModel> //> QSortFilterProxyModel
+#include <QSortFilterProxyModel>
 
-// Deps Headers
-#include <antara/gaming/ecs/system.manager.hpp> //> antara::gaming, ag::ecs::system_manager
+#include <antara/gaming/ecs/system.manager.hpp>
 
 namespace ag = antara::gaming;
 
 namespace atomic_dex
 {
-    class contact_proxy_model final : public QSortFilterProxyModel
+    class qt_contact_address_list_proxy_model final : public QSortFilterProxyModel
     {
         Q_OBJECT
         
@@ -36,23 +34,19 @@ namespace atomic_dex
         QString m_filter_type;
         
       public:
-        explicit contact_proxy_model(ag::ecs::system_manager& system_manager, QObject* parent);
-        ~contact_proxy_model() final = default;
+        explicit qt_contact_address_list_proxy_model(ag::ecs::system_manager& system_manager, QObject* parent);
         
         [[nodiscard]] const QString& get_search_expression() const;
         void                         set_search_expression(QString value);
         [[nodiscard]] const QString& get_filter_type() const;
         void                         set_filter_type(QString value);
         
-        // QSortFilterProxyModel Functions
         [[nodiscard]] bool filterAcceptsRow(int source_row, const QModelIndex& source_parent) const final;
         [[nodiscard]] bool lessThan(const QModelIndex& source_left, const QModelIndex& source_right) const final; // Sorts address entries by type then by key.
     
-        // QML API Properties
         Q_PROPERTY(QString searchExpression READ get_search_expression WRITE set_search_expression NOTIFY searchExpressionChanged)
         Q_PROPERTY(QString filterType READ get_filter_type WRITE set_filter_type NOTIFY filterTypeChanged)
         
-        // QML API Properties Signals
       signals:
         void searchExpressionChanged();
         void filterTypeChanged();

@@ -23,8 +23,8 @@
 #include <doctest/doctest.h>
 
 //! Project
-#include "atomicdex/addressbook/contact_model.hpp"
 #include "atomicdex/addressbook/addressbook_manager.hpp"
+#include "atomicdex/addressbook/qt_contact_address_list_model.hpp"
 
 #include "../atomic.dex.tests.hpp"
 
@@ -42,7 +42,7 @@ TEST_CASE("addressbook_contact_model")
         addressbook_manager.add_contact_category(contact_name, "QA");
         addressbook_manager.add_contact_category(contact_name, "CTO");
     }
-    atomic_dex::contact_model contact_model{g_context->system_manager(), contact_name};
+    atomic_dex::qt_contact_address_list_model contact_model{g_context->system_manager(), contact_name};
 
     THEN("get_categories should return 4 categories")
     {

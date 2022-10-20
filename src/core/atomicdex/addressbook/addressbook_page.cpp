@@ -16,61 +16,44 @@
 
 #include "addressbook_page.hpp"
 
-// Constructor(s)/destructor
 namespace atomic_dex
 {
     addressbook_page::addressbook_page(entt::registry& registry, ag::ecs::system_manager& system_manager, QObject* parent) :
-        QObject(parent), system(registry), m_system_manager(system_manager), m_model(new addressbook_model(system_manager, this))
+        QObject(parent), system(registry), m_system_manager(system_manager), m_model(new qt_contact_list_model(system_manager, this))
     {
-        m_system_manager.create_system<addressbook_manager>(m_system_manager);
         disable();
     }
-}
 
-// ag::ecs::pre_update_system implem
-namespace atomic_dex
-{
     void addressbook_page::update()
     {
     }
-}
 
-//! QML API
-namespace atomic_dex
-{
-    addressbook_model*
+    qt_contact_list_model*
     addressbook_page::get_model() const 
     {
         return m_model;
     }
 
-    void
-    addressbook_page::connect_signals() 
+    void addressbook_page::connect_signals()
     {
         SPDLOG_INFO("connecting addressbook signals");
         dispatcher_.sink<post_login>().connect<&addressbook_page::on_post_login>(*this);
     }
 
-    void
-    addressbook_page::disconnect_signals() 
+    void addressbook_page::disconnect_signals()
     {
         SPDLOG_INFO("disconnecting addressbook signals");
         dispatcher_.sink<post_login>().disconnect<&addressbook_page::on_post_login>(*this);
     }
 
-    void
-    addressbook_page::on_post_login([[maybe_unused]] const post_login& evt) 
+    void addressbook_page::on_post_login([[maybe_unused]] const post_login& evt)
     {
-        SPDLOG_INFO("post_login: filling addressbook from cfg");
-        m_system_manager.get_system<addressbook_manager>().load_configuration();
-        m_model->populate();
+        //m_model->populate();
     }
 
-    void
-    addressbook_page::clear() 
+    void addressbook_page::clear()
     {
-        SPDLOG_INFO("clear addressbook page");
-        m_system_manager.get_system<addressbook_manager>().save_configuration();
+        //m_system_manager.get_system<addressbook_manager>().save_configuration();
         m_model->clear();
     }
 } // namespace atomic_dex
