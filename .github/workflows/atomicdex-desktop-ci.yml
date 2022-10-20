@@ -370,7 +370,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: ${{ env.artifact_name_dmg }}
-          path: ${{ github.workspace }}/bundled/osx/${{ env.DEX_PROJECT_NAME }}.dmg
+          path: ${{ github.workspace }}/bundled-${{ matrix.type }}/osx/${{ env.DEX_PROJECT_NAME }}.dmg
           retention-days: 7
 
       - name: Upload artifacts (MacOS installer)
@@ -378,7 +378,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: ${{ env.artifact_name_installer }}
-          path: ${{ github.workspace }}/bundled/osx/${{ env.DEX_PROJECT_NAME }}_installer.7z
+          path: ${{ github.workspace }}/bundled-${{ matrix.type }}/osx/${{ env.DEX_PROJECT_NAME }}_installer.7z
           retention-days: 7
 
       - name: Upload env variable for artifacts (Windows)
