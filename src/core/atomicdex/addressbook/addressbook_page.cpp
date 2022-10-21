@@ -14,6 +14,8 @@
  *                                                                            *
  ******************************************************************************/
 
+#include "../managers/qt.wallet.manager.hpp"
+#include "addressbook_filesystem_loader.hpp"
 #include "addressbook_page.hpp"
 
 namespace atomic_dex
@@ -48,12 +50,20 @@ namespace atomic_dex
 
     void addressbook_page::on_post_login([[maybe_unused]] const post_login& evt)
     {
-        //m_model->populate();
+        m_model->populate(
+            load_addressbook_from_filesystem(
+                m_system_manager.get_system<qt_wallet_manager>()
+                    .get_wallet_default_name().toStdString()));
     }
 
     void addressbook_page::clear()
     {
-        //m_system_manager.get_system<addressbook_manager>().save_configuration();
+        std::vector<contact_dto> addressbook;
+
+        m_model->fill_std_vector(addressbook);
+        save_addressbook_to_filesystem(addressbook, 
+                                       m_system_manager.get_system<qt_wallet_manager>()
+                                           .get_wallet_default_name().toStdString());
         m_model->clear();
     }
 } // namespace atomic_dex
