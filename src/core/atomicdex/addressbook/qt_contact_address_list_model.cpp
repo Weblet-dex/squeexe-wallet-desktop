@@ -15,6 +15,7 @@
  ******************************************************************************/
 
 #include <utility>
+#include <unordered_map>
 
 #include <QJsonDocument>
 
@@ -86,7 +87,19 @@ namespace atomic_dex
     void qt_contact_address_list_model::populate(const std::vector<contact_dto::addresses_entry>& addresses_entries_vec)
     {
         beginResetModel();
-
+        for (const auto& addresses_entry : addresses_entries_vec)
+        {
+            for (const auto& address : addresses_entry.addresses)
+            {
+                element elem
+                {
+                    .type = QString::fromStdString(addresses_entry.type),
+                    .key = QString::fromStdString(address.first),
+                    .value = QString::fromStdString(address.second)
+                };
+                model_data.push_back(std::move(elem));
+            }
+        }
         endResetModel();
     }
 
@@ -99,7 +112,19 @@ namespace atomic_dex
 
     void qt_contact_address_list_model::fill_std_vector(std::vector<contact_dto::addresses_entry>& out)
     {
+        std::unordered_map<QString, std::vector<std::pair<std::string, std::string>>> model_data_by_address_type;
+        for (const auto& elem : model_data)
+        {
+            model_data_by_address_type.at(elem.type).emplace_back(elem.key.toStdString(), elem.value.toStdString());
+        }
+        for (auto&[type, data] : model_data_by_address_type)
+        {
+            contact_dto::addresses_entry addresses_entry;
 
+            addresses_entry.type = type.toStdString();
+            addresses_entry.addresses = std::move(data);
+            out.push_back(addresses_entry);
+        }
     }
 
     bool qt_contact_address_list_model::addAddressEntry(QString type, QString key, QString value)
