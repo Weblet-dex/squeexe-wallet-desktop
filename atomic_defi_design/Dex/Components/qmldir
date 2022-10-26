@@ -1,5 +1,6 @@
 module Dex.Components
 
+Arrow 1.0 Arrow.qml
 Button 1.0 DefaultButton.qml
 ComboBox 1.0 DefaultComboBox.qml
 ComboBoxWithSearchBar 1.0 ComboBoxWithSearchBar.qml
