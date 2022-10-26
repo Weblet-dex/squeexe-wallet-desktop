@@ -1,10 +1,8 @@
-// Qt Imports
 import QtQuick 2.15
 import QtQuick.Layouts 1.15
 
 import Qaterial 1.0 as Qaterial
 
-// Project Imports
 import Dex.Components 1.0 as Dex
 import "../Components" as Dex
 import Dex.Themes 1.0 as Dex

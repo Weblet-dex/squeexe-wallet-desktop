@@ -1,11 +1,10 @@
-// Qt Imports
 import QtQuick 2.15
 
-// Project Imports
 import "../Constants"           //> General.image_path
 import Dex.Themes 1.0 as Dex    //> CurrentTheme
 
-Item {
+Item 
+{
     property bool   up: true
     property alias  color: imgOverlay.color
 
