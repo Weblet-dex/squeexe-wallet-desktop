@@ -17,6 +17,7 @@
 #pragma once
 
 #include <vector>
+#include <unordered_map>
 
 namespace atomic_dex
 {
@@ -24,7 +25,7 @@ namespace atomic_dex
     {
         struct addresses_entry
         {
-            std::vector<std::pair<std::string, std::string>> addresses;
+            std::unordered_map<std::string, std::string> addresses;
 
             // Coin name or protocol name (e.g. BTC, KMD, Smart Chain, ERC-20)
             std::string type;

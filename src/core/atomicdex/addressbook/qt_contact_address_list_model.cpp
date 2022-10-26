@@ -112,10 +112,10 @@ namespace atomic_dex
 
     void qt_contact_address_list_model::fill_std_vector(std::vector<contact_dto::addresses_entry>& out)
     {
-        std::unordered_map<QString, std::vector<std::pair<std::string, std::string>>> model_data_by_address_type;
+        std::unordered_map<QString, std::unordered_map<std::string, std::string>> model_data_by_address_type;
         for (const auto& elem : model_data)
         {
-            model_data_by_address_type.at(elem.type).emplace_back(elem.key.toStdString(), elem.value.toStdString());
+            model_data_by_address_type.at(elem.type).emplace(elem.key.toStdString(), elem.value.toStdString());
         }
         for (auto&[type, data] : model_data_by_address_type)
         {
