@@ -118,8 +118,10 @@ namespace atomic_dex
         {
             contact_dto contact;
             contact.name = element.name.toStdString();
-            // TODO: parse tags
-            //contact.tags = element.tags;
+            for (const auto& element_tag : element.tags)
+            {
+                contact.tags.push_back(element_tag.toStdString());
+            }
             element.address_list_model->fill_std_vector(contact.addresses_entries);
             out.push_back(contact);
         }
