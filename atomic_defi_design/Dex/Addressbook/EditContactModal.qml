@@ -11,7 +11,7 @@ Dex.MultipageModal
 {
     id: root
 
-    property var contactModel: { "name": "", "categories": [] }
+    property var contactModel: { "name": "", "tags": [] }
 
     Dex.MultipageModalContent
     {
@@ -45,7 +45,7 @@ Dex.MultipageModal
             Dex.ListView
             {
                 visible: !addressList.contactAddAddressMode
-                model: contactModel.proxyFilter
+                model: contactModel.addressListModel.proxyModel
                 spacing: 10
                 height: contentHeight > 190 ? 190 : contentHeight
                 width: parent.width
@@ -73,7 +73,7 @@ Dex.MultipageModal
 
                         ColumnLayout
                         {
-                            property var coinInfo: Dex.API.app.portfolio_pg.global_cfg_mdl.get_coin_info(address_type)
+                            property var coinInfo: Dex.API.app.portfolio_pg.global_cfg_mdl.get_coin_info(type)
 
                             Row
                             {
@@ -83,13 +83,13 @@ Dex.MultipageModal
                                     anchors.verticalCenter: parent.verticalCenter
                                     width: 25
                                     height: 25
-                                    source: Dex.General.coinIcon(address_type.toLowerCase())
+                                    source: Dex.General.coinIcon(type.toLowerCase())
                                 }
 
                                 Dex.Text
                                 {
                                     anchors.verticalCenter: parent.verticalCenter
-                                    text: address_type
+                                    text: type
                                 }
 
                                 Dex.Text
@@ -108,7 +108,7 @@ Dex.MultipageModal
                                     height: 9
                                     color: "transparent"
                                     iconSource: Qaterial.Icons.close
-                                    onClicked: contactModel.removeAddressEntry(address_type, address_key)
+                                    onClicked: contactModel.removeAddressEntry(type, key)
                                 }
                             }
 
@@ -116,7 +116,7 @@ Dex.MultipageModal
                             {
                                 Layout.leftMargin: 36
                                 Layout.maximumWidth: 330
-                                text: address_key
+                                text: key
                                 font: Dex.DexTypo.caption
                                 elide: Text.ElideRight
                             }
@@ -125,7 +125,7 @@ Dex.MultipageModal
                             {
                                 Layout.leftMargin: 36
                                 Layout.maximumWidth: 330
-                                text: address_value
+                                text: value
                                 font: Dex.DexTypo.caption
                                 elide: Text.ElideRight
 
@@ -141,7 +141,7 @@ Dex.MultipageModal
 
                                     onClicked:
                                     {
-                                        Dex.API.qt_utilities.copy_text_to_clipboard(address_value)
+                                        Dex.API.qt_utilities.copy_text_to_clipboard(value)
                                         app.notifyCopy(qsTr("Address Book"), qsTr("address copied to clipboard"))
                                     }
                                 }
@@ -163,9 +163,9 @@ Dex.MultipageModal
                                 onClicked:
                                 {
                                     addAddressForm.editionMode = true
-                                    addAddressForm.addressType = address_type
-                                    addAddressForm.addressKey = address_key
-                                    addAddressForm.addressValue = address_value
+                                    addAddressForm.addressType = type
+                                    addAddressForm.addressKey = key
+                                    addAddressForm.addressValue = value
                                     addressList.contactAddAddressMode = true
                                 }
                             }
@@ -180,7 +180,7 @@ Dex.MultipageModal
                                 iconSource: Qaterial.Icons.sendOutline
                                 onClicked:
                                 {
-                                    trySend(address_value, address_type)
+                                    trySend(value, type)
                                 }
                             }
                         }
@@ -222,7 +222,7 @@ Dex.MultipageModal
             Dex.ListView
             {
                 width: parent.width
-                model: contactModel.categories
+                model: contactModel.tags
                 orientation: Qt.Horizontal
                 spacing: 6
                 delegate: Dex.MouseArea
@@ -303,7 +303,6 @@ Dex.MultipageModal
                 onClicked:
                 {
                     contactModel.name = contactNameInput.field.text
-                    contactModel.save()
                     root.close()
                 }
             }

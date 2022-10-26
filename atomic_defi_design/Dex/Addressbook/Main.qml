@@ -70,8 +70,8 @@ Item
                     textField.forceFocus: true
                     textField.placeholderText: qsTr("Search contact")
 
-                    textField.onTextChanged: Dex.API.app.addressbookPg.model.proxy.searchExp = textField.text
-                    Component.onDestruction: Dex.API.app.addressbookPg.model.proxy.searchExp = ""
+                    textField.onTextChanged: Dex.API.app.addressbookPg.model.proxyModel.searchExp = textField.text
+                    Component.onDestruction: Dex.API.app.addressbookPg.model.proxyModel.searchExp = ""
                 }
             }
 
@@ -136,7 +136,7 @@ Item
             Layout.fillWidth: true
             Layout.fillHeight: true
 
-            model: Dex.API.app.addressbookPg.model.proxy
+            model: Dex.API.app.addressbookPg.model.proxyModel
 
             delegate: Dex.Expandable
             {
@@ -171,7 +171,7 @@ Item
                         Dex.Text
                         {
                             anchors.verticalCenter: parent.verticalCenter
-                            text: modelData.name
+                            text: name
                         }
 
                         Dex.Arrow
@@ -190,7 +190,7 @@ Item
 
                         Repeater
                         {
-                            model: modelData.categories.slice(0, 6)
+                            model: tags.slice(0, 6)
 
                             delegate: Dex.Rectangle
                             {
@@ -236,7 +236,7 @@ Item
                             text: qsTr("Edit")
                             onClicked:
                             {
-                                editContactLoader.contactModel = modelData
+                                editContactLoader.contactModel = model
                                 editContactLoader.open()
                             }
                         }
@@ -253,7 +253,7 @@ Item
                             {
                                 id: removeContactPopup
 
-                                contactName: modelData.name
+                                contactName: name
                             }
                         }
                     }
@@ -270,14 +270,14 @@ Item
 
                         visible: addressList.model.rowCount() > 0
                         x: 30
-                        model: modelData.proxyFilter
+                        model: addressListModel.proxyModel
                         width: parent.width - 40
                         implicitHeight: contentHeight > 240 ? 240 : contentHeight
                         spacing: 18
 
                         delegate: Item
                         {
-                            property var coinInfo: Dex.API.app.portfolio_pg.global_cfg_mdl.get_coin_info(address_type)
+                            property var coinInfo: Dex.API.app.portfolio_pg.global_cfg_mdl.get_coin_info(type)
 
                             width: addressList.width
                             height: 30
@@ -291,13 +291,13 @@ Item
                                     anchors.verticalCenter: parent.verticalCenter
                                     width: 25
                                     height: 25
-                                    source: Dex.General.coinIcon(address_type.toLowerCase())
+                                    source: Dex.General.coinIcon(type.toLowerCase())
                                 }
 
                                 Dex.Text
                                 {
                                     anchors.verticalCenter: parent.verticalCenter
-                                    text: address_type
+                                    text: type
                                 }
 
                                 Dex.Text
@@ -317,7 +317,7 @@ Item
                                 Dex.Text
                                 {
                                     anchors.verticalCenter: parent.verticalCenter
-                                    text: "%1 : %2".arg(address_key).arg(address_value)
+                                    text: "%1 : %2".arg(key).arg(value)
                                 }
 
 
@@ -329,7 +329,7 @@ Item
                                     color: "transparent"
                                     onClicked:
                                     {
-                                        Dex.API.qt_utilities.copy_text_to_clipboard(address_value)
+                                        Dex.API.qt_utilities.copy_text_to_clipboard(value)
                                         app.notifyCopy(qsTr("Address Book"), qsTr("address copied to clipboard"))
                                     }
                                 }
@@ -340,7 +340,7 @@ Item
                                     height: 25
                                     iconSource: Qaterial.Icons.sendOutline
                                     color: "transparent"
-                                    onClicked: trySend(address_value, address_type)
+                                    onClicked: trySend(value, type)
                                 }
                             }
                         }
