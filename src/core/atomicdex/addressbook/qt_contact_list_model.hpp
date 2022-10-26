@@ -56,9 +56,10 @@ namespace atomic_dex
         ~qt_contact_list_model();
         
         // `QAbstractListModel` functions
-        [[nodiscard]] QVariant               data(const QModelIndex& index, int role) const final;
-        [[nodiscard]] int                    rowCount(const QModelIndex& parent = QModelIndex()) const final;
-        [[nodiscard]] QHash<int, QByteArray> roleNames() const final;
+        [[nodiscard]] QVariant                data(const QModelIndex& index, int role) const final;
+        bool                                  setData(const QModelIndex &index, const QVariant &value, int role) final;
+        [[nodiscard]] int                     rowCount(const QModelIndex& parent = QModelIndex()) const final;
+        [[nodiscard]] QHash<int, QByteArray>  roleNames() const final;
 
         // Fills model data `model_data` from a container of type `std::vector<contact_dto>`.
         void populate(const std::vector<contact_dto>& contact_vec);

@@ -66,8 +66,25 @@ namespace atomic_dex
                 return {};
         }
     }
+
+    bool qt_contact_list_model::setData(const QModelIndex& index, const QVariant& value, int role)
+    {
+        element& item = model_data[index.row()];
+
+        switch (static_cast<roles>(role))
+        {
+            case NameRole:
+                item.name = value.toString();
+                break;
+            default:
+                return false;
+        }
+
+        emit dataChanged(index, index, {role});
+        return true;
+    }
     
-    QHash<int, QByteArray> atomic_dex::qt_contact_list_model::roleNames() const
+    QHash<int, QByteArray> qt_contact_list_model::roleNames() const
     {
         return
         {
