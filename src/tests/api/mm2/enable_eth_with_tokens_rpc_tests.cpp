@@ -12,7 +12,7 @@ TEST_CASE("enable_eth_with_tokens_request_rpc serialization")
         .ticker = "ETH",
         .nodes =
         {
-            .servers = { { .url = "http://eth1.cipig.net:8555" }, { .url = "http://eth2.cipig.net:8555" }, { .url = "http://eth3.cipig.net:8555" } }
+            { .url = "http://eth1.cipig.net:8555" }, { .url = "http://eth2.cipig.net:8555" }, { .url = "http://eth3.cipig.net:8555" }
         },
         .tx_history = true,
         .erc20_tokens_requests = { { .ticker = "BAT-ERC20", .required_confirmations = 4 } },
