@@ -597,7 +597,7 @@ QtObject {
         if (ticker === "QTUM") return !General.isParentCoinNeeded("QTUM", "QRC-20")
         if (General.isZhtlc(ticker))
         {
-            let progress = General.zhtlcActivationProgress(current_ticker_infos.activation_status, ticker)
+            let progress = General.zhtlcActivationProgress(API.app.wallet_pg.ticker_infos.activation_status, ticker)
             if (progress != 100) return false
         }
 

@@ -198,6 +198,7 @@ namespace
             ofs_custom.write(QString::fromStdString(custom_cfg_data.dump()).toUtf8());
             ofs_custom.close();
         }
+        SPDLOG_INFO("Coins file updated to set {}: {} | tickers: [{}]", field_name, status,  fmt::join(tickers, ", "));
     }
 }
 
@@ -1213,7 +1214,7 @@ namespace atomic_dex
                 .is_testnet           = coin_info.is_testnet.value_or(false),
                 .with_tx_history      = false}; // Tx history not yet ready for ZHTLC
 
-            nlohmann::json j = mm2::template_request("init_z_coin", true);
+            nlohmann::json j = mm2::template_request("task::enable_z_coin::init", true);
             mm2::to_json(j, request);
             nlohmann::json batch = nlohmann::json::array();
             batch.push_back(j);
@@ -1273,9 +1274,7 @@ namespace atomic_dex
                                                 nlohmann::json     z_batch_array = nlohmann::json::array();
                                                 t_init_z_coin_status_request z_request{.task_id = task_id};
 
-                                                SPDLOG_DEBUG("{} init_z_coin Task ID: {}", tickers[idx], task_id);
-
-                                                nlohmann::json j = mm2::template_request("init_z_coin_status", true);
+                                                nlohmann::json j = mm2::template_request("task::enable_z_coin::status", true);
                                                 mm2::to_json(j, z_request);
                                                 z_batch_array.push_back(j);
                                                 std::string last_event = "none";
@@ -1289,7 +1288,20 @@ namespace atomic_dex
 
                                                     std::string status = z_answers[0].at("result").at("status").get<std::string>();
 
-                                                    if (status == "Ready")
+                                                    if (z_answers[0].contains("error"))
+                                                    {
+                                                        if (z_answers[0].at("error_type").get<std::string>() == "NoSuchTask")
+                                                        {
+                                                            event = "Assumed active";
+                                                            std::unique_lock lock(m_coin_cfg_mutex);
+                                                            m_coins_informations[tickers[idx]].currently_enabled = true;
+
+                                                            dispatcher_.trigger<coin_fully_initialized>(coin_fully_initialized{.tickers = {tickers[idx]}});
+                                                            this->m_nb_update_required += 1;
+                                                            break;
+                                                        }
+                                                    }
+                                                    else if (status == "Ok")
                                                     {
                                                         m_coins_informations[tickers[idx]].activation_status = z_answers[0];
                                                         if (z_answers[0].at("result").at("details").contains("error"))
@@ -1368,7 +1380,7 @@ namespace atomic_dex
                                                     if (z_error[0].at("result").at("details").contains("error"))
                                                     {
                                                         std::string zhtlc_error   = z_error[0].at("result").at("details").at("error").get<std::string>();
-                                                        SPDLOG_DEBUG("Error enabling {}: {} ", tickers[idx], zhtlc_error);
+                                                        SPDLOG_ERROR("Error enabling {}: {} ", tickers[idx], zhtlc_error);
                                                         SPDLOG_DEBUG(
                                                             "Removing zhtlc from enabling, idx: {}, tickers size: {}, answers size: {}",
                                                             tickers[idx], idx, tickers.size(), answers.size()
@@ -1392,7 +1404,7 @@ namespace atomic_dex
                                                         // We could save this ticker in a list to try `init_z_coin_status` again on it periodically until complete.
 
                                                         SPDLOG_DEBUG("Exited zhtlc enable loop after 1000 tries");
-                                                        SPDLOG_DEBUG(
+                                                        SPDLOG_ERROR(
                                                             "Bad answer for zhtlc_error: [{}] -> idx: {}, tickers size: {}, answers size: {}", tickers[idx], idx,
                                                             tickers.size(), answers.size()
                                                         );

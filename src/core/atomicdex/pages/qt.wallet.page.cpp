@@ -518,7 +518,7 @@ namespace atomic_dex
                     .amount    = json_fees.at("fees_amount").get<std::string>()
                 };
             }
-            nlohmann::json json_data = mm2::template_request("init_withdraw", true);
+            nlohmann::json json_data = mm2::template_request("task::withdraw::init", true);
 
             mm2::to_json(json_data, init_withdraw_req);
 
@@ -544,7 +544,6 @@ namespace atomic_dex
                     {
                         auto task_id = answers[0].at("result").at("task_id").get<std::int8_t>();
                         {
-                            SPDLOG_DEBUG("Task ID: {}", task_id);
                             using namespace std::chrono_literals;
                             auto&              mm2_system = m_system_manager.get_system<mm2_service>();
                             static std::size_t z_nb_try      = 1;
@@ -553,7 +552,7 @@ namespace atomic_dex
                             QString            z_status;
                             t_withdraw_status_request z_request{.task_id = task_id};
 
-                            nlohmann::json j = mm2::template_request("withdraw_status", true);
+                            nlohmann::json j = mm2::template_request("task::withdraw::status", true);
                             mm2::to_json(j, z_request);
                             z_batch_array.push_back(j);
 
@@ -565,7 +564,7 @@ namespace atomic_dex
                                 z_status = QString::fromStdString(z_answers[0].at("result").at("status").get<std::string>());
 
                                 SPDLOG_DEBUG("[{}/120] Waiting for {} withdraw status [{}]...", z_nb_try, ticker, z_status.toUtf8().constData());
-                                if (z_status == "Ready")
+                                if (z_status == "Ok")
                                 {
                                     break;
                                 }
@@ -596,9 +595,9 @@ namespace atomic_dex
                                 }
                                 else
                                 {
-                                    auto           withdraw_answer      = mm2::rpc_process_answer_batch<t_withdraw_status_answer>(z_error[0], "withdraw_status");
+                                    auto           withdraw_answer      = mm2::rpc_process_answer_batch<t_withdraw_status_answer>(z_error[0], "task::withdraw::status");
                                     nlohmann::json j_out                = nlohmann::json::object();
-                                    j_out["withdraw_answer"]            = z_error[0]["result"]["details"]["result"];
+                                    j_out["withdraw_answer"]            = z_error[0]["result"]["details"];
                                     j_out.at("withdraw_answer")["date"] = withdraw_answer.result.value().timestamp_as_date;
 
                                     // Add total amount in fiat currency.
