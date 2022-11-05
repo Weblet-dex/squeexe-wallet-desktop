@@ -493,7 +493,7 @@ namespace atomic_dex
     {
         enable_coins(t_coins{coin_config});
     }
-    
+
     void mm2_service::enable_coins(const std::vector<std::string>& tickers)
     {
         t_coins coins{};
@@ -588,7 +588,7 @@ namespace atomic_dex
                     std::size_t                     idx = 0;
                     t_coins                         activated_coins;
                     t_coins                         failed_coins;
-                    
+
                     for (auto&& answer : answers)
                     {
                         auto [res, error] = this->process_batch_enable_answer(answer);
@@ -641,7 +641,7 @@ namespace atomic_dex
                 SPDLOG_ERROR(error.what());
             }
         };
-        
+
         for (const auto& coin_config : coins)
         {
             t_enable_request request
@@ -686,7 +686,7 @@ namespace atomic_dex
                     std::size_t                     idx = 0;
                     t_coins                         activated_coins;
                     t_coins                         failed_coins;
-                    
+
                     for (auto&& answer : answers)
                     {
                         auto [res, error] = this->process_batch_enable_answer(answer);
@@ -984,11 +984,11 @@ namespace atomic_dex
     {
         const auto& answer = rpc.result.value();
         mm2::balance_answer balance_answer;
-        
+
         balance_answer.address  = answer.balances.begin()->first;
         balance_answer.balance  = answer.balances.begin()->second.spendable;
         balance_answer.coin     = answer.platform_coin;
-        
+
         {
             std::unique_lock lock(m_balance_mutex);
             m_balance_informations[balance_answer.coin] = std::move(balance_answer);
@@ -1000,7 +1000,7 @@ namespace atomic_dex
         const auto& answer = rpc.result.value();
         {
             mm2::balance_answer balance_answer;
-            
+
             balance_answer.coin = rpc.request.ticker;
             balance_answer.balance = answer.bch_addresses_infos.begin()->second.balances.spendable;
             balance_answer.address = answer.bch_addresses_infos.begin()->first;
@@ -1015,13 +1015,47 @@ namespace atomic_dex
             {
                 continue;
             }
-            
+
             mm2::balance_answer balance_answer;
-        
+
             balance_answer.coin = data.balances.begin()->first;
             balance_answer.address = address;
             balance_answer.balance = data.balances.begin()->second.spendable;
-        
+
+            {
+                std::unique_lock lock(m_balance_mutex);
+                m_balance_informations[balance_answer.coin] = std::move(balance_answer);
+            }
+        }
+    }
+
+    void mm2_service::process_balance_answer(const mm2::enable_eth_with_tokens_rpc& rpc)
+    {
+        const auto& answer = rpc.result.value();
+        {
+            mm2::balance_answer balance_answer;
+
+            balance_answer.coin = rpc.request.ticker;
+            balance_answer.balance = answer.eth_addresses_infos.begin()->second.balances.spendable;
+            balance_answer.address = answer.eth_addresses_infos.begin()->first;
+            {
+                std::unique_lock lock(m_balance_mutex);
+                m_balance_informations[balance_answer.coin] = std::move(balance_answer);
+            }
+        }
+        for (auto [address, data] : answer.erc20_addresses_infos)
+        {
+            if (data.balances.empty())
+            {
+                continue;
+            }
+
+            mm2::balance_answer balance_answer;
+
+            balance_answer.coin = data.balances.begin()->first;
+            balance_answer.address = address;
+            balance_answer.balance = data.balances.begin()->second.spendable;
+
             {
                 std::unique_lock lock(m_balance_mutex);
                 m_balance_informations[balance_answer.coin] = std::move(balance_answer);
@@ -1499,12 +1533,12 @@ namespace atomic_dex
         }
         return m_coins_informations.at(ticker);
     }
-    
+
     bool mm2_service::is_coin_enabled(const std::string& ticker) const
     {
         return m_coins_informations[ticker].currently_enabled;
     }
-    
+
     bool mm2_service::has_coin(const std::string& ticker) const
     {
         return m_coins_informations.contains(ticker);

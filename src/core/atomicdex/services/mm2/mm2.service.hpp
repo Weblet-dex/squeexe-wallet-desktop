@@ -36,6 +36,7 @@
 #include "atomicdex/api/mm2/rpc.min.volume.hpp"
 #include "atomicdex/api/mm2/rpc.orderbook.hpp"
 #include "atomicdex/api/mm2/enable_bch_with_tokens_rpc.hpp"
+#include "atomicdex/api/mm2/enable_eth_with_tokens_rpc.hpp"
 #include "atomicdex/api/mm2/enable_slp_rpc.hpp"
 #include "atomicdex/config/raw.mm2.coins.cfg.hpp"
 #include "atomicdex/constants/dex.constants.hpp"
@@ -183,7 +184,8 @@ namespace atomic_dex
        void enable_zhtlc(const t_coins& coins);
        
        // Balances processing functions
-       void process_balance_answer(const mm2::enable_bch_with_tokens_rpc& rpc);    // Called after enabling SLP coins along tBCH/BCH.
+       void process_balance_answer(const mm2::enable_bch_with_tokens_rpc& rpc);    // Called after enabling SLP coins alongside tBCH/BCH.
+       void process_balance_answer(const mm2::enable_eth_with_tokens_rpc& rpc);    // Called after enabling ERC20 tokens alongside ETH.
        void process_balance_answer(const mm2::enable_slp_rpc& rpc);                // Called after enabling an SLP coin.
 
      public:
