@@ -1473,7 +1473,7 @@ namespace atomic_dex
             {
                 if (coin_info.activation_status.at("result").contains("status"))
                 {
-                    if (coin_info.activation_status.at("result").at("status") == "Ready")
+                    if (coin_info.activation_status.at("result").at("status") == "Ok")
                     {
                         if (coin_info.activation_status.at("result").contains("details"))
                         {
