@@ -18,7 +18,6 @@ TEST_CASE("enable_eth_with_tokens_request_rpc serialization")
         .erc20_tokens_requests = { { .ticker = "BAT-ERC20", .required_confirmations = 4 } },
         .required_confirmations = 5,
         .requires_notarization = false,
-        .utxo_merge_params = enable_eth_with_tokens_request_rpc::utxo_merge_params_t{ .merge_at = 50, .check_every = 10, .max_merge_at_once = 25 }
     };
     
     nlohmann::to_json(result, data);
@@ -30,9 +29,6 @@ TEST_CASE("enable_eth_with_tokens_request_rpc serialization")
     CHECK_EQ(result["erc20_tokens_requests"][0]["required_confirmations"], 4);
     CHECK_EQ(result["required_confirmations"], 5);
     CHECK_FALSE(result["requires_notarization"]);
-    CHECK_EQ(result["utxo_merge_params"]["merge_at"], 50);
-    CHECK_EQ(result["utxo_merge_params"]["check_every"], 10);
-    CHECK_EQ(result["utxo_merge_params"]["max_merge_at_once"], 25);
 }
 
 TEST_CASE("enable_eth_with_tokens_result_rpc deserialization")
