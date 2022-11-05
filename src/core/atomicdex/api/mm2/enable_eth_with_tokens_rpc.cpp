@@ -15,8 +15,6 @@ namespace atomic_dex::mm2
             j["required_confirmations"] = in.required_confirmations.value();
         if (in.requires_notarization.has_value())
             j["requires_notarization"] = in.requires_notarization.value();
-        if (in.utxo_merge_params.has_value())
-            j["utxo_merge_params"] = in.utxo_merge_params.value();
     }
     
     void to_json(nlohmann::json& j, const enable_eth_with_tokens_request_rpc::erc20_token_request_t& in)
@@ -24,13 +22,6 @@ namespace atomic_dex::mm2
         j["ticker"] = in.ticker;
         if (in.required_confirmations)
             j["required_confirmations"] = in.required_confirmations.value();
-    }
-    
-    void to_json(nlohmann::json& j, const enable_eth_with_tokens_request_rpc::utxo_merge_params_t& in)
-    {
-        j["merge_at"] = in.merge_at;
-        j["check_every"] = in.check_every;
-        j["max_merge_at_once"] = in.max_merge_at_once;
     }
 
     void from_json(const nlohmann::json& json, enable_eth_with_tokens_result_rpc& out)
