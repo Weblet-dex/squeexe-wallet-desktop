@@ -1500,6 +1500,8 @@ namespace atomic_dex
 
     bool mm2_service::is_zhtlc_coin_ready(const std::string coin) const
     {
+        //! TODO: We could call this during exit to ensure no zhtlc coins are midway thru activation
+        //!       If not, we should call init_z_coin_cancel
         const auto coin_info       = get_coin_info(coin);
         if (coin_info.is_zhtlc_family)
         {
@@ -2139,6 +2141,7 @@ namespace atomic_dex
     void
     mm2_service::on_zhtlc_leave_enabling([[maybe_unused]] const zhtlc_leave_enabling& evt)
     {
+        //! TODO: If two coins are enabling at the same time, this might be incorrect. We should tie it to the coin.
         SPDLOG_DEBUG("{} l{} f[{}]", __FUNCTION__, __LINE__, fs::path(__FILE__).filename().string());
 
         m_zhtlc_enable_thread_active = false;
@@ -2386,6 +2389,7 @@ namespace atomic_dex
     void
     mm2_service::add_new_coin(const nlohmann::json& coin_cfg_json, const nlohmann::json& raw_coin_cfg_json)
     {
+        //! TODO: if app is exiting, we need to ensure there is no file write in progress
         //! Normal cfg part
         SPDLOG_DEBUG("[{}], [{}]", coin_cfg_json.dump(4), raw_coin_cfg_json.dump(4));
         if (not coin_cfg_json.empty() && not is_this_ticker_present_in_normal_cfg(coin_cfg_json.begin().key()))
