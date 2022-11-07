@@ -175,7 +175,7 @@ namespace atomic_dex
      private:
        void update_coin_active(const std::vector<std::string>& tickers, bool status);
        void enable_erc20_coin(coin_config coin_config);
-       void enable_erc20_coins(const t_coins& coins);
+       void enable_erc20_coins(const t_coins& coins, CoinTypeGadget::CoinTypeEnum protocol, bool testnet);
        void enable_erc_family_coin(const coin_config& coin_config);
        void enable_erc_family_coins(const t_coins& coins);
        void enable_utxo_qrc20_coin(coin_config coin_config);

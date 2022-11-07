@@ -522,6 +522,9 @@ namespace atomic_dex
     {
         t_coins other_coins;
         t_coins erc20_coins;
+        t_coins erc20_testnet_coins;
+        t_coins bep20_coins;
+        t_coins bep20_testnet_coins;
         t_coins erc_family_coins;
         t_coins slp_coins;
         t_coins slp_testnet_coins;
@@ -550,9 +553,30 @@ namespace atomic_dex
             }
             else if (coin_config.is_erc_family)
             {
-                if (coin_config.coin_type == CoinType::ERC20)
+                if (coin_config.coin_type == CoinType::ERC20 || coin_config.coin_type == CoinType::BEP20)
                 {
-                    erc20_coins.push_back(coin_config);
+                    if (coin_config.is_testnet.value_or(false))
+                    {
+                        if (coin_config.coin_type == CoinType::ERC20)
+                        {
+                            erc20_testnet_coins.push_back(coin_config);
+                        }
+                        else if (coin_config.coin_type == CoinType::BEP20)
+                        {
+                            bep20_testnet_coins.push_back(coin_config);
+                        }
+                    }
+                    else
+                    {
+                        if (coin_config.coin_type == CoinType::ERC20)
+                        {
+                            erc20_coins.push_back(coin_config);
+                        }
+                        else if (coin_config.coin_type == CoinType::BEP20)
+                        {
+                            bep20_coins.push_back(coin_config);
+                        }
+                    }
                 }
                 else
                 {
@@ -570,7 +594,19 @@ namespace atomic_dex
         }
         if (erc20_coins.size() > 0)
         {
-            enable_erc20_coins(erc20_coins);
+            enable_erc20_coins(erc20_coins, CoinType::ERC20, false);
+        }
+        if (erc20_testnet_coins.size() > 0)
+        {
+            enable_erc20_coins(erc20_testnet_coins, CoinType::ERC20, true);
+        }
+        if (bep20_coins.size() > 0)
+        {
+            enable_erc20_coins(bep20_coins, CoinType::BEP20, false);
+        }
+        if (bep20_coins.size() > 0)
+        {
+            enable_erc20_coins(bep20_testnet_coins, CoinType::BEP20, true);
         }
         if (erc_family_coins.size() > 0)
         {
@@ -592,12 +628,33 @@ namespace atomic_dex
 
     void mm2_service::enable_erc20_coin(coin_config coin_config)
     {
-        enable_erc20_coins(t_coins{std::move(coin_config)});
+        enable_erc20_coins(t_coins{std::move(coin_config)}, coin_config.coin_type, coin_config.is_testnet.value_or(false));
     }
 
-    void mm2_service::enable_erc20_coins(const t_coins& coins)
+    void mm2_service::enable_erc20_coins(const t_coins& coins, CoinTypeGadget::CoinTypeEnum protocol, bool testnet)
     {
-        constexpr auto eth_ticker = "ETH";
+        if (protocol == CoinType::ERC20)
+        {
+            if (testnet)
+            {
+                constexpr auto parent_ticker = "ETH-ARB";
+            }
+            else
+            {
+                constexpr auto parent_ticker = "ETH";
+            }
+        }
+        else if (protocol == CoinType::BEP20)
+        {
+            if (testnet)
+            {
+                constexpr auto parent_ticker = "tBNB";
+            }
+            else
+            {
+                constexpr auto parent_ticker = "BNB";
+            }
+        }
         auto callback = [this]<typename RpcRequest>(RpcRequest rpc)
         {
             if (rpc.error)
@@ -649,16 +706,16 @@ namespace atomic_dex
             }
         };
 
-        if (!has_coin(eth_ticker))
+        if (!has_coin(parent_ticker))
         {
             static constexpr auto error = "{} is not present in the config. Cannot enable ERC20 tokens.";
             
             SPDLOG_ERROR(error);
-            this->dispatcher_.trigger<enabling_coin_failed>(eth_ticker, fmt::format(error, eth_ticker));
+            this->dispatcher_.trigger<enabling_coin_failed>(parent_ticker, fmt::format(error, parent_ticker));
             return;
         }
         
-        auto eth_info = get_coin_info(eth_ticker);
+        auto eth_info = get_coin_info(parent_ticker);
         
         if (eth_info.currently_enabled)
         {
