@@ -231,6 +231,7 @@ namespace atomic_dex
             std::vector<std::string> to_init;
             while (not m_portfolio_queue.empty())
             {
+                bool add_to_init(true);
                 const char* ticker_cstr = nullptr;
                 m_portfolio_queue.pop(ticker_cstr);
                 std::string ticker(ticker_cstr);
@@ -242,7 +243,18 @@ namespace atomic_dex
                 {
                     this->m_secondary_coin_fully_enabled = true;
                 }
-                to_init.push_back(ticker);
+                //! TODO: figure out why sometimes ZHTLC coins end up in here twice.
+
+                if (std::find(to_init.begin(), to_init.end(), ticker) != to_init.end()) {
+                    SPDLOG_INFO("Ticker {} is already in vector", ticker);
+                    add_to_init = false;
+                }
+                else {
+                    SPDLOG_INFO("Ticker {} is not already in vector", ticker);
+                }
+                if (add_to_init) {
+                    to_init.push_back(ticker);
+                }
                 std::free((void*)ticker_cstr);
             }
 
