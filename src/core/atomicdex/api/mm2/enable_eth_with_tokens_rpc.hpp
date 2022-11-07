@@ -1,9 +1,26 @@
+/******************************************************************************
+ * Copyright © 2013-2021 The Komodo Platform Developers.                      *
+ *                                                                            *
+ * See the AUTHORS, DEVELOPER-AGREEMENT and LICENSE files at                  *
+ * the top-level directory of this distribution for the individual copyright  *
+ * holder information and the developer policies on copyright and licensing.  *
+ *                                                                            *
+ * Unless otherwise agreed in a custom licensing agreement, no part of the    *
+ * Komodo Platform software, including this file may be copied, modified,     *
+ * propagated or distributed except according to the terms contained in the   *
+ * LICENSE file                                                               *
+ *                                                                            *
+ * Removal or modification of this copyright notice is prohibited.            *
+ *                                                                            *
+ ******************************************************************************/
+
 #pragma once
 
 #include <vector>
 
 #include "rpc.hpp"
 #include "balance_info.hpp"
+#include "atomicdex/config/enable.cfg.hpp"
 
 namespace atomic_dex::mm2
 {
@@ -19,22 +36,18 @@ namespace atomic_dex::mm2
                 std::string         ticker;
                 std::optional<int>  required_confirmations;
             };
-            struct nodes_t
-            {
-                std::string                     url;
-                std::optional<bool>             gui_auth{false};
-            };
 
             std::string                         ticker;
             bool                                tx_history{true};
             std::optional<int>                  required_confirmations;
             std::optional<bool>                 requires_notarization;
-            std::vector<nodes_t>                nodes;
+            std::vector<node>                   nodes;
             std::vector<erc20_token_request_t>  erc20_tokens_requests;
-            std::string                   erc_swap_contract_address{"0x24ABE4c71FC658C91313b6552cd40cD808b3Ea80"};
-            std::string                   erc_testnet_swap_contract_address{"0x6b5A52217006B965BB190864D62dc3d270F7AaFD"};
-            std::string                   erc_fallback_swap_contract_address{"0x8500AFc0bc5214728082163326C2FF0C73f4a871"};
-            std::string                   erc_testnet_fallback_swap_contract_address{"0x7Bc1bBDD6A0a722fC9bffC49c921B685ECB84b94"};
+            std::string                         gas_station_url{"https://ethgasstation.info/json/ethgasAPI.json"};
+            std::string                         erc_swap_contract_address{"0x24ABE4c71FC658C91313b6552cd40cD808b3Ea80"};
+            std::string                         erc_testnet_swap_contract_address{"0x6b5A52217006B965BB190864D62dc3d270F7AaFD"};
+            std::string                         erc_fallback_swap_contract_address{"0x8500AFc0bc5214728082163326C2FF0C73f4a871"};
+            std::string                         erc_testnet_fallback_swap_contract_address{"0x7Bc1bBDD6A0a722fC9bffC49c921B685ECB84b94"};
         };
         
         struct expected_result_type
@@ -70,7 +83,6 @@ namespace atomic_dex::mm2
     using enable_eth_with_tokens_error_rpc      = enable_eth_with_tokens_rpc::expected_error_type;
 
     void to_json(nlohmann::json& j, const enable_eth_with_tokens_request_rpc& in);
-    void to_json(nlohmann::json& j, const enable_eth_with_tokens_request_rpc::nodes_t& in);
     void to_json(nlohmann::json& j, const enable_eth_with_tokens_request_rpc::erc20_token_request_t& in);
     void from_json(const nlohmann::json& json, enable_eth_with_tokens_result_rpc& out);
     void from_json(const nlohmann::json& json, enable_eth_with_tokens_result_rpc::derivation_method_t& out);

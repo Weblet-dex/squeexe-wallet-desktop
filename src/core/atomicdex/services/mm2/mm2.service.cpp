@@ -132,6 +132,12 @@ namespace
         {
             return;
         }
+        if (tickers.empty())
+        {
+            // TODO: Why is this even being triggered when the list is empty?
+            SPDLOG_DEBUG("Tickers list empty, skipping update_coin_status");
+            return;
+        }
         SPDLOG_INFO("Update coins status to: {} - field_name: {} - tickers: {}", status, field_name, fmt::join(tickers, ", "));
         fs::path    cfg_path               = atomic_dex::utils::get_atomic_dex_config_folder();
         std::string filename               = std::string(atomic_dex::get_raw_version()) + "-coins." + wallet_name + ".json";
@@ -235,9 +241,12 @@ namespace atomic_dex
                             config_json_data.at(key)["active"] = true;
                         }
                     }
-
+                    SPDLOG_INFO("Standard config ok for after iterate thru config");
                     auto   res = config_json_data.get<std::unordered_map<std::string, atomic_dex::coin_config>>();
+                    SPDLOG_INFO("Standard config ok after auto res");
+
                     return res;
+                    SPDLOG_INFO("Standard config ok after return?");
                 }
                 catch (const std::exception& error)
                 {
@@ -512,6 +521,7 @@ namespace atomic_dex
     void mm2_service::enable_coins(const t_coins& coins)
     {
         t_coins other_coins;
+        t_coins erc20_coins;
         t_coins erc_family_coins;
         t_coins slp_coins;
         t_coins slp_testnet_coins;
@@ -540,7 +550,14 @@ namespace atomic_dex
             }
             else if (coin_config.is_erc_family)
             {
-                erc_family_coins.push_back(coin_config);
+                if (coin_config.coin_type == CoinType::ERC20)
+                {
+                    erc20_coins.push_back(coin_config);
+                }
+                else
+                {
+                    erc_family_coins.push_back(coin_config);
+                }
             }
             else
             {
@@ -549,23 +566,134 @@ namespace atomic_dex
         }
         if (other_coins.size() > 0)
         {
+            SPDLOG_INFO("Skipping QRC");
             enable_utxo_qrc20_coins(other_coins);
+        }
+        if (erc20_coins.size() > 0)
+        {
+            SPDLOG_INFO("Skipping ERC20");
+            enable_erc20_coins(erc20_coins);
         }
         if (erc_family_coins.size() > 0)
         {
+            SPDLOG_INFO("Skipping ERC fam");
             enable_erc_family_coins(erc_family_coins);
         }
         if (slp_coins.size() > 0)
         {
+            SPDLOG_INFO("Skipping SLP");
             enable_slp_coins(slp_coins);
         }
         if (slp_testnet_coins.size() > 0)
         {
+            SPDLOG_INFO("Skipping SLP testnet");
             enable_slp_testnet_coins(slp_testnet_coins);
         }
         if (zhtlc_coins.size() > 0)
         {
+            SPDLOG_INFO("Skipping zhtlc");
             enable_zhtlc(zhtlc_coins);
+        }
+    }
+
+    void mm2_service::enable_erc20_coin(coin_config coin_config)
+    {
+        enable_erc20_coins(t_coins{std::move(coin_config)});
+    }
+
+    void mm2_service::enable_erc20_coins(const t_coins& coins)
+    {
+        constexpr auto eth_ticker = "ETH";
+        auto callback = [this]<typename RpcRequest>(RpcRequest rpc)
+        {
+            if (rpc.error)
+            {
+                if (rpc.error->error_type.find("PlatformIsAlreadyActivated") != std::string::npos || rpc.error->error_type.find("TokenIsAlreadyActivated") != std::string::npos)
+                {
+                    SPDLOG_ERROR("{} {}: ", rpc.request.ticker, rpc.error->error_type);
+                    fetch_single_balance(get_coin_info(rpc.request.ticker));
+                    update_coin_active({rpc.request.ticker}, true);
+                    m_coins_informations[rpc.request.ticker].currently_enabled = true;
+                    dispatcher_.trigger<coin_fully_initialized>(coin_fully_initialized{.tickers = {rpc.request.ticker}});
+                    if constexpr (std::is_same_v<RpcRequest, mm2::enable_eth_with_tokens_rpc>)
+                    {
+                        for (const auto& erc20_coin_info : rpc.request.erc20_tokens_requests)
+                        {
+                            SPDLOG_ERROR("{} {}: ", erc20_coin_info.ticker, rpc.error->error_type);
+                            fetch_single_balance(get_coin_info(erc20_coin_info.ticker));
+                            update_coin_active({erc20_coin_info.ticker}, true);
+                            m_coins_informations[erc20_coin_info.ticker].currently_enabled = true;
+                            dispatcher_.trigger<coin_fully_initialized>(coin_fully_initialized{.tickers = {erc20_coin_info.ticker}});
+                        }
+                    }
+                }
+                else
+                {
+                    m_coins_informations[rpc.request.ticker].currently_enabled = false;
+                    update_coin_active({rpc.request.ticker}, false);
+                    this->dispatcher_.trigger<enabling_coin_failed>(rpc.request.ticker, rpc.error->error);
+                }
+            }
+            else
+            {
+                dispatcher_.trigger<coin_fully_initialized>(coin_fully_initialized{.tickers = {rpc.request.ticker}});
+                fetch_single_balance(get_coin_info(rpc.request.ticker));
+                m_coins_informations[rpc.request.ticker].currently_enabled = true;
+                if constexpr (std::is_same_v<RpcRequest, mm2::enable_eth_with_tokens_rpc>)
+                {
+                    for (const auto& erc20_address_info : rpc.result->erc20_addresses_infos)
+                    {
+                        for (const auto& balance : erc20_address_info.second.balances)
+                        {
+                            dispatcher_.trigger<coin_fully_initialized>(coin_fully_initialized{.tickers = {balance.first}});
+                            process_balance_answer(rpc);
+                            m_coins_informations[balance.first].currently_enabled = true;
+                        }
+                    }
+                }
+                process_balance_answer(rpc);
+            }
+        };
+
+        if (!has_coin(eth_ticker))
+        {
+            static constexpr auto error = "{} is not present in the config. Cannot enable ERC20 tokens.";
+            
+            SPDLOG_ERROR(error);
+            this->dispatcher_.trigger<enabling_coin_failed>(eth_ticker, fmt::format(error, eth_ticker));
+            return;
+        }
+        
+        auto eth_info = get_coin_info(eth_ticker);
+        
+        if (eth_info.currently_enabled)
+        {
+            for (const auto& coin_config : coins)
+            {
+                mm2::enable_erc20_rpc rpc{.request={.ticker = coin_config.ticker}};
+                
+                if (coin_config.ticker == eth_info.ticker)
+                {
+                    continue;
+                }
+                m_mm2_client.process_rpc_async<mm2::enable_erc20_rpc>(rpc.request, callback);
+            }
+        }
+        else
+        {
+            mm2::enable_eth_with_tokens_rpc rpc;
+            
+            rpc.request.ticker = eth_info.ticker;
+            rpc.request.nodes = eth_info.urls.value_or(std::vector<node>{});
+            for (const auto& coin_config : coins)
+            {
+                if (coin_config.ticker == eth_info.ticker)
+                {
+                    continue;
+                }
+                rpc.request.erc20_tokens_requests.push_back({.ticker = coin_config.ticker});
+            }
+            m_mm2_client.process_rpc_async<mm2::enable_eth_with_tokens_rpc>(rpc.request, callback);
         }
     }
 
@@ -588,7 +716,7 @@ namespace atomic_dex
                     std::size_t                     idx = 0;
                     t_coins                         activated_coins;
                     t_coins                         failed_coins;
-
+                    
                     for (auto&& answer : answers)
                     {
                         auto [res, error] = this->process_batch_enable_answer(answer);
@@ -641,13 +769,13 @@ namespace atomic_dex
                 SPDLOG_ERROR(error.what());
             }
         };
-
+        
         for (const auto& coin_config : coins)
         {
             t_enable_request request
             {
                 .coin_name       = coin_config.ticker,
-                .urls            = coin_config.urls.value_or(std::vector<std::string>{}),
+                .urls            = coin_config.eth_family_urls.value_or(std::vector<std::string>{}),
                 .coin_type       = coin_config.coin_type,
                 .is_testnet      = coin_config.is_testnet.value_or(false),
                 .with_tx_history = false
@@ -661,6 +789,7 @@ namespace atomic_dex
             .then(callback)
             .then([this, batch_array](pplx::task<void> previous_task) { this->handle_exception_pplx_task(previous_task, "enable_common_coins", batch_array); });
     }
+
 
     void mm2_service::enable_utxo_qrc20_coin(coin_config coin_config)
     {
@@ -1026,6 +1155,21 @@ namespace atomic_dex
                 std::unique_lock lock(m_balance_mutex);
                 m_balance_informations[balance_answer.coin] = std::move(balance_answer);
             }
+        }
+    }
+
+    void mm2_service::process_balance_answer(const mm2::enable_erc20_rpc& rpc)
+    {
+        const auto& answer = rpc.result.value();
+        mm2::balance_answer balance_answer;
+
+        balance_answer.address  = answer.balances.begin()->first;
+        balance_answer.balance  = answer.balances.begin()->second.spendable;
+        balance_answer.coin     = answer.platform_coin;
+
+        {
+            std::unique_lock lock(m_balance_mutex);
+            m_balance_informations[balance_answer.coin] = std::move(balance_answer);
         }
     }
 
@@ -1794,8 +1938,8 @@ namespace atomic_dex
                 fs::remove(mm2_cfg_path);
                 SPDLOG_INFO("mm2 is initialized");
                 dispatcher_.trigger<mm2_initialized>();
-                enable_default_coins();
                 m_mm2_running = true;
+                enable_default_coins();
                 dispatcher_.trigger<mm2_started>();
             });
     }

@@ -7,8 +7,10 @@ namespace atomic_dex::mm2
     void to_json(nlohmann::json& j, const enable_eth_with_tokens_request_rpc& in)
     {
         j["ticker"] = in.ticker;
+        j["nodes"] = in.nodes;
         j["tx_history"] = in.tx_history;
-        j["erc20_tokens_requests"] = in.erc20_tokens_requests;
+        j["erc20_tokens_requests"]  = in.erc20_tokens_requests;
+        j["gas_station_url"]        = in.gas_station_url;
         j["swap_contract_address"]  = in.ticker != "ETH" ? in.erc_testnet_swap_contract_address : in.erc_swap_contract_address;
         j["fallback_swap_contract"] = in.ticker != "ETH" ? in.erc_testnet_fallback_swap_contract_address : in.erc_fallback_swap_contract_address;
         if (in.required_confirmations.has_value())
@@ -16,7 +18,7 @@ namespace atomic_dex::mm2
         if (in.requires_notarization.has_value())
             j["requires_notarization"] = in.requires_notarization.value();
     }
-    
+
     void to_json(nlohmann::json& j, const enable_eth_with_tokens_request_rpc::erc20_token_request_t& in)
     {
         j["ticker"] = in.ticker;

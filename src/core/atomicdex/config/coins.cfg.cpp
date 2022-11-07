@@ -137,6 +137,7 @@ namespace atomic_dex
         cfg.is_testnet           = j.contains("is_testnet") ? j.at("is_testnet").get<bool>() : false;
         cfg.wallet_only          = j.contains("wallet_only") ? j.at("wallet_only").get<bool>() : false;
 
+        SPDLOG_INFO("Standard config ok for {}", cfg.ticker);
         if (j.contains("other_types"))
         {
             std::vector<std::string> other_types;
@@ -169,9 +170,17 @@ namespace atomic_dex
         {
             cfg.bchd_urls = j.at("bchd_urls").get<std::vector<std::string>>();
         }
+        SPDLOG_INFO("Standard config ok for {} before nodes", cfg.ticker);
         if (j.contains("nodes"))
         {
-            cfg.urls = j.at("nodes").get<std::vector<std::string>>();
+            cfg.urls = j.at("nodes").get<std::vector<node>>();
+
+            std::vector<std::string> url_list;            
+            cfg.eth_family_urls = url_list;
+            for (const auto& url : j.at("nodes").get<std::vector<node>>())
+            {
+                cfg.eth_family_urls->push_back(url.url);
+            }
         }
         if (j.contains("allow_slp_unsafe_conf"))
         {
@@ -182,6 +191,7 @@ namespace atomic_dex
         {
             cfg.z_urls = j.at("light_wallet_d_servers").get<std::vector<std::string>>();
         }
+        SPDLOG_INFO("Standard config ok for {} after light_wallet_d_servers", cfg.ticker);
         if (j.contains("is_segwit_on"))
         {
             cfg.segwit = true;
@@ -192,14 +202,17 @@ namespace atomic_dex
         {
             cfg.alias_ticker = j.at("alias_ticker").get<std::string>();
         }
+        SPDLOG_INFO("Standard config ok for {} before explorer_tx_url", cfg.ticker);
         if (j.contains("explorer_tx_url"))
         {
             j.at("explorer_tx_url").get_to(cfg.tx_uri);
         }
+        SPDLOG_INFO("Standard config ok for {} before explorer_address_url", cfg.ticker);
         if (j.contains("explorer_address_url"))
         {
             j.at("explorer_address_url").get_to(cfg.address_url);
         }
+        SPDLOG_INFO("Standard config ok for {} after explorer_address_url", cfg.ticker);
 
         switch (cfg.coin_type)
         {
@@ -305,6 +318,7 @@ namespace atomic_dex
             cfg.fees_ticker            = cfg.ticker;
             break;
         }
+        SPDLOG_INFO("Standard config ok for {} after switch case", cfg.ticker);
     }
 
     void print_coins(std::vector<coin_config> coins)
