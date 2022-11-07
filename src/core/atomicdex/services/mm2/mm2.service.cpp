@@ -566,32 +566,26 @@ namespace atomic_dex
         }
         if (other_coins.size() > 0)
         {
-            SPDLOG_INFO("Skipping QRC");
             enable_utxo_qrc20_coins(other_coins);
         }
         if (erc20_coins.size() > 0)
         {
-            SPDLOG_INFO("Skipping ERC20");
             enable_erc20_coins(erc20_coins);
         }
         if (erc_family_coins.size() > 0)
         {
-            SPDLOG_INFO("Skipping ERC fam");
             enable_erc_family_coins(erc_family_coins);
         }
         if (slp_coins.size() > 0)
         {
-            SPDLOG_INFO("Skipping SLP");
             enable_slp_coins(slp_coins);
         }
         if (slp_testnet_coins.size() > 0)
         {
-            SPDLOG_INFO("Skipping SLP testnet");
             enable_slp_testnet_coins(slp_testnet_coins);
         }
         if (zhtlc_coins.size() > 0)
         {
-            SPDLOG_INFO("Skipping zhtlc");
             enable_zhtlc(zhtlc_coins);
         }
     }
