@@ -38,7 +38,7 @@ namespace atomic_dex
             SmartChain      = 4,
             SLP             = 5,
             Matic           = 6,
-            Optimism        = 7,
+            ZHTLC           = 7,
             Arbitrum        = 8,
             AVX20           = 9,
             FTM20           = 10,
@@ -51,11 +51,10 @@ namespace atomic_dex
             SmartBCH        = 17,
             EthereumClassic = 18,
             RSK             = 19,
-            ZHTLC           = 20,
-            Disabled        = 21,
-            Invalid         = 22,
-            All             = 23,
-            Size            = 24
+            Disabled        = 20,
+            Invalid         = 21,
+            All             = 22,
+            Size            = 23
         };
 
         Q_ENUM(CoinTypeEnum)

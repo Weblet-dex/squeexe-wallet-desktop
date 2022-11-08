@@ -21,12 +21,14 @@
 #include "rpc.hpp"
 #include "balance_info.hpp"
 #include "atomicdex/config/enable.cfg.hpp"
+#include "atomicdex/constants/qt.coins.enums.hpp"
+#include "atomicdex/constants/erc.constants.hpp"
 
 namespace atomic_dex::mm2
 {
     struct enable_eth_with_tokens_rpc
     {
-        static constexpr auto endpoint = "enable_eth_with_tokens";
+        static constexpr auto endpoint  = "enable_eth_with_tokens";
         static constexpr bool is_v2     = true;
 
         struct expected_request_type
@@ -38,16 +40,17 @@ namespace atomic_dex::mm2
             };
 
             std::string                         ticker;
+            CoinType                            coin_type;
+            std::optional<std::string>          gas_station_url;
+            std::string                         swap_contract_address;
+            std::string                         fallback_swap_contract;
             bool                                tx_history{true};
+            std::optional<bool>                 is_testnet{false};
+            std::optional<size_t>               gas_station_decimals;
             std::optional<int>                  required_confirmations;
             std::optional<bool>                 requires_notarization;
             std::vector<node>                   nodes;
             std::vector<erc20_token_request_t>  erc20_tokens_requests;
-            std::string                         gas_station_url{"https://ethgasstation.info/json/ethgasAPI.json"};
-            std::string                         erc_swap_contract_address{"0x24ABE4c71FC658C91313b6552cd40cD808b3Ea80"};
-            std::string                         erc_testnet_swap_contract_address{"0x6b5A52217006B965BB190864D62dc3d270F7AaFD"};
-            std::string                         erc_fallback_swap_contract_address{"0x8500AFc0bc5214728082163326C2FF0C73f4a871"};
-            std::string                         erc_testnet_fallback_swap_contract_address{"0x7Bc1bBDD6A0a722fC9bffC49c921B685ECB84b94"};
         };
         
         struct expected_result_type

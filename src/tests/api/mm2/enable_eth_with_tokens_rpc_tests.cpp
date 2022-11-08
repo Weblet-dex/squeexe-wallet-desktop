@@ -10,14 +10,14 @@ TEST_CASE("enable_eth_with_tokens_request_rpc serialization")
     enable_eth_with_tokens_request_rpc  data
     {
         .ticker = "ETH",
+        .tx_history = true,
+        .required_confirmations = 5,
+        .requires_notarization = false,
         .nodes =
         {
             { .url = "http://eth1.cipig.net:8555" }, { .url = "http://eth2.cipig.net:8555" }, { .url = "http://eth3.cipig.net:8555" }
         },
-        .tx_history = true,
         .erc20_tokens_requests = { { .ticker = "BAT-ERC20", .required_confirmations = 4 } },
-        .required_confirmations = 5,
-        .requires_notarization = false,
     };
     
     nlohmann::to_json(result, data);

@@ -34,6 +34,7 @@
 #include "atomicdex/api/mm2/rpc2.init_z_coin.hpp"
 #include "atomicdex/api/mm2/rpc2.init_z_coin_status.hpp"
 #include "atomicdex/config/mm2.cfg.hpp"
+#include "atomicdex/config/coins.cfg.hpp"
 #include "atomicdex/constants/dex.constants.hpp"
 #include "atomicdex/managers/qt.wallet.manager.hpp"
 #include "atomicdex/services/internet/internet.checker.service.hpp"
@@ -241,12 +242,9 @@ namespace atomic_dex
                             config_json_data.at(key)["active"] = true;
                         }
                     }
-                    SPDLOG_INFO("Standard config ok for after iterate thru config");
                     auto   res = config_json_data.get<std::unordered_map<std::string, atomic_dex::coin_config>>();
-                    SPDLOG_INFO("Standard config ok after auto res");
 
                     return res;
-                    SPDLOG_INFO("Standard config ok after return?");
                 }
                 catch (const std::exception& error)
                 {
@@ -522,9 +520,32 @@ namespace atomic_dex
     {
         t_coins other_coins;
         t_coins erc20_coins;
-        t_coins erc20_testnet_coins;
         t_coins bep20_coins;
+        t_coins matic_coins;
+        t_coins arbitrum_coins;
+        t_coins avax_coins;
+        t_coins ftm_coins;
+        t_coins hrc_coins;
+        t_coins ubiq_coins;
+        t_coins krc_coins;
+        t_coins movr_coins;
+        t_coins moonbeam_coins;
+        t_coins heco_coins;
+        t_coins etc_coins;
+        t_coins rsk_coins;
+        t_coins smartbch_coins;
+        t_coins other_testnet_coins;
+        t_coins erc20_testnet_coins;
         t_coins bep20_testnet_coins;
+        t_coins matic_testnet_coins;
+        t_coins arbitrum_testnet_coins;
+        t_coins avax_testnet_coins;
+        t_coins ftm_testnet_coins;
+        t_coins movr_testnet_coins;
+        t_coins moonbeam_testnet_coins;
+        t_coins heco_testnet_coins;
+        t_coins etc_testnet_coins;
+        t_coins rsk_testnet_coins;
         t_coins erc_family_coins;
         t_coins slp_coins;
         t_coins slp_testnet_coins;
@@ -553,34 +574,115 @@ namespace atomic_dex
             }
             else if (coin_config.is_erc_family)
             {
-                if (coin_config.coin_type == CoinType::ERC20 || coin_config.coin_type == CoinType::BEP20)
+                if (coin_config.is_testnet.value_or(false))
                 {
-                    if (coin_config.is_testnet.value_or(false))
+                    if (coin_config.coin_type == CoinType::ERC20)
                     {
-                        if (coin_config.coin_type == CoinType::ERC20)
-                        {
-                            erc20_testnet_coins.push_back(coin_config);
-                        }
-                        else if (coin_config.coin_type == CoinType::BEP20)
-                        {
-                            bep20_testnet_coins.push_back(coin_config);
-                        }
+                        erc20_testnet_coins.push_back(coin_config);
                     }
-                    else
+                    else if (coin_config.coin_type == CoinType::BEP20)
                     {
-                        if (coin_config.coin_type == CoinType::ERC20)
-                        {
-                            erc20_coins.push_back(coin_config);
-                        }
-                        else if (coin_config.coin_type == CoinType::BEP20)
-                        {
-                            bep20_coins.push_back(coin_config);
-                        }
+                        bep20_testnet_coins.push_back(coin_config);
+                    }
+                    else if (coin_config.coin_type == CoinType::Matic)
+                    {
+                        matic_testnet_coins.push_back(coin_config);
+                    }
+                    else if (coin_config.coin_type == CoinType::Arbitrum)
+                    {
+                        arbitrum_testnet_coins.push_back(coin_config);
+                    }
+                    else if (coin_config.coin_type == CoinType::AVX20)
+                    {
+                        avax_testnet_coins.push_back(coin_config);
+                    }
+                    else if (coin_config.coin_type == CoinType::FTM20)
+                    {
+                        ftm_testnet_coins.push_back(coin_config);
+                    }
+                    else if (coin_config.coin_type == CoinType::Moonriver)
+                    {
+                        movr_testnet_coins.push_back(coin_config);
+                    }
+                    else if (coin_config.coin_type == CoinType::Moonbeam)
+                    {
+                        moonbeam_testnet_coins.push_back(coin_config);
+                    }
+                    else if (coin_config.coin_type == CoinType::HecoChain)
+                    {
+                        heco_testnet_coins.push_back(coin_config);
+                    }
+                    else if (coin_config.coin_type == CoinType::EthereumClassic)
+                    {
+                        etc_testnet_coins.push_back(coin_config);
+                    }
+                    else if (coin_config.coin_type == CoinType::RSK)
+                    {
+                        rsk_testnet_coins.push_back(coin_config);
                     }
                 }
                 else
                 {
-                    erc_family_coins.push_back(coin_config);
+                    if (coin_config.coin_type == CoinType::ERC20)
+                    {
+                        erc20_coins.push_back(coin_config);
+                    }
+                    else if (coin_config.coin_type == CoinType::BEP20)
+                    {
+                        bep20_coins.push_back(coin_config);
+                    }
+                    else if (coin_config.coin_type == CoinType::Matic)
+                    {
+                        matic_coins.push_back(coin_config);
+                    }
+                    else if (coin_config.coin_type == CoinType::Arbitrum)
+                    {
+                        arbitrum_coins.push_back(coin_config);
+                    }
+                    else if (coin_config.coin_type == CoinType::AVX20)
+                    {
+                        avax_coins.push_back(coin_config);
+                    }
+                    else if (coin_config.coin_type == CoinType::FTM20)
+                    {
+                        ftm_coins.push_back(coin_config);
+                    }
+                    else if (coin_config.coin_type == CoinType::HRC20)
+                    {
+                        hrc_coins.push_back(coin_config);
+                    }
+                    else if (coin_config.coin_type == CoinType::Ubiq)
+                    {
+                        ubiq_coins.push_back(coin_config);
+                    }
+                    else if (coin_config.coin_type == CoinType::KRC20)
+                    {
+                        krc_coins.push_back(coin_config);
+                    }
+                    else if (coin_config.coin_type == CoinType::Moonriver)
+                    {
+                        movr_coins.push_back(coin_config);
+                    }
+                    else if (coin_config.coin_type == CoinType::Moonbeam)
+                    {
+                        moonbeam_coins.push_back(coin_config);
+                    }
+                    else if (coin_config.coin_type == CoinType::HecoChain)
+                    {
+                        heco_coins.push_back(coin_config);
+                    }
+                    else if (coin_config.coin_type == CoinType::EthereumClassic)
+                    {
+                        etc_coins.push_back(coin_config);
+                    }
+                    else if (coin_config.coin_type == CoinType::RSK)
+                    {
+                        rsk_coins.push_back(coin_config);
+                    }
+                    else if (coin_config.coin_type == CoinType::SmartBCH)
+                    {
+                        smartbch_coins.push_back(coin_config);
+                    }
                 }
             }
             else
@@ -592,21 +694,110 @@ namespace atomic_dex
         {
             enable_utxo_qrc20_coins(other_coins);
         }
+
         if (erc20_coins.size() > 0)
         {
-            enable_erc20_coins(erc20_coins, CoinType::ERC20, false);
+            enable_erc20_coins(erc20_coins);
+        }
+        if (bep20_coins.size() > 0)
+        {
+            enable_erc20_coins(bep20_coins);
+        }
+        if (matic_coins.size() > 0)
+        {
+            enable_erc20_coins(matic_coins);
+        }
+        if (arbitrum_coins.size() > 0)
+        {
+            enable_erc20_coins(arbitrum_coins);
+        }
+        if (avax_coins.size() > 0)
+        {
+            enable_erc20_coins(avax_coins);
+        }
+        if (ftm_coins.size() > 0)
+        {
+            enable_erc20_coins(ftm_coins);
+        }
+        if (hrc_coins.size() > 0)
+        {
+            enable_erc20_coins(hrc_coins);
+        }
+        if (ubiq_coins.size() > 0)
+        {
+            enable_erc20_coins(ubiq_coins);
+        }
+        if (krc_coins.size() > 0)
+        {
+            enable_erc20_coins(krc_coins);
+        }
+        if (movr_coins.size() > 0)
+        {
+            enable_erc20_coins(movr_coins);
+        }
+        if (moonbeam_coins.size() > 0)
+        {
+            enable_erc20_coins(moonbeam_coins);
+        }
+        if (heco_coins.size() > 0)
+        {
+            enable_erc20_coins(heco_coins);
+        }
+        if (etc_coins.size() > 0)
+        {
+            enable_erc20_coins(etc_coins);
+        }
+        if (rsk_coins.size() > 0)
+        {
+            enable_erc20_coins(rsk_coins);
+        }
+        if (smartbch_coins.size() > 0)
+        {
+            enable_erc20_coins(smartbch_coins);
         }
         if (erc20_testnet_coins.size() > 0)
         {
-            enable_erc20_coins(erc20_testnet_coins, CoinType::ERC20, true);
+            enable_erc20_coins(erc20_testnet_coins);
         }
-        if (bep20_coins.size() > 0)
+        if (bep20_testnet_coins.size() > 0)
         {
-            enable_erc20_coins(bep20_coins, CoinType::BEP20, false);
+            enable_erc20_coins(bep20_testnet_coins);
         }
-        if (bep20_coins.size() > 0)
+        if (matic_testnet_coins.size() > 0)
         {
-            enable_erc20_coins(bep20_testnet_coins, CoinType::BEP20, true);
+            enable_erc20_coins(matic_testnet_coins);
+        }
+        if (arbitrum_testnet_coins.size() > 0)
+        {
+            enable_erc20_coins(arbitrum_testnet_coins);
+        }
+        if (avax_testnet_coins.size() > 0)
+        {
+            enable_erc20_coins(avax_testnet_coins);
+        }
+        if (ftm_testnet_coins.size() > 0)
+        {
+            enable_erc20_coins(ftm_testnet_coins);
+        }
+        if (movr_testnet_coins.size() > 0)
+        {
+            enable_erc20_coins(movr_testnet_coins);
+        }
+        if (moonbeam_testnet_coins.size() > 0)
+        {
+            enable_erc20_coins(moonbeam_testnet_coins);
+        }
+        if (heco_testnet_coins.size() > 0)
+        {
+            enable_erc20_coins(heco_testnet_coins);
+        }
+        if (etc_testnet_coins.size() > 0)
+        {
+            enable_erc20_coins(etc_testnet_coins);
+        }
+        if (rsk_testnet_coins.size() > 0)
+        {
+            enable_erc20_coins(rsk_testnet_coins);
         }
         if (erc_family_coins.size() > 0)
         {
@@ -626,35 +817,21 @@ namespace atomic_dex
         }
     }
 
-    void mm2_service::enable_erc20_coin(coin_config coin_config)
+    void mm2_service::enable_erc20_coin(coin_config cfg)
     {
-        enable_erc20_coins(t_coins{std::move(coin_config)}, coin_config.coin_type, coin_config.is_testnet.value_or(false));
+        auto parent_ticker_info = get_coin_info(cfg.fees_ticker);
+        enable_erc20_coins(t_coins{std::move(cfg)});
     }
 
-    void mm2_service::enable_erc20_coins(const t_coins& coins, CoinTypeGadget::CoinTypeEnum protocol, bool testnet)
+    std::string mm2_service::get_parent_ticker(coin_config cfg)
     {
-        if (protocol == CoinType::ERC20)
-        {
-            if (testnet)
-            {
-                constexpr auto parent_ticker = "ETH-ARB";
-            }
-            else
-            {
-                constexpr auto parent_ticker = "ETH";
-            }
-        }
-        else if (protocol == CoinType::BEP20)
-        {
-            if (testnet)
-            {
-                constexpr auto parent_ticker = "tBNB";
-            }
-            else
-            {
-                constexpr auto parent_ticker = "BNB";
-            }
-        }
+        return get_coin_info(cfg.fees_ticker).ticker;
+    }
+
+    void mm2_service::enable_erc20_coins(const t_coins& coins)
+    {
+        auto parent_ticker = get_parent_ticker(coins.front());
+        SPDLOG_INFO("Parent Ticker is {}: ", parent_ticker);
         auto callback = [this]<typename RpcRequest>(RpcRequest rpc)
         {
             if (rpc.error)
@@ -721,19 +898,21 @@ namespace atomic_dex
         {
             for (const auto& coin_config : coins)
             {
-                mm2::enable_erc20_rpc rpc{.request={.ticker = coin_config.ticker}};
-                
+                mm2::enable_erc20_rpc rpc;
+                rpc.request.ticker = coin_config.ticker;
                 if (coin_config.ticker == eth_info.ticker)
                 {
                     continue;
                 }
+                SPDLOG_INFO("m_mm2_client.process_rpc_async<mm2::enable_erc20_rpc>(rpc.request, callback);");
                 m_mm2_client.process_rpc_async<mm2::enable_erc20_rpc>(rpc.request, callback);
             }
         }
         else
         {
             mm2::enable_eth_with_tokens_rpc rpc;
-            
+            rpc.request.coin_type = eth_info.coin_type;
+            rpc.request.is_testnet = eth_info.is_testnet.value_or(false);
             rpc.request.ticker = eth_info.ticker;
             rpc.request.nodes = eth_info.urls.value_or(std::vector<node>{});
             for (const auto& coin_config : coins)
@@ -744,6 +923,7 @@ namespace atomic_dex
                 }
                 rpc.request.erc20_tokens_requests.push_back({.ticker = coin_config.ticker});
             }
+            SPDLOG_INFO("m_mm2_client.process_rpc_async<mm2::enable_eth_with_tokens_rpc>(rpc.request, callback);");
             m_mm2_client.process_rpc_async<mm2::enable_eth_with_tokens_rpc>(rpc.request, callback);
         }
     }
@@ -840,7 +1020,6 @@ namespace atomic_dex
             .then(callback)
             .then([this, batch_array](pplx::task<void> previous_task) { this->handle_exception_pplx_task(previous_task, "enable_common_coins", batch_array); });
     }
-
 
     void mm2_service::enable_utxo_qrc20_coin(coin_config coin_config)
     {
@@ -1034,6 +1213,7 @@ namespace atomic_dex
                 {
                     continue;
                 }
+                SPDLOG_INFO("m_mm2_client.process_rpc_async<mm2::enable_slp_rpc>(rpc.request, callback);");
                 m_mm2_client.process_rpc_async<mm2::enable_slp_rpc>(rpc.request, callback);
             }
         }
@@ -1053,6 +1233,7 @@ namespace atomic_dex
                 }
                 rpc.request.slp_tokens_requests.push_back({.ticker = coin_config.ticker});
             }
+            SPDLOG_INFO("m_mm2_client.process_rpc_async<mm2::enable_bch_with_tokens_rpc>(rpc.request, callback);");
             m_mm2_client.process_rpc_async<mm2::enable_bch_with_tokens_rpc>(rpc.request, callback);
         }
     }
@@ -1137,6 +1318,7 @@ namespace atomic_dex
                 {
                     continue;
                 }
+                SPDLOG_INFO("m_mm2_client.process_rpc_async<mm2::enable_slp_rpc>(rpc.request, callback);");
                 m_mm2_client.process_rpc_async<mm2::enable_slp_rpc>(rpc.request, callback);
             }
         }
@@ -1156,6 +1338,7 @@ namespace atomic_dex
                 }
                 rpc.request.slp_tokens_requests.push_back({.ticker = coin_config.ticker});
             }
+            SPDLOG_INFO("m_mm2_client.process_rpc_async<mm2::enable_bch_with_tokens_rpc>(rpc.request, callback);");
             m_mm2_client.process_rpc_async<mm2::enable_bch_with_tokens_rpc>(rpc.request, callback);
         }
     }
@@ -2209,9 +2392,6 @@ namespace atomic_dex
                 break;
             case CoinTypeGadget::Arbitrum:
                 out = construct_url_functor("ETH-ARB20", "ETHR-ARB20", "arbitrum_tx_history", "arbitrum_tx_history", ticker, address);
-                break;
-            case CoinTypeGadget::Optimism:
-                out = construct_url_functor("ETH-OPT20", "ETHK-OPT20", "optimism_tx_history", "optimism_tx_history", ticker, address);
                 break;
             case CoinTypeGadget::EthereumClassic:
                 out = construct_url_functor("ETC", "ETCT", "etc_tx_history", "etc_tx_history", ticker, address);

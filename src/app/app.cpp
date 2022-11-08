@@ -246,11 +246,11 @@ namespace atomic_dex
                 //! TODO: figure out why sometimes ZHTLC coins end up in here twice.
 
                 if (std::find(to_init.begin(), to_init.end(), ticker) != to_init.end()) {
-                    SPDLOG_INFO("Ticker {} is already in vector", ticker);
+                    SPDLOG_DEBUG("Ticker {} is already in vector", ticker);
                     add_to_init = false;
                 }
                 else {
-                    SPDLOG_INFO("Ticker {} is not already in vector", ticker);
+                    SPDLOG_DEBUG("Ticker {} is not already in vector", ticker);
                 }
                 if (add_to_init) {
                     to_init.push_back(ticker);

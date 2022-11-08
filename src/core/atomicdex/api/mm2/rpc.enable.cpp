@@ -48,13 +48,6 @@ namespace atomic_dex::mm2
             j["fallback_swap_contract"] = cfg.is_testnet ? cfg.matic_erc_testnet_fallback_swap_contract_address : cfg.matic_erc_fallback_swap_contract_address;
             break;
         }
-        case CoinType::Optimism:
-        {
-            j["urls"]                  = cfg.urls;
-            j["swap_contract_address"] = cfg.optimism_erc_swap_contract_address;
-            j["fallback_swap_contract"] = cfg.optimism_erc_fallback_swap_contract_address;
-            break;
-        }
         case CoinType::Arbitrum:
         {
             j["urls"]                  = cfg.urls;
