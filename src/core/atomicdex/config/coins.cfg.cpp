@@ -53,10 +53,6 @@ namespace
         {
             return CoinType::Matic;
         }
-        if (coin_type == "Arbitrum")
-        {
-            return CoinType::Arbitrum;
-        }
         if (coin_type == "AVX-20")
         {
             return CoinType::AVX20;
@@ -216,11 +212,6 @@ namespace atomic_dex
         case CoinType::Matic:
             cfg.has_parent_fees_ticker = true;
             cfg.fees_ticker            = cfg.is_testnet.value() ? "MATICTEST" : "MATIC";
-            cfg.is_erc_family          = true;
-            break;
-        case CoinType::Arbitrum:
-            cfg.has_parent_fees_ticker = true;
-            cfg.fees_ticker            = "ETH-ARB20";
             cfg.is_erc_family          = true;
             break;
         case CoinType::AVX20:
