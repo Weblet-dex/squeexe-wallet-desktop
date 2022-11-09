@@ -53,10 +53,6 @@ namespace
         {
             return CoinType::Matic;
         }
-        if (coin_type == "Optimism")
-        {
-            return CoinType::Optimism;
-        }
         if (coin_type == "Arbitrum")
         {
             return CoinType::Arbitrum;
@@ -220,11 +216,6 @@ namespace atomic_dex
         case CoinType::Matic:
             cfg.has_parent_fees_ticker = true;
             cfg.fees_ticker            = cfg.is_testnet.value() ? "MATICTEST" : "MATIC";
-            cfg.is_erc_family          = true;
-            break;
-        case CoinType::Optimism:
-            cfg.has_parent_fees_ticker = true;
-            cfg.fees_ticker            = "ETH-OPT20";
             cfg.is_erc_family          = true;
             break;
         case CoinType::Arbitrum:

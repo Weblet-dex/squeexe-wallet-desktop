@@ -1967,9 +1967,6 @@ namespace atomic_dex
             case CoinTypeGadget::Arbitrum:
                 out = construct_url_functor("ETH-ARB20", "ETHR-ARB20", "arbitrum_tx_history", "arbitrum_tx_history", ticker, address);
                 break;
-            case CoinTypeGadget::Optimism:
-                out = construct_url_functor("ETH-OPT20", "ETHK-OPT20", "optimism_tx_history", "optimism_tx_history", ticker, address);
-                break;
             case CoinTypeGadget::EthereumClassic:
                 out = construct_url_functor("ETC", "ETCT", "etc_tx_history", "etc_tx_history", ticker, address);
                 break;
