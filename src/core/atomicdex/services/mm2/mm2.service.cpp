@@ -305,6 +305,7 @@ namespace atomic_dex
                 std::vector<std::string> tickers;
                 for (auto&& coin: coins)
                 {
+                    SPDLOG_DEBUG("{}: Active [{}]", coin.ticker, coin.active);
                     if (!coin.active)
                     {
                         tickers.push_back(coin.ticker);
@@ -312,7 +313,7 @@ namespace atomic_dex
                 }
                 if (!tickers.empty())
                 {
-                    SPDLOG_INFO("coin_status_update required, {}", m_nb_update_required);
+                    SPDLOG_DEBUG("coin_status_update required, {}", m_nb_update_required);
                     update_coin_status(this->m_current_wallet_name, tickers, true, m_coins_informations, m_coin_cfg_mutex);
                 }
                 m_nb_update_required -= 1;
@@ -638,7 +639,6 @@ namespace atomic_dex
                         tickers.push_back(coin.ticker);
                         fetch_single_balance(coin);
                     }
-                    update_coin_active(tickers, true);
                     dispatcher_.trigger<coin_fully_initialized>(tickers);
 
                     std::vector<std::string> failed_tickers;
@@ -675,6 +675,7 @@ namespace atomic_dex
         m_mm2_client.async_rpc_batch_standalone(batch_array)
             .then(callback)
             .then([this, batch_array](pplx::task<void> previous_task) { this->handle_exception_pplx_task(previous_task, "enable_common_coins", batch_array); });
+        this->m_nb_update_required += 1;
     }
 
     void mm2_service::enable_utxo_qrc20_coin(coin_config coin_config)
@@ -737,7 +738,6 @@ namespace atomic_dex
                         tickers.push_back(coin.ticker);
                         fetch_single_balance(coin);
                     }
-                    update_coin_active(tickers, true);
                     dispatcher_.trigger<coin_fully_initialized>(tickers);
 
                     std::vector<std::string> failed_tickers;
@@ -787,6 +787,7 @@ namespace atomic_dex
         m_mm2_client.async_rpc_batch_standalone(batch_array)
             .then(callback)
             .then([this, batch_array](pplx::task<void> previous_task) { this->handle_exception_pplx_task(previous_task, "enable_qrc_family_coins", batch_array); });
+        this->m_nb_update_required += 1;
     }
 
     void mm2_service::enable_slp_coin(coin_config coin_config)
@@ -805,7 +806,6 @@ namespace atomic_dex
                 {
                     SPDLOG_ERROR("{} {}: ", rpc.request.ticker, rpc.error->error_type);
                     fetch_single_balance(get_coin_info(rpc.request.ticker));
-                    update_coin_active({rpc.request.ticker}, true);
                     m_coins_informations[rpc.request.ticker].currently_enabled = true;
                     dispatcher_.trigger<coin_fully_initialized>(coin_fully_initialized{.tickers = {rpc.request.ticker}});
                     if constexpr (std::is_same_v<RpcRequest, mm2::enable_bch_with_tokens_rpc>)
@@ -814,7 +814,6 @@ namespace atomic_dex
                         {
                             SPDLOG_ERROR("{} {}: ", slp_coin_info.ticker, rpc.error->error_type);
                             fetch_single_balance(get_coin_info(slp_coin_info.ticker));
-                            update_coin_active({slp_coin_info.ticker}, true);
                             m_coins_informations[slp_coin_info.ticker].currently_enabled = true;
                             dispatcher_.trigger<coin_fully_initialized>(coin_fully_initialized{.tickers = {slp_coin_info.ticker}});
                         }
@@ -890,6 +889,7 @@ namespace atomic_dex
             }
             m_mm2_client.process_rpc_async<mm2::enable_bch_with_tokens_rpc>(rpc.request, callback);
         }
+        this->m_nb_update_required += 1;
     }
     
     void mm2_service::enable_slp_testnet_coin(coin_config coin_config)
@@ -908,7 +908,6 @@ namespace atomic_dex
                 {
                     SPDLOG_ERROR("{} {}: ", rpc.request.ticker, rpc.error->error_type);
                     fetch_single_balance(get_coin_info(rpc.request.ticker));
-                    update_coin_active({rpc.request.ticker}, true);
                     m_coins_informations[rpc.request.ticker].currently_enabled = true;
                     dispatcher_.trigger<coin_fully_initialized>(coin_fully_initialized{.tickers = {rpc.request.ticker}});
                     if constexpr (std::is_same_v<RpcRequest, mm2::enable_bch_with_tokens_rpc>)
@@ -917,7 +916,6 @@ namespace atomic_dex
                         {
                             SPDLOG_ERROR("{} {}: ", slp_coin_info.ticker, rpc.error->error_type);
                             fetch_single_balance(get_coin_info(slp_coin_info.ticker));
-                            update_coin_active({slp_coin_info.ticker}, true);
                             m_coins_informations[slp_coin_info.ticker].currently_enabled = true;
                             dispatcher_.trigger<coin_fully_initialized>(coin_fully_initialized{.tickers = {slp_coin_info.ticker}});
                         }
@@ -993,6 +991,7 @@ namespace atomic_dex
             }
             m_mm2_client.process_rpc_async<mm2::enable_bch_with_tokens_rpc>(rpc.request, callback);
         }
+        this->m_nb_update_required += 1;
     }
 
     void mm2_service::enable_cosmos_coin(coin_config coin_config)
@@ -1015,7 +1014,6 @@ namespace atomic_dex
                 {
                     SPDLOG_ERROR("{} {}: ", rpc.request.ticker, rpc.error->error_type);
                     fetch_single_balance(get_coin_info(rpc.request.ticker));
-                    update_coin_active({rpc.request.ticker}, true);
                     m_coins_informations[rpc.request.ticker].currently_enabled = true;
                     dispatcher_.trigger<coin_fully_initialized>(coin_fully_initialized{.tickers = {rpc.request.ticker}});
                     if constexpr (std::is_same_v<RpcRequest, mm2::enable_tendermint_with_assets_rpc>)
@@ -1024,7 +1022,6 @@ namespace atomic_dex
                         {
                             SPDLOG_ERROR("{} {}: ", tendermint_coin_info.ticker, rpc.error->error_type);
                             fetch_single_balance(get_coin_info(tendermint_coin_info.ticker));
-                            update_coin_active({tendermint_coin_info.ticker}, true);
                             m_coins_informations[tendermint_coin_info.ticker].currently_enabled = true;
                             dispatcher_.trigger<coin_fully_initialized>(coin_fully_initialized{.tickers = {tendermint_coin_info.ticker}});
                         }
@@ -1094,6 +1091,7 @@ namespace atomic_dex
             }
             m_mm2_client.process_rpc_async<mm2::enable_tendermint_with_assets_rpc>(rpc.request, callback);
         }
+        this->m_nb_update_required += 1;
     }
 
     void mm2_service::process_balance_answer(const mm2::enable_tendermint_token_rpc& rpc)
