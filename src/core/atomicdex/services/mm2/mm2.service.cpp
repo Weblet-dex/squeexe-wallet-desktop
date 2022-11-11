@@ -514,6 +514,7 @@ namespace atomic_dex
         t_coins erc_family_coins;
         t_coins slp_coins;
         t_coins slp_testnet_coins;
+        t_coins tendermint_coins;
         t_coins zhtlc_coins;
         
         for (const auto& coin_config : coins)
@@ -532,6 +533,17 @@ namespace atomic_dex
                 {
                     slp_coins.push_back(coin_config);
                 }
+            }
+            else if (coin_config.coin_type == CoinType::TENDERMINT)
+            {
+                if (coin_config.ticker == "ATOM")
+                {
+                    enable_cosmos_coin(coin_config);
+                }
+                else
+                {
+                    tendermint_coins.push_back(coin_config);
+                }                
             }
             else if (coin_config.coin_type == CoinType::ZHTLC)
             {
@@ -561,6 +573,10 @@ namespace atomic_dex
         if (slp_testnet_coins.size() > 0)
         {
             enable_slp_testnet_coins(slp_testnet_coins);
+        }
+        if (tendermint_coins.size() > 0)
+        {
+            enable_tendermint_coins(tendermint_coins, "IRIS");
         }
         if (zhtlc_coins.size() > 0)
         {
@@ -976,6 +992,160 @@ namespace atomic_dex
                 rpc.request.slp_tokens_requests.push_back({.ticker = coin_config.ticker});
             }
             m_mm2_client.process_rpc_async<mm2::enable_bch_with_tokens_rpc>(rpc.request, callback);
+        }
+    }
+
+    void mm2_service::enable_cosmos_coin(coin_config coin_config)
+    {
+        enable_tendermint_coins(t_coins{std::move(coin_config)}, "ATOM");
+    }
+
+    void mm2_service::enable_tendermint_coin(coin_config coin_config)
+    {
+        enable_tendermint_coins(t_coins{std::move(coin_config)}, "IRIS");
+    }
+
+    void mm2_service::enable_tendermint_coins(const t_coins& coins, const std::string parent_ticker)
+    {
+        auto parent_ticker_info = get_coin_info(parent_ticker)
+        SPDLOG_ERROR();
+        auto callback = [this]<typename RpcRequest>(RpcRequest rpc)
+        {
+            if (rpc.error)
+            {
+                if (rpc.error->error_type.find("PlatformIsAlreadyActivated") != std::string::npos || rpc.error->error_type.find("TokenIsAlreadyActivated") != std::string::npos)
+                {
+                    SPDLOG_ERROR("{} {}: ", rpc.request.ticker, rpc.error->error_type);
+                    fetch_single_balance(get_coin_info(rpc.request.ticker));
+                    update_coin_active({rpc.request.ticker}, true);
+                    m_coins_informations[rpc.request.ticker].currently_enabled = true;
+                    dispatcher_.trigger<coin_fully_initialized>(coin_fully_initialized{.tickers = {rpc.request.ticker}});
+                    if constexpr (std::is_same_v<RpcRequest, mm2::enable_tendermint_with_assets_rpc>)
+                    {
+                        for (const auto& tendermint_coin_info : rpc.request.tokens_params)
+                        {
+                            SPDLOG_ERROR("{} {}: ", tendermint_coin_info.ticker, rpc.error->error_type);
+                            fetch_single_balance(get_coin_info(tendermint_coin_info.ticker));
+                            update_coin_active({tendermint_coin_info.ticker}, true);
+                            m_coins_informations[tendermint_coin_info.ticker].currently_enabled = true;
+                            dispatcher_.trigger<coin_fully_initialized>(coin_fully_initialized{.tickers = {tendermint_coin_info.ticker}});
+                        }
+                    }
+                }
+                else
+                {
+                    m_coins_informations[rpc.request.ticker].currently_enabled = false;
+                    update_coin_active({rpc.request.ticker}, false);
+                    this->dispatcher_.trigger<enabling_coin_failed>(rpc.request.ticker, rpc.error->error);
+                }
+            }
+            else
+            {
+                dispatcher_.trigger<coin_fully_initialized>(coin_fully_initialized{.tickers = {rpc.request.ticker}});
+                fetch_single_balance(get_coin_info(rpc.request.ticker));
+                m_coins_informations[rpc.request.ticker].currently_enabled = true;
+                if constexpr (std::is_same_v<RpcRequest, mm2::enable_tendermint_with_assets_rpc>)
+                {
+                    for (const auto& tendermint_token_addresses_info : rpc.result->tendermint_token_addresses_infos)
+                    {
+                        for (const auto& balance : tendermint_token_addresses_info.second.balances)
+                        {
+                            dispatcher_.trigger<coin_fully_initialized>(coin_fully_initialized{.tickers = {balance.first}});
+                            process_balance_answer(rpc);
+                            m_coins_informations[balance.first].currently_enabled = true;
+                        }
+                    }
+                }
+                process_balance_answer(rpc);
+            }
+        };
+
+        if (!has_coin(parent_ticker))
+        {
+            static constexpr auto error = "{} is not present in the config. Cannot enable TENDERMINT tokens.";
+            
+            SPDLOG_ERROR(error);
+            this->dispatcher_.trigger<enabling_coin_failed>(parent_ticker, fmt::format(error, parent_ticker));
+            return;
+        }
+        
+        if (parent_ticker_info.currently_enabled)
+        {
+            for (const auto& coin_config : coins)
+            {
+                mm2::enable_tendermint_token_rpc rpc{.request={.ticker = coin_config.ticker}};
+                
+                if (coin_config.ticker == parent_ticker_info.ticker)
+                {
+                    continue;
+                }
+                m_mm2_client.process_rpc_async<mm2::enable_tendermint_token_rpc>(rpc.request, callback);
+            }
+        }
+        else
+        {
+            mm2::enable_tendermint_with_assets_rpc rpc;
+            
+            rpc.request.ticker = parent_ticker_info.ticker;
+            rpc.request.rpc_urls = parent_ticker_info.urls.value_or(std::vector<std::string>{});
+            for (const auto& coin_config : coins)
+            {
+                if (coin_config.ticker == parent_ticker_info.ticker)
+                {
+                    continue;
+                }
+                rpc.request.tokens_params.push_back({.ticker = coin_config.ticker});
+            }
+            m_mm2_client.process_rpc_async<mm2::enable_tendermint_with_assets_rpc>(rpc.request, callback);
+        }
+    }
+
+    void mm2_service::process_balance_answer(const mm2::enable_tendermint_token_rpc& rpc)
+    {
+        const auto& answer = rpc.result.value();
+        mm2::balance_answer balance_answer;
+        
+        balance_answer.address  = answer.balances.begin()->first;
+        balance_answer.balance  = answer.balances.begin()->second.spendable;
+        balance_answer.coin     = answer.platform_coin;
+        
+        {
+            std::unique_lock lock(m_balance_mutex);
+            m_balance_informations[balance_answer.coin] = std::move(balance_answer);
+        }
+    }
+
+    void mm2_service::process_balance_answer(const mm2::enable_tendermint_with_assets_rpc& rpc)
+    {
+        const auto& answer = rpc.result.value();
+        {
+            mm2::balance_answer balance_answer;
+            
+            balance_answer.coin = rpc.request.ticker;
+            balance_answer.balance = answer.tendermint_addresses_infos.begin()->second.balances.spendable;
+            balance_answer.address = answer.tendermint_addresses_infos.begin()->first;
+            {
+                std::unique_lock lock(m_balance_mutex);
+                m_balance_informations[balance_answer.coin] = std::move(balance_answer);
+            }
+        }
+        for (auto [address, data] : answer.tendermint_token_addresses_infos)
+        {
+            if (data.balances.empty())
+            {
+                continue;
+            }
+            
+            mm2::balance_answer balance_answer;
+        
+            balance_answer.coin = data.balances.begin()->first;
+            balance_answer.address = address;
+            balance_answer.balance = data.balances.begin()->second.spendable;
+        
+            {
+                std::unique_lock lock(m_balance_mutex);
+                m_balance_informations[balance_answer.coin] = std::move(balance_answer);
+            }
         }
     }
 

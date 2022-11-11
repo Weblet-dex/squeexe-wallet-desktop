@@ -105,6 +105,14 @@ namespace
         {
             return CoinType::RSK;
         }
+        if (coin_type == "TENDERMINT")
+        {
+            return CoinType::TENDERMINT;
+        }
+        if (coin_type == "TENDERMINTTOKEN")
+        {
+            return CoinType::TENDERMINT;
+        }
         if (coin_type == "ZHTLC")
         {
             return CoinType::ZHTLC;
@@ -172,6 +180,10 @@ namespace atomic_dex
         if (j.contains("nodes"))
         {
             cfg.urls = j.at("nodes").get<std::vector<std::string>>();
+        }
+        if (j.contains("rpc_urls"))
+        {
+            cfg.urls = j.at("rpc_urls").get<std::vector<std::string>>();
         }
         if (j.contains("allow_slp_unsafe_conf"))
         {
@@ -290,6 +302,10 @@ namespace atomic_dex
         case CoinType::SLP:
             cfg.has_parent_fees_ticker = true;
             cfg.fees_ticker            = cfg.is_testnet.value() ? "tBCH" : "BCH";
+            break;
+        case CoinType::TENDERMINT:
+            cfg.has_parent_fees_ticker = true;
+            cfg.fees_ticker            = cfg.ticker == "ATOM" ? "ATOM" : "IRIS";
             break;
         case CoinType::ZHTLC:
             cfg.has_parent_fees_ticker = false;
