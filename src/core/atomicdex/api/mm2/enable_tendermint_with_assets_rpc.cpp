@@ -25,19 +25,15 @@ namespace atomic_dex::mm2
 
     void from_json(const nlohmann::json& json, enable_tendermint_with_assets_result_rpc& out)
     {
-        out.address = json["address"];
-        out.current_block = json["current_block"];
-        out.tendermint_addresses_infos = json["tendermint_addresses_infos"].get<typeof(out.tendermint_addresses_infos)>();
-        out.tendermint_token_addresses_infos = json["tendermint_token_addresses_infos"].get<typeof(out.tendermint_token_addresses_infos)>();
+        out.address                          = json["address"];
+        out.current_block                    = json["current_block"];
+        out.tendermint_balances_infos        = json["balance"].get<typeof(out.tendermint_balances_infos)>();
+        out.tendermint_token_balances_infos  = json["tokens_balances"].get<typeof(out.tendermint_token_balances_infos)>();
     }
     
-    void from_json(const nlohmann::json& json, enable_tendermint_with_assets_result_rpc::tendermint_address_infos_t& out)
+    void from_json(const nlohmann::json& json, enable_tendermint_with_assets_result_rpc::tendermint_balance_infos_t& out)
     {
-        out.balances = json["balances"];
-    }
-    
-    void from_json(const nlohmann::json& json, enable_tendermint_with_assets_result_rpc::tendermint_token_address_infos_t& out)
-    {
-        out.balances = json["balances"].get<typeof(out.balances)>();
+        out.balances.spendable = json["spendable"];
+        out.balances.unspendable = json["unspendable"];
     }
 }

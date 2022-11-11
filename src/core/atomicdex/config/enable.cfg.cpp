@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright © 2013-2022 The Komodo Platform Developers.                      *
+ * Copyright © 2013-2021 The Komodo Platform Developers.                      *
  *                                                                            *
  * See the AUTHORS, DEVELOPER-AGREEMENT and LICENSE files at                  *
  * the top-level directory of this distribution for the individual copyright  *
@@ -13,18 +13,33 @@
  * Removal or modification of this copyright notice is prohibited.            *
  *                                                                            *
  ******************************************************************************/
-//! Dependencies Headers
+
+
+//! Deps
 #include <nlohmann/json.hpp>
 
-// Project Headers
-#include "balance.infos.hpp"
+//! Project Headers
+#include "atomicdex/config/enable.cfg.hpp"
 
-namespace atomic_dex::mm2
+namespace atomic_dex
 {
     void
-    from_json(const nlohmann::json& j, balance_infos& answer)
+    to_json(nlohmann::json& j, const node& cfg)
     {
-        answer.spendable = j.at("spendable").get<std::string>();
-        answer.unspendable = j.at("unspendable").get<std::string>();
+        j["url"] = cfg.url;
+        if (cfg.gui_auth.has_value())
+        {
+            j["gui_auth"] = cfg.gui_auth.value();
+        }
     }
-} // namespace atomic_dex::mm2
+
+    void
+    from_json(const nlohmann::json& j, node& cfg)
+    {
+        j.at("url").get_to(cfg.url);
+        if (j.count("gui_auth") == 1)
+        {
+            cfg.gui_auth = j.at("gui_auth").get<bool>();
+        }
+    }
+} // namespace atomic_dex

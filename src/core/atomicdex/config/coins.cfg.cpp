@@ -179,11 +179,23 @@ namespace atomic_dex
         }
         if (j.contains("nodes"))
         {
-            cfg.urls = j.at("nodes").get<std::vector<std::string>>();
+            cfg.urls = j.at("nodes").get<std::vector<node>>();
+            std::vector<std::string> url_list;
+            cfg.eth_family_urls = url_list;
+            for (const auto& url : j.at("nodes").get<std::vector<node>>())
+            {
+                cfg.eth_family_urls->push_back(url.url);
+            }
         }
         if (j.contains("rpc_urls"))
         {
-            cfg.urls = j.at("rpc_urls").get<std::vector<std::string>>();
+            auto rpc_urls_obj = j.at("rpc_urls").get<std::vector<node>>();
+            std::vector<std::string> rpc_urls_list;
+            cfg.rpc_urls = rpc_urls_list;
+            for (const auto& url : rpc_urls_obj)
+            {
+                cfg.rpc_urls->push_back(url.url);
+            }
         }
         if (j.contains("allow_slp_unsafe_conf"))
         {

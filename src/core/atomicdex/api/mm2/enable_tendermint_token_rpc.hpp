@@ -38,9 +38,7 @@ namespace atomic_dex::mm2
         
         struct expected_result_type
         {
-            std::string                                     token_id;
             std::string                                     platform_coin;
-            int                                             required_confirmations;
             std::unordered_map<std::string, balance_info>   balances;
         };
 

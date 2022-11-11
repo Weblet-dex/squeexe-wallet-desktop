@@ -64,7 +64,6 @@ namespace
             json_req.insert(json_req.end(), json_data);
         }
         request.set_body(json_req.dump());
-        SPDLOG_DEBUG("json_req: {}", json_req.dump(4));
         return request;
     }
 
@@ -73,7 +72,6 @@ namespace
     {
         Rpc rpc;
         auto json_answer = nlohmann::json::parse(TO_STD_STR(answer.extract_string(true).get()));
-        SPDLOG_DEBUG("json_answer: {}", json_answer.dump(4));
         if (Rpc::is_v2)
         {
             if (answer.status_code() == 200)
