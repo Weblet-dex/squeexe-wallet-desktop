@@ -507,9 +507,6 @@ namespace atomic_dex
         }
         coins.erase(std::unique(coins.begin(), coins.end(), [](auto left, auto right) { return left.ticker == right.ticker; }), coins.end()); // Remove duplicates
         enable_coins(coins);
-        // This updates coins as active which might not be if activation failed.
-        // update_coin_status(this->m_current_wallet_name, tickers, true, m_coins_informations, m_coin_cfg_mutex);
-
     }
 
     void mm2_service::enable_coins(const t_coins& coins)
@@ -676,6 +673,7 @@ namespace atomic_dex
             {
                 SPDLOG_ERROR(error.what());
             }
+            this->m_nb_update_required += 1;
         };
         
         for (const auto& coin_config : coins)
@@ -775,6 +773,7 @@ namespace atomic_dex
             {
                 SPDLOG_ERROR(error.what());
             }
+            this->m_nb_update_required += 1;
         };
         
         for (const auto& coin_config : coins)
@@ -866,6 +865,7 @@ namespace atomic_dex
                 }
                 process_balance_answer(rpc);
             }
+            this->m_nb_update_required += 1;
         };
 
         if (!has_coin(bch_ticker))
@@ -912,6 +912,7 @@ namespace atomic_dex
         }
         this->m_nb_update_required += 1;
     }
+
     
     void mm2_service::enable_slp_testnet_coin(coin_config coin_config)
     {
@@ -968,6 +969,7 @@ namespace atomic_dex
                 }
                 process_balance_answer(rpc);
             }
+            this->m_nb_update_required += 1;
         };
         
         if (!has_coin(bch_ticker))
@@ -1557,11 +1559,6 @@ namespace atomic_dex
                                                         this->dispatcher_.trigger<enabling_z_coin_status>(tickers[idx], event);
                                                         this->dispatcher_.trigger<enabling_coin_failed>(tickers[idx], z_error[0].dump(4));
                                                         to_remove.emplace(tickers[idx]);
-
-                                                        if (error.find("already initialized") != std::string::npos)
-                                                        {
-                                                            update_coin_status(this->m_current_wallet_name, tickers, true, m_coins_informations, m_coin_cfg_mutex);
-                                                        }
                                                     }
                                                     else if (z_nb_try == 1000)
                                                     {
@@ -1604,7 +1601,7 @@ namespace atomic_dex
                                     {
                                         fetch_single_balance(get_coin_info(tickers[0]));
                                     }
-                                    // batch_balance_and_tx(false, tickers, true);
+                                    this->m_nb_update_required += 1;
                                 }
                             }
                         }
@@ -1622,6 +1619,7 @@ namespace atomic_dex
                         update_coin_status(this->m_current_wallet_name, tickers, false, m_coins_informations, m_coin_cfg_mutex);
                     });
             dispatcher_.trigger<zhtlc_leave_enabling>();
+            this->m_nb_update_required += 1;
         };
 
         for (auto&& coin: coins)
