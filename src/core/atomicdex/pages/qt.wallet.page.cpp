@@ -496,7 +496,7 @@ namespace atomic_dex
     }
 
     void
-    wallet_page::send(const QString& address, const QString& amount, bool max, bool with_fees, QVariantMap fees_data)
+    wallet_page::send(const QString& address, const QString& amount, bool max, bool with_fees, QVariantMap fees_data, const QString& memo)
     {
         //! Preparation
         this->set_send_busy(true);
@@ -672,11 +672,10 @@ namespace atomic_dex
 
             //! Process
             mm2_system.get_mm2_client().async_rpc_batch_standalone(batch).then(answer_functor).then(error_functor);
-
         }
         else
         {
-            t_withdraw_request withdraw_req{.coin = ticker, .to = address.toStdString(), .amount = max ? "0" : amount.toStdString(), .max = max};
+            t_withdraw_request withdraw_req{.coin = ticker, .to = address.toStdString(), .amount = max ? "0" : amount.toStdString(), .memo = memo.toStdString(), .max = max};
 
             if (with_fees)
             {

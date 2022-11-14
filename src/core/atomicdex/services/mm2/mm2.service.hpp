@@ -182,8 +182,7 @@ namespace atomic_dex
        void enable_slp_coins(const t_coins& coins);
        void enable_slp_testnet_coin(coin_config coin_config);
        void enable_slp_testnet_coins(const t_coins& coins);
-       void enable_cosmos_coin(coin_config coin_config);
-       void enable_tendermint_coin(coin_config coin_config);
+       void enable_tendermint_coin(coin_config coin_config, std::string parent_ticker);
        void enable_tendermint_coins(const t_coins& coins, const std::string parent_ticker);
        void enable_zhtlc(const t_coins& coins);
        

@@ -389,6 +389,10 @@ QtObject {
         return JSON.stringify(j_obj, null, 4)
     }
 
+    function is_coin_with_memo(coin_info) {
+        return coin_info.type === "TENDERMINT" || coin_info.type === "TENDERMINTTOKEN"
+    }
+
     function addressTxUri(coin_info) {
         if (coin_info.tx_uri == "") return "address/"
             return coin_info.address_uri

@@ -518,7 +518,9 @@ namespace atomic_dex
         t_coins erc_family_coins;
         t_coins slp_coins;
         t_coins slp_testnet_coins;
-        t_coins tendermint_coins;
+        t_coins osmosis_coins;
+        t_coins iris_coins;
+        t_coins cosmos_coins;
         t_coins zhtlc_coins;
         
         for (const auto& coin_config : coins)
@@ -538,15 +540,23 @@ namespace atomic_dex
                     slp_coins.push_back(coin_config);
                 }
             }
-            else if (coin_config.coin_type == CoinType::TENDERMINT)
+            else if (coin_config.coin_type == CoinType::TENDERMINT || coin_config.coin_type == CoinType::TENDERMINTTOKEN)
             {
-                if (coin_config.ticker == "ATOM")
+                if (coin_config.parent_coin == "ATOM")
                 {
-                    enable_cosmos_coin(coin_config);
+                    cosmos_coins.push_back(coin_config);
+                }
+                if (coin_config.parent_coin == "IRIS")
+                {
+                    iris_coins.push_back(coin_config);
+                }
+                if (coin_config.parent_coin == "OSMO")
+                {
+                    osmosis_coins.push_back(coin_config);
                 }
                 else
                 {
-                    tendermint_coins.push_back(coin_config);
+                    SPDLOG_WARN("Unexpected Tenddermint ticker: {}", coin_config.ticker);
                 }                
             }
             else if (coin_config.coin_type == CoinType::ZHTLC)
@@ -578,9 +588,17 @@ namespace atomic_dex
         {
             enable_slp_testnet_coins(slp_testnet_coins);
         }
-        if (tendermint_coins.size() > 0)
+        if (iris_coins.size() > 0)
         {
-            enable_tendermint_coins(tendermint_coins, "IRIS");
+            enable_tendermint_coins(iris_coins, "IRIS");
+        }
+        if (cosmos_coins.size() > 0)
+        {
+            enable_tendermint_coins(cosmos_coins, "ATOM");
+        }
+        if (osmosis_coins.size() > 0)
+        {
+            enable_tendermint_coins(osmosis_coins, "OSMO");
         }
         if (zhtlc_coins.size() > 0)
         {
@@ -997,18 +1015,14 @@ namespace atomic_dex
         this->m_nb_update_required += 1;
     }
 
-    void mm2_service::enable_cosmos_coin(coin_config coin_config)
+    void mm2_service::enable_tendermint_coin(coin_config coin_config, std::string parent_ticker)
     {
-        enable_tendermint_coins(t_coins{std::move(coin_config)}, "ATOM");
-    }
-
-    void mm2_service::enable_tendermint_coin(coin_config coin_config)
-    {
-        enable_tendermint_coins(t_coins{std::move(coin_config)}, "IRIS");
+        enable_tendermint_coins(t_coins{std::move(coin_config)}, parent_ticker);
     }
 
     void mm2_service::enable_tendermint_coins(const t_coins& coins, const std::string parent_ticker)
     {
+        SPDLOG_INFO("Parent ticker: {}", parent_ticker);
         auto callback = [this]<typename RpcRequest>(RpcRequest rpc)
         {
             if (rpc.error)

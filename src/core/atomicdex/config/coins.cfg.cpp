@@ -111,7 +111,7 @@ namespace
         }
         if (coin_type == "TENDERMINTTOKEN")
         {
-            return CoinType::TENDERMINT;
+            return CoinType::TENDERMINTTOKEN;
         }
         if (coin_type == "ZHTLC")
         {
@@ -141,6 +141,7 @@ namespace atomic_dex
         j.at("explorer_url").get_to(cfg.explorer_url);
 
         cfg.gui_ticker           = j.contains("gui_coin") ? j.at("gui_coin").get<std::string>() : cfg.ticker;
+        cfg.parent_coin          = j.contains("parent_coin") ? j.at("parent_coin").get<std::string>() : cfg.ticker;
         cfg.minimal_claim_amount = cfg.is_claimable ? j.at("minimal_claim_amount").get<std::string>() : "0";
         cfg.coinpaprika_id       = j.contains("coinpaprika_id") ? j.at("coinpaprika_id").get<std::string>() : "test-coin";
         cfg.coingecko_id         = j.contains("coingecko_id") ? j.at("coingecko_id").get<std::string>() : "test-coin";
@@ -322,7 +323,11 @@ namespace atomic_dex
             break;
         case CoinType::TENDERMINT:
             cfg.has_parent_fees_ticker = true;
-            cfg.fees_ticker            = cfg.ticker == "ATOM" ? "ATOM" : "IRIS";
+            cfg.fees_ticker            = cfg.parent_coin;
+            break;
+        case CoinType::TENDERMINTTOKEN:
+            cfg.has_parent_fees_ticker = true;
+            cfg.fees_ticker            = cfg.parent_coin;
             break;
         case CoinType::ZHTLC:
             cfg.has_parent_fees_ticker = false;

@@ -25,9 +25,10 @@ namespace atomic_dex::mm2
     struct withdraw_request
     {
         std::string                  coin;
-        std::string                  to;                 ///< coins will be withdraw to this address
-        std::string                  amount;             ///< ignored if max is true
-        std::optional<withdraw_fees> fees{std::nullopt}; ///< ignored if std::nullopt
+        std::string                  to;                  ///< coins will be withdraw to this address
+        std::string                  amount;              ///< ignored if max is true
+        std::optional<std::string>   memo;                ///< memo for tendermint
+        std::optional<withdraw_fees> fees{std::nullopt};  ///< ignored if std::nullopt
         bool                         max{false};
     };
 
