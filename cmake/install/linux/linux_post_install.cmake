@@ -13,7 +13,7 @@ if (EXISTS ${PROJECT_ROOT_DIR}/build-Release OR EXISTS ${PROJECT_ROOT_DIR}/build
     get_filename_component(PROJECT_ROOT_DIR ${PROJECT_ROOT_DIR} DIRECTORY)
 endif ()
 
-set(PROJECT_QML_DIR ${PROJECT_ROOT_DIR}/atomic_defi_design/Dex)
+set(PROJECT_QML_DIR ${PROJECT_ROOT_DIR}/src/qml/Dex)
 set(PROJECT_APP_DIR AntaraAtomicDexAppDir)
 set(PROJECT_APP_PATH ${CMAKE_SOURCE_DIR}/bin/${PROJECT_APP_DIR})
 set(PROJECT_BIN_PATH ${PROJECT_APP_PATH}/usr/bin/${DEX_PROJECT_NAME})

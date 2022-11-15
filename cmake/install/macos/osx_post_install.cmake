@@ -13,7 +13,7 @@ set(BIN_DIR ${CMAKE_CURRENT_SOURCE_DIR}/bin)
 set(TARGET_APP_PATH ${PROJECT_ROOT_DIR}/bundled/osx/)
 set(PROJECT_APP_DIR ${DEX_PROJECT_NAME}.app)
 set(PROJECT_APP_PATH ${BIN_DIR}/${PROJECT_APP_DIR})
-set(PROJECT_QML_DIR ${PROJECT_ROOT_DIR}/atomic_defi_design/Dex)
+set(PROJECT_QML_DIR ${PROJECT_ROOT_DIR}/src/qml/Dex)
 set(MAC_DEPLOY_PATH $ENV{QT_ROOT}/clang_64/bin/macdeployqt)
 
 message(STATUS "VCPKG package manager enabled")

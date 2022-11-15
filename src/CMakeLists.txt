@@ -51,13 +51,13 @@ target_link_libraries(${PROJECT_NAME}_core INTERFACE SortFilterProxyModel)
 # Translation files
 set_directory_properties(PROPERTIES CLEAN_NO_CUSTOM TRUE)
 set(TS_FILES
-        ${CMAKE_SOURCE_DIR}/atomic_defi_design/assets/languages/atomic_defi_en.ts
-        ${CMAKE_SOURCE_DIR}/atomic_defi_design/assets/languages/atomic_defi_fr.ts
-        ${CMAKE_SOURCE_DIR}/atomic_defi_design/assets/languages/atomic_defi_de.ts
-        ${CMAKE_SOURCE_DIR}/atomic_defi_design/assets/languages/atomic_defi_es.ts
-        ${CMAKE_SOURCE_DIR}/atomic_defi_design/assets/languages/atomic_defi_tr.ts
-        ${CMAKE_SOURCE_DIR}/atomic_defi_design/assets/languages/atomic_defi_ru.ts)
-set_source_files_properties(${TS_FILES} PROPERTIES OUTPUT_LOCATION ${CMAKE_SOURCE_DIR}/atomic_defi_design/assets/languages)
+        qml/assets/languages/atomic_defi_en.ts
+        qml/assets/languages/atomic_defi_fr.ts
+        qml/assets/languages/atomic_defi_de.ts
+        qml/assets/languages/atomic_defi_es.ts
+        qml/assets/languages/atomic_defi_tr.ts
+        qml/assets/languages/atomic_defi_ru.ts)
+set_source_files_properties(${TS_FILES} PROPERTIES OUTPUT_LOCATION qml/assets/languages)
 qt5_create_translation(QM_FILES
         ${PROJECT_SOURCE_DIR}/atomic_defi_design/Dex
         ${PROJECT_SOURCE_DIR}/src
@@ -67,15 +67,15 @@ message(STATUS "QM FILES -> ${QM_FILES}")
 message(STATUS "TS FILES -> ${TS_FILES}")
 
 set(qml_qrc)
-set(assets_qrc)
-set(imports_qrc ${CMAKE_SOURCE_DIR}/atomic_defi_design/imports/qml.qrc)
-dex_generate_qrc(${CMAKE_SOURCE_DIR}/atomic_defi_design/Dex qml_qrc 
+dex_generate_qrc(qml/Dex qml_qrc 
     PATH_PREFIX "Dex"
     FILES_TO_EXCLUDE ".gitignore;.DS_Store;.qrc")
-dex_generate_qrc(${CMAKE_SOURCE_DIR}/atomic_defi_design/assets assets_qrc 
+set(assets_qrc)
+dex_generate_qrc(qml/assets assets_qrc 
     PATH_PREFIX "assets"
     FILES_TO_EXCLUDE ".gitignore;.DS_Store;CONTRIBUTING.txt;FONTLOG.txt;LICENCE-FAQ.txt;LICENCE.txt;README.txt;TRADEMARKS.txt;.ts;.qm;.qrc"
     FILES "languages/atomic_defi_en.qm;languages/atomic_defi_es.qm;languages/atomic_defi_de.qm;languages/atomic_defi_fr.qm;languages/atomic_defi_ru.qm;languages/atomic_defi_tr.qm")
+set(imports_qrc qml/imports/qml.qrc)
 
 # Main executable
 add_executable(${PROJECT_NAME}
@@ -214,10 +214,10 @@ if (WIN32)
     add_custom_command(TARGET ${PROJECT_NAME} PRE_BUILD
             COMMAND ${CMAKE_COMMAND} -E copy_directory
             ${CMAKE_SOURCE_DIR}/ci_tools_atomic_dex/windows_misc $<TARGET_FILE_DIR:${PROJECT_NAME}>)
-    message(STATUS "${WINDEPLOYQT_PATH} ${CMAKE_BINARY_DIR}/bin/${PROJECT_NAME}.exe --qmldir ${CMAKE_SOURCE_DIR}/atomic_defi_design/Dex")
+    message(STATUS "${WINDEPLOYQT_PATH} ${CMAKE_BINARY_DIR}/bin/${PROJECT_NAME}.exe --qmldir qml/Dex")
     add_custom_command(TARGET ${PROJECT_NAME}
             POST_BUILD
-            COMMAND ${WINDEPLOYQT_PATH} ${CMAKE_BINARY_DIR}/bin/${PROJECT_NAME}.exe --qmldir ${CMAKE_SOURCE_DIR}/atomic_defi_design/Dex
+            COMMAND ${WINDEPLOYQT_PATH} ${CMAKE_BINARY_DIR}/bin/${PROJECT_NAME}.exe --qmldir qml/Dex
             )
     include(${CMAKE_SOURCE_DIR}/cmake/install/windows/dex_install.cmake)
 

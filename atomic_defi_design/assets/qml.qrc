@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/assets">
+        <file>images/dex-logo-big.png</file>
+        <file>images/dex-tray-icon.png</file>
+        <file>images/logo/dex-logo.png</file>
+        <file>languages/atomic_defi_en.qm</file>
+        <file>languages/atomic_defi_es.qm</file>
+        <file>languages/atomic_defi_de.qm</file>
+        <file>languages/atomic_defi_fr.qm</file>
+        <file>languages/atomic_defi_ru.qm</file>
+        <file>languages/atomic_defi_tr.qm</file>
+    </qresource>
+</RCC>
