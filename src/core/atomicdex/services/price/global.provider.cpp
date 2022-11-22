@@ -211,16 +211,22 @@ namespace atomic_dex
                 {
                     t_float_50 rate(1);
                     {
-                        std::shared_lock lock(m_coin_rate_mutex);
-                        rate = t_float_50(m_coin_rate_providers.at(fiat)); ///< Retrieve BTC or KMD rate let's say for USD
+                        if (m_coin_rate_providers.contains(fiat))
+                        {
+                            std::shared_lock lock(m_coin_rate_mutex);
+                            rate = t_float_50(m_coin_rate_providers.at(fiat)); ///< Retrieve BTC or KMD rate let's say for USD
+                        }
                     }
                     t_float_50 tmp_current_price = t_float_50(current_price) * rate;
                     current_price                = tmp_current_price.str();
                 }
                 else if (fiat != "USD")
                 {
-                    t_float_50 tmp_current_price = t_float_50(current_price) * m_other_fiats_rates->at("rates").at(fiat).get<double>();
-                    current_price                = tmp_current_price.str();
+                    if (m_other_fiats_rates->contains("rates"))
+                    {
+                        t_float_50 tmp_current_price = t_float_50(current_price) * m_other_fiats_rates->at("rates").at(fiat).get<double>();
+                        current_price                = tmp_current_price.str();
+                    }
                 }
             }
             else
@@ -228,8 +234,11 @@ namespace atomic_dex
                 //! We use smartfi and the fiat is not USD, we multiply the current price with the rate
                 if (is_this_currency_a_fiat(m_cfg, fiat) && fiat != "USD")
                 {
-                    t_float_50 tmp_current_price = t_float_50(current_price) * m_other_fiats_rates->at("rates").at(fiat).get<double>();
-                    current_price                = tmp_current_price.str();
+                    if (m_other_fiats_rates->contains("rates"))
+                    {
+                        t_float_50 tmp_current_price = t_float_50(current_price) * m_other_fiats_rates->at("rates").at(fiat).get<double>();
+                        current_price                = tmp_current_price.str();
+                    }
                 }
                 else if (!is_this_currency_a_fiat(m_cfg, fiat))
                 {
@@ -270,6 +279,7 @@ namespace atomic_dex
             SPDLOG_ERROR("Exception caught in get_rate_conversion: {} - fiat: {} - ticker: {}", error.what(), fiat, ticker);
             return "0.00";
         }
+        return "0.00";
     }
 
     std::string
