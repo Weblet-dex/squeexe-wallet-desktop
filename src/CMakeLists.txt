@@ -137,12 +137,6 @@ add_executable(${PROJECT_NAME}_tests MACOSX_BUNDLE ${ICON}
         tests/utilities/qt.utilities.tests.cpp
         tests/utilities/global.utilities.tests.cpp
 
-        ##! Managers
-        tests/managers/addressbook.manager.tests.cpp
-
-        ##! Models
-        tests/models/qt.addressbook.contact.model.tests.cpp
-
         ##! Utilities
         tests/utilities/qt.utilities.tests.cpp
         tests/utilities/global.utilities.tests.cpp)
