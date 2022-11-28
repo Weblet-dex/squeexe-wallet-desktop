@@ -13,6 +13,8 @@ Item
 
     property bool isAsk
     property bool isVertical: false
+    property alias view: orderbook_list
+
     width: parent.width
     height: parent.height
 

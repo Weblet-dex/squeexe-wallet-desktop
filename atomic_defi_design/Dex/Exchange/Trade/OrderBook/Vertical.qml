@@ -28,6 +28,7 @@ Widget
         isVertical: true
         Layout.fillHeight: true
         Layout.fillWidth: true
+        view.verticalLayoutDirection: ListView.BottomToTop
     }
 
     Item
