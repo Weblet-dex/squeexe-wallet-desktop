@@ -76,6 +76,22 @@ namespace atomic_dex
             case NameRole:
                 item.name = value.toString();
                 break;
+            case PushTagArgRole:
+            {
+                auto tag = value.toString();
+                if (item.tags.contains(value.toString()))
+                    return false;
+                item.tags.push_back(tag);
+                emit dataChanged(index, index, {TagsRole});
+                return true;
+            }
+            case RemoveTagArgRole:
+            {
+                if (!item.tags.removeOne(value.toString()))
+                    return false;
+                emit dataChanged(index, index, {TagsRole});
+                return true;
+            }
             default:
                 return false;
         }
@@ -90,6 +106,8 @@ namespace atomic_dex
         {
             {NameRole, "name"},
             {TagsRole, "tags"},
+            {PushTagArgRole, "pushTagArg"},
+            {RemoveTagArgRole, "removeTagArg"},
             {NameWithTagsRole, "nameWithTags"},
             {AddressListModelRole, "addressListModel"}
         };

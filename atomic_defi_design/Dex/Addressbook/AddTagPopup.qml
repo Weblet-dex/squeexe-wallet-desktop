@@ -50,10 +50,14 @@ Dex.Popup
                     return
                 }
 
-                var addTagResult = contactModel.addCategory(tagNameField.text)
+                if (contactModel.tags.indexOf(tagNameField.text) != -1)
+                {
+                    tagAlreadyTakenToolTip.visible = true
+                    return
+                }
 
-                if (addTagResult === false) tagAlreadyTakenToolTip.visible = true
-                else root.close()
+                contactModel.pushTagArg = tagNameField.text;
+                root.close()
             }
         }
     }

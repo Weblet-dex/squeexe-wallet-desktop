@@ -259,7 +259,10 @@ Dex.MultipageModal
                         height: 18
                         color: "transparent"
                         iconSource: Qaterial.Icons.close
-                        onClicked: contactModel.removeCategory(modelData)
+                        onClicked: 
+                        {
+                            contactModel.removeTagArg = modelData
+                        }
                     }
                 }
             }

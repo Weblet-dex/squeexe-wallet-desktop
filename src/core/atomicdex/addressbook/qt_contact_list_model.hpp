@@ -47,6 +47,8 @@ namespace atomic_dex
         {
             NameRole = Qt::UserRole + 1,
             TagsRole,
+            PushTagArgRole,
+            RemoveTagArgRole,
             NameWithTagsRole,
             AddressListModelRole
         };
