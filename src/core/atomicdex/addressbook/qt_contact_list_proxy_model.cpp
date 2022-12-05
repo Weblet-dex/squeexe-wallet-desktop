@@ -34,7 +34,6 @@ namespace atomic_dex
     
     bool qt_contact_list_proxy_model::filterAcceptsRow(int source_row, const QModelIndex& source_parent) const
     {
-        int role        = filterRole();
         QModelIndex idx = sourceModel()->index(source_row, 0, source_parent);
         assert(sourceModel()->hasIndex(idx.row(), 0));
     
