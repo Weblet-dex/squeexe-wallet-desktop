@@ -26,6 +26,7 @@
 #include "atomicdex/constants/dex.constants.hpp"
 #include "rpc.hpp"
 #include "rpc.tx.history.hpp"
+#include "../../mm2.hpp"
 
 namespace
 {
@@ -47,7 +48,7 @@ namespace
     web::http::http_request make_request(typename Rpc::expected_request_type data_req = {})
     {
         web::http::http_request request;
-        nlohmann::json json_req = {{"method", Rpc::endpoint}, {"userpass", atomic_dex::mm2::get_rpc_password()}};
+        nlohmann::json json_req = {{"method", Rpc::endpoint}, {"userpass", mm2::get_rpc_password()}};
         nlohmann::json json_data;
 
         nlohmann::to_json(json_data, data_req);

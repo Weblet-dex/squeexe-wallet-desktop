@@ -37,6 +37,7 @@
 #include "atomicdex/services/price/global.provider.hpp"
 #include "atomicdex/utilities/global.utilities.hpp"
 #include "atomicdex/utilities/qt.utilities.hpp"
+#include "../mm2.hpp"
 
 namespace
 {
@@ -680,7 +681,7 @@ namespace atomic_dex
             };
             mm2_system.get_mm2_client().async_rpc_batch_standalone(batch).then(answer_functor);
         }
-        return {QString::fromStdString(seed), QString::fromStdString(mm2::get_rpc_password())};
+        return {QString::fromStdString(seed), QString::fromStdString(::mm2::get_rpc_password())};
     }
 
     QString settings_page::get_version()

@@ -235,8 +235,6 @@ namespace atomic_dex::mm2
 
     nlohmann::json template_request(std::string method_name, bool is_protocol_v2 = false);
 
-    void               set_rpc_password(std::string rpc_password) ;
-    const std::string& get_rpc_password() ;
     void               set_system_manager(ag::ecs::system_manager& system_manager);
 } // namespace atomic_dex::mm2
 

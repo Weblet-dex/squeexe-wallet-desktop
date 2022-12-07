@@ -41,6 +41,7 @@
 #include "atomicdex/services/mm2/mm2.service.hpp"
 #include "atomicdex/utilities/qt.utilities.hpp"
 #include "atomicdex/utilities/kill.hpp"
+#include "../../mm2.hpp"
 
 namespace ag = antara::gaming;
 
@@ -1682,7 +1683,7 @@ namespace atomic_dex
         this->dispatcher_.trigger<force_update_providers>();
         mm2_config cfg{.passphrase = std::move(passphrase), .rpc_password = atomic_dex::gen_random_password()};
         mm2::set_system_manager(m_system_manager);
-        mm2::set_rpc_password(cfg.rpc_password);
+        ::mm2::get_rpc_password() = cfg.rpc_password;
         json       json_cfg;
         const auto tools_path = ag::core::assets_real_path() / "tools/mm2/";
 

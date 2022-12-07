@@ -33,6 +33,7 @@
 #include "atomicdex/services/price/global.provider.hpp"
 #include "atomicdex/utilities/global.utilities.hpp"
 #include "atomicdex/utilities/qt.utilities.hpp"
+#include "../../mm2.hpp"
 
 //! Utilities
 namespace
@@ -581,7 +582,7 @@ namespace atomic_dex::mm2
     nlohmann::json
     template_request(std::string method_name, bool is_protocol_v2)
     {
-        nlohmann::json request = {{"method", std::move(method_name)}, {"userpass", get_rpc_password()}};
+        nlohmann::json request = {{"method", std::move(method_name)}, {"userpass", ::mm2::get_rpc_password()}};
         if (is_protocol_v2)
         {
             request["mmrpc"] = "2.0";
@@ -652,25 +653,6 @@ namespace atomic_dex::mm2
             answer["error"] = body;
         }
         return answer;
-    }
-
-    static inline std::string&
-    access_rpc_password()
-    {
-        static std::string rpc_password;
-        return rpc_password;
-    }
-
-    void
-    set_rpc_password(std::string rpc_password)
-    {
-        access_rpc_password() = std::move(rpc_password);
-    }
-
-    const std::string&
-    get_rpc_password()
-    {
-        return access_rpc_password();
     }
 
     pplx::task<web::http::http_response>
