@@ -22,9 +22,6 @@
 #include "atomicdex/api/coinpaprika/coinpaprika.hpp"
 #include "atomicdex/utilities/global.utilities.hpp"
 
-//! Private
-#include "atomicdex/utilities/nlohmann.json.sax.private.cpp"
-
 namespace
 {
     //! Constants
