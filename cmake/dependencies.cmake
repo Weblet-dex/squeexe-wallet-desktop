@@ -1,4 +1,3 @@
-##! Dependancies
 include(FetchContent)
 
 if (WIN32)
@@ -32,55 +31,18 @@ if (APPLE)
     get_target_property(KK_VAR cpprestsdk::cpprest INTERFACE_LINK_LIBRARIES)
     message("Property of cpprestsdk::cpprest: ${KK_VAR}")
 endif ()
-#find_package(absl CONFIG REQUIRED)
+
 find_package(Boost COMPONENTS filesystem random system thread REQUIRED)
 add_library(komodo-taskflow INTERFACE)
-if (CONAN_ENABLED)
-    find_package(Taskflow REQUIRED)
-    target_link_libraries(komodo-taskflow INTERFACE Taskflow::Taskflow)
-endif ()
 add_library(komodo-taskflow::taskflow ALIAS komodo-taskflow)
-if (CONAN_ENABLED)
-    if (NOT TARGET Boost::filesystem)
-        add_library(Boost::filesystem INTERFACE IMPORTED)
-        if (WIN32)
-            target_link_libraries(Boost::filesystem INTERFACE
-                    CONAN_LIB::Boost_libboost_filesystem
-                    CONAN_LIB::Boost_libboost_system
-                    Boost::Boost)
-        else ()
-
-            target_link_libraries(Boost::filesystem INTERFACE
-                    CONAN_LIB::Boost_boost_filesystem
-                    CONAN_LIB::Boost_boost_system
-                    Boost::Boost)
-        endif ()
-    endif ()
-
-    if (NOT TARGET Boost::random)
-        add_library(Boost::random INTERFACE IMPORTED)
-        if (WIN32)
-            target_link_libraries(Boost::random INTERFACE CONAN_LIB::Boost_libboost_random)
-        else ()
-            target_link_libraries(Boost::random INTERFACE CONAN_LIB::Boost_boost_random)
-        endif ()
-    endif ()
-endif ()
 
 add_library(komodo-date INTERFACE)
-if (CONAN_ENABLED)
-    target_link_libraries(komodo-date INTERFACE date::date)
-else ()
-    target_link_libraries(komodo-date INTERFACE date::date-tz)
-endif ()
+target_link_libraries(komodo-date INTERFACE date::date-tz)
 add_library(komodo-date::date ALIAS komodo-date)
 
 find_package(Qt5 5.15 COMPONENTS Core Quick LinguistTools Svg Charts WebEngine WebEngineCore WebEngineWidgets Widgets REQUIRED)
 
-#find_package(Qt5)
-
 set(BUILD_TESTING OFF CACHE BOOL "Override option" FORCE)
-#set(REPROC++ ON CACHE BOOL "" FORCE)
 
 FetchContent_Declare(
         doom_st
@@ -91,11 +53,6 @@ FetchContent_Declare(
         doom_meta
         URL https://github.com/KomodoPlatform/meta/archive/master.zip
 )
-
-#FetchContent_Declare(
-#        reproc
-#        URL https://github.com/KomodoPlatform/reproc/archive/v14.2.1.zip
-#)
 
 set(EXPECTED_ENABLE_TESTS OFF CACHE BOOL "Override option" FORCE)
 
@@ -122,12 +79,6 @@ add_library(refl-cpp INTERFACE)
 target_include_directories(refl-cpp INTERFACE ${refl-cpp_SOURCE_DIR})
 add_library(antara::refl-cpp ALIAS refl-cpp)
 
-#FetchContent_GetProperties(reproc)
-#if (NOT reproc_POPULATED)
- #   FetchContent_Populate(reproc)
- #   add_subdirectory(${reproc_SOURCE_DIR} ${reproc_BINARY_DIR} EXCLUDE_FROM_ALL)
-#endif ()
-
 FetchContent_GetProperties(expected)
 if (NOT expected_POPULATED)
     FetchContent_Populate(expected)
@@ -135,21 +86,16 @@ if (NOT expected_POPULATED)
 endif ()
 
 
-##! Sodium
+## Sodium
 add_library(komodo-sodium INTERFACE)
-if (CONAN_ENABLED)
-    find_package(libsodium REQUIRED)
-else ()
-    find_package(unofficial-sodium CONFIG REQUIRED)
-    target_link_libraries(komodo-sodium INTERFACE unofficial-sodium::sodium)
-endif ()
+find_package(unofficial-sodium CONFIG REQUIRED)
+target_link_libraries(komodo-sodium INTERFACE unofficial-sodium::sodium)
 add_library(komodo-sodium::sodium ALIAS komodo-sodium)
 
 
 ## Unofficial BTC
 add_library(unofficial-bitcoin INTERFACE)
 if (WIN32)
-    #target_link_directories(unofficial-	bitcoin INTERFACE ${PROJECT_SOURCE_DIR}/wally)
     target_link_libraries(unofficial-bitcoin INTERFACE ${PROJECT_SOURCE_DIR}/wally/wally.lib)
     target_include_directories(unofficial-bitcoin INTERFACE ${PROJECT_SOURCE_DIR}/wally)
 else ()
