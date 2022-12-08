@@ -21,7 +21,7 @@
 
 //! Headers
 #include "atomicdex/utilities/global.utilities.hpp"
-#include "atomicdex/version/version.hpp"
+#include "atomicdex/version.hpp"
 #include "atomicdex/constants/dex.constants.hpp"
 
 namespace atomic_dex

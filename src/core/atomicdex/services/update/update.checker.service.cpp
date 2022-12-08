@@ -25,7 +25,7 @@
 #include "atomicdex/events/events.hpp"
 #include "atomicdex/services/update/update.checker.service.hpp"
 #include "atomicdex/utilities/cpprestsdk.utilities.hpp"
-#include "atomicdex/version/version.hpp"
+#include "atomicdex/version.hpp"
 
 namespace
 {

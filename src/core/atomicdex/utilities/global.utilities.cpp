@@ -13,7 +13,7 @@
 
 //! Project Headers
 #include "atomicdex/utilities/global.utilities.hpp"
-#include "atomicdex/version/version.hpp"
+#include "atomicdex/version.hpp"
 
 namespace
 {

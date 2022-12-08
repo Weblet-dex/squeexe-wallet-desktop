@@ -26,7 +26,7 @@
 #include "atomicdex/config/wallet.cfg.hpp"
 #include "atomicdex/services/mm2/mm2.service.hpp"
 #include "atomicdex/utilities/security.utilities.hpp"
-#include "atomicdex/version/version.hpp"
+#include "atomicdex/version.hpp"
 
 namespace atomic_dex
 {
