@@ -56,6 +56,17 @@ namespace atomic_dex
                     .get_wallet_default_name().toStdString()));
     }
 
+
+    void addressbook_page::saveContacts()
+    {
+        std::vector<contact_dto> addressbook;
+
+        m_model->fill_std_vector(addressbook);
+        save_addressbook_to_filesystem(addressbook, 
+                                       m_system_manager.get_system<qt_wallet_manager>()
+                                           .get_wallet_default_name().toStdString());
+    }
+
     void addressbook_page::clear()
     {
         std::vector<contact_dto> addressbook;

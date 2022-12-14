@@ -44,6 +44,8 @@ namespace atomic_dex
         // Handler that should be called when logged in to a wallet.
         void on_post_login([[maybe_unused]] const post_login& evt);
 
+        Q_INVOKABLE void saveContacts();
+
         void clear();
 
       private:
