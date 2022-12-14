@@ -55,8 +55,8 @@ namespace atomic_dex
 
     void save_addressbook_json_to_filesystem(const nlohmann::json& json, const std::string& wallet_name)
     {
-        const fs::path out_folder{utils::get_atomic_dex_addressbook_folder()};
-        const fs::path out_path{out_folder / wallet_name};
+        const auto out_folder{utils::get_atomic_dex_addressbook_folder()};
+        const auto out_path{out_folder / wallet_name};
         QFile output;
         
         utils::create_if_doesnt_exist(out_folder);
