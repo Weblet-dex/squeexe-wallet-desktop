@@ -108,7 +108,7 @@ Dex.MultipageModal
                                     height: 9
                                     color: "transparent"
                                     iconSource: Qaterial.Icons.close
-                                    onClicked: contactModel.removeAddressEntry(type, key)
+                                    onClicked: contactModel.addressListModel.removeAddressEntry(type, key)
                                 }
                             }
 

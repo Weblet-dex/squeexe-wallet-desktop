@@ -241,10 +241,10 @@ Dex.Rectangle
 
             if (editionMode) // Removes old address entry before if we are in edition mode.
             {
-                contactModel.removeAddressEntry(addressType, addressKey);
+                contactModel.addressListModel.removeAddressEntry(addressType, addressKey);
             }
 
-            var createAddressResult = contactModel.addAddressEntry(addressTypeComboBox.currentText, addressKeyField.text, addressValueField.text);
+            var createAddressResult = contactModel.addressListModel.addAddressEntry(addressTypeComboBox.currentText, addressKeyField.text, addressValueField.text);
             if (createAddressResult === true)
             {
                 addressCreated()
