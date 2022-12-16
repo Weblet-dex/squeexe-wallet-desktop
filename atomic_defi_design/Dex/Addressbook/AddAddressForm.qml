@@ -254,6 +254,8 @@ Dex.Rectangle
             if (createAddressResult === true)
             {
                 addressCreated()
+                Dex.API.app.addressbookPg.model.proxyModel.searchExp = "x"
+                Dex.API.app.addressbookPg.model.proxyModel.searchExp = ""
             }
             else
             {

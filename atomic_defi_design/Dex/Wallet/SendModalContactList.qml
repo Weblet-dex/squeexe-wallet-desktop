@@ -18,8 +18,8 @@ MultipageModal
     property string ticker: api_wallet_page.ticker
     property var selected_address: ""
 
-    Component.onCompleted: API.app.addressbookPg.model.proxy.typeFilter = ticker
-    Component.onDestruction: API.app.addressbookPg.model.proxy.typeFilter = ""
+    Component.onCompleted: API.app.addressbookPg.model.proxyModel.typeFilter = ticker
+    Component.onDestruction: API.app.addressbookPg.model.proxyModel.typeFilter = ""
 
     MultipageModalContent
     {
@@ -31,8 +31,8 @@ MultipageModal
             Layout.alignment: Qt.AlignHCenter
             Layout.fillWidth: true
             placeholderText: qsTr("Search for contacts...")
-            onTextChanged: API.app.addressbookPg.model.proxy.searchExp = text
-            Component.onDestruction: API.app.addressbookPg.model.proxy.searchExp = ""
+            onTextChanged: API.app.addressbookPg.model.proxyModel.searchExp = text
+            Component.onDestruction: API.app.addressbookPg.model.proxyModel.searchExp = ""
         }
 
         // Contact List
@@ -42,7 +42,7 @@ MultipageModal
 
             Layout.fillWidth: true
 
-            model: API.app.addressbookPg.model.proxy
+            model: API.app.addressbookPg.model.proxyModel
             delegate: DefaultRectangle
             {
                 property int addressesCount
