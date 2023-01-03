@@ -1183,7 +1183,7 @@ namespace atomic_dex
         };
 
         nlohmann::json batch;
-        nlohmann::json preimage_request = mm2::template_request("trade_preimage");
+        nlohmann::json preimage_request = mm2::template_request("trade_preimage", true);
         mm2::to_json(preimage_request, req);
         batch.push_back(preimage_request);
         preimage_request["userpass"] = "******";

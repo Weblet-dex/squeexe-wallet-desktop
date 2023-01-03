@@ -27,17 +27,17 @@ namespace atomic_dex::mm2
     void
     to_json(nlohmann::json& j, const trade_preimage_request& request)
     {
-        j["base"]        = request.base_coin;
-        j["rel"]         = request.rel_coin;
-        j["swap_method"] = request.swap_method;
-        j["volume"]      = request.volume;
+        j["params"]["base"]        = request.base_coin;
+        j["params"]["rel"]         = request.rel_coin;
+        j["params"]["swap_method"] = request.swap_method;
+        j["params"]["volume"]      = request.volume;
         if (request.max.has_value())
         {
-            j["max"] = request.max.value();
+            j["params"]["max"] = request.max.value();
         }
         if (request.price.has_value())
         {
-            j["price"] = request.price.value();
+            j["params"]["price"] = request.price.value();
         }
     }
 
@@ -55,6 +55,8 @@ namespace atomic_dex::mm2
     {
         j.at("base_coin_fee").get_to(answer.base_coin_fee);
         j.at("rel_coin_fee").get_to(answer.rel_coin_fee);
+        j.at("total_fees").get_to(answer.total_fees);
+
         if (j.contains("taker_fee"))
         {
             answer.taker_fee = j.at("taker_fee").get<coin_fee>();

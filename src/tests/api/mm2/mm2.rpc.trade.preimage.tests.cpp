@@ -335,7 +335,7 @@ SCENARIO("atomic_dex::mm2::preimage scenario")
     CHECK(batch.is_array());
 
     //! Prepare request template
-    nlohmann::json request_json = atomic_dex::mm2::template_request("trade_preimage");
+    nlohmann::json request_json = atomic_dex::mm2::template_request("trade_preimage", true);
 
     //! Retrieve mm2 service
     auto& mm2 = g_context->system_manager().get_system<atomic_dex::mm2_service>();

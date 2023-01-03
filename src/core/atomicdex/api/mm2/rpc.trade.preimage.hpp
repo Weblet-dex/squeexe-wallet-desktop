@@ -45,7 +45,7 @@ namespace atomic_dex::mm2
     {
         std::string                  coin;
         std::string                  amount;
-        mm2::fraction           amount_fraction;
+        mm2::fraction                amount_fraction;
     };
 
     ENTT_API void from_json(const nlohmann::json& j, coin_fee& fee);

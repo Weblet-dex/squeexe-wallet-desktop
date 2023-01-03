@@ -301,27 +301,28 @@ Widget
         triggeredOnStart: true;
         onTriggered: {
             loop_count++;
-            console.log("Getting fees info... " + loop_count + "/50")
+            console.log("Getting fees info... " + loop_count + "/100")
             if (trade_preimage_ready)
             {
                 show_waiting_for_trade_preimage = false
                 loop_count = 0
-                stop()
                 confirm_trade_modal.open()
+                stop()
             }
             else if (trade_preimage_error != "")
             {
                 loop_count = 0
                 errors.text_value = trade_preimage_error.toString()
                 show_waiting_for_trade_preimage = false
+                reset_fees_state()
                 stop()
-
             }
-            else if (loop_count > 50)
+            else if (loop_count > 100)
             {
                 loop_count = 0
                 show_waiting_for_trade_preimage = false
                 trade_preimage_error = "Trade preimage timed out, try again."
+                reset_fees_state()
                 stop()
             }
         }
