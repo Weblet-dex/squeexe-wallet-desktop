@@ -15,7 +15,7 @@
 #include "atomicdex/utilities/safe.float.hpp"
 
 t_float_50
-safe_float(const std::string& from) 
+safe_float(const std::string& from, std::optional<QString> trigger)
 {
     try
     {
@@ -24,7 +24,7 @@ safe_float(const std::string& from)
     }
     catch (const std::exception& error)
     {
-        SPDLOG_ERROR("exception caught when creating a floating point number: {}", error.what());
+        SPDLOG_ERROR("exception caught when creating a floating point number: {}, trigger: {}", error.what(), trigger->toStdString());
 //#if defined(linux) || defined(__APPLE__)
 //        SPDLOG_ERROR("stacktrace: {}", boost::stacktrace::to_string(boost::stacktrace::stacktrace()));
 //#endif

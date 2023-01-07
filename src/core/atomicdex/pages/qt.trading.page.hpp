@@ -119,7 +119,7 @@ namespace atomic_dex
         bool                                   m_skip_taker{false};
 
         //! Private function
-        void                       determine_max_volume();
+        void                       determine_max_volume(QString trigger = "");
         void                       determine_total_amount();
         void                       determine_cex_rates(QString trigger = "");
         void                       cap_volume(QString trigger = "");
@@ -162,7 +162,7 @@ namespace atomic_dex
         Q_INVOKABLE void reset_order();
 
         Q_INVOKABLE void determine_fees();
-        Q_INVOKABLE void determine_error_cases();
+        Q_INVOKABLE void determine_error_cases(QString trigger);
         Q_INVOKABLE void reset_fees();
 
         //! Properties

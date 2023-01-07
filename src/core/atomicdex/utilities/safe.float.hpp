@@ -1,5 +1,8 @@
 #pragma once
 
+#include <optional>
+#include <QString>
+
 //! Boost
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunused-parameter"
@@ -9,4 +12,4 @@ using t_float_50 = boost::multiprecision::cpp_dec_float_50;
 using t_rational = boost::multiprecision::cpp_rational;
 #pragma clang diagnostic pop
 
-t_float_50 safe_float(const std::string& from) ;
+t_float_50 safe_float(const std::string& from, std::optional<QString> trigger = "");

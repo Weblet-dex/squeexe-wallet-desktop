@@ -38,13 +38,13 @@ namespace atomic_dex
     void
     orderbook_scanner_service::process_best_orders() 
     {
-        if (m_rpc_busy)
+        if (m_bestorders_rpc_busy)
         {
             // SPDLOG_INFO("process_best_orders is busy - skipping");
             return;
         }
 
-        SPDLOG_INFO("[process_best_orders]");
+        SPDLOG_DEBUG("[mm2_service::process_best_orders]");
         if (m_system_manager.has_system<mm2_service>())
         {
             auto& mm2_system = m_system_manager.get_system<mm2_service>();
@@ -67,7 +67,7 @@ namespace atomic_dex
                 // best_orders_req_json["userpass"] = "*****";
                 // SPDLOG_INFO("best_orders request: {}", best_orders_req_json.dump(4));
 
-                this->m_rpc_busy = true;
+                this->m_bestorders_rpc_busy = true;
                 emit trading_pg.get_orderbook_wrapper()->bestOrdersBusyChanged();
                 //! Treat answer
                 auto answer_functor = [this, &trading_pg](web::http::http_response resp) {
@@ -80,9 +80,9 @@ namespace atomic_dex
                         {
                             this->m_best_orders_infos = best_order_answer.result.value();
                         }
+                        this->dispatcher_.trigger<process_orderbook_finished>(false);
                     }
-                    this->m_rpc_busy = false;
-                    this->dispatcher_.trigger<process_orderbook_finished>(false);
+                    this->m_bestorders_rpc_busy = false;
                     emit trading_pg.get_orderbook_wrapper()->bestOrdersBusyChanged();
                 };
 
@@ -96,7 +96,6 @@ namespace atomic_dex
                         catch (const std::exception& e)
                         {
                             SPDLOG_ERROR("[process_best_orders] pplx task error: {}", e.what());
-                            this->m_rpc_busy = false;
                             this->dispatcher_.trigger<process_orderbook_finished>(true);
                         }
                     });
@@ -134,7 +133,7 @@ namespace atomic_dex
     bool
     orderbook_scanner_service::is_best_orders_busy() const 
     {
-        return m_rpc_busy.load();
+        return m_bestorders_rpc_busy.load();
     }
 
     t_orders_contents

@@ -57,7 +57,6 @@ namespace atomic_dex
         {
             m_actions_queue.push(trading_actions::post_process_orderbook_finished);
             m_models_actions[orderbook_need_a_reset] = evt.is_a_reset;
-            determine_max_volume();
         }
     }
 } // namespace atomic_dex
@@ -498,34 +497,30 @@ namespace atomic_dex
                     }
                     else
                     {
-                        const auto base_max_taker_vol = safe_float(wrapper->get_base_max_taker_vol().toJsonObject()["decimal"].toString().toStdString());
-                        auto       rel_max_taker      = wrapper->get_rel_max_taker_vol().toJsonObject()["decimal"].toString().toStdString();
-                        if (rel_max_taker.empty())
-                        {
-                            rel_max_taker = "0";
-                        }
-                        const auto rel_max_taker_vol = safe_float(rel_max_taker);
-                        t_float_50 min_vol           = safe_float(m_minimal_trading_amount.toStdString());
-                        auto       adjust_functor    = [this, wrapper]()
+                        const auto base_max_taker_vol = safe_float(wrapper->get_base_max_taker_vol().toJsonObject()["decimal"].toString().toStdString(), "post_process_orderbook_finished (base_max_taker_vol)");
+                        auto       rel_max_taker_vol  = safe_float(wrapper->get_rel_max_taker_vol().toJsonObject()["decimal"].toString().toStdString(), "post_process_orderbook_finished (rel_max_taker_vol)");
+                        t_float_50 min_vol            = safe_float(m_minimal_trading_amount.toStdString(), "post_process_orderbook_finished (min_vol)");
+
+                        auto        adjust_functor    = [this, wrapper]()
                         {
                             if (m_post_clear_forms && this->m_current_trading_mode == TradingModeGadget::Pro)
                             {
                                 SPDLOG_DEBUG("m_post_clear_forms && this->m_current_trading_mode == TradingModeGadget::Pro");
-                                this->determine_max_volume();
+                                this->determine_max_volume("process_action");
                                 this->update_volume(get_max_volume(), "process_action");
                                 this->set_price(m_cex_price);
                                 this->set_min_trade_vol(wrapper->get_current_min_taker_vol());
                                 m_post_clear_forms = false;
                             }
                         };
+
                         if ((m_market_mode == MarketMode::Buy && rel_max_taker_vol > 0 && min_vol <= 0) ||
                             (m_market_mode == MarketMode::Sell && base_max_taker_vol > 0 && min_vol <= 0))
                         {
                             adjust_functor();
                         }
                     }
-
-                    this->determine_error_cases();
+                    this->determine_error_cases("process_action");
                 }
                 break;
             }
@@ -653,7 +648,7 @@ namespace atomic_dex
             if (m_market_mode == MarketMode::Buy)
             {
                 SPDLOG_WARN("Recalculating max vol because price changed");
-                this->determine_max_volume();
+                this->determine_max_volume("set_price");
             }
 
             this->determine_total_amount();
@@ -755,8 +750,9 @@ namespace atomic_dex
     }
 
     void
-    trading_page::determine_max_volume()
+    trading_page::determine_max_volume(QString trigger)
     {
+        SPDLOG_DEBUG("[trading_page::determine_max_volume] trigger: {}", trigger.toStdString());
         if (this->m_market_mode == MarketMode::Sell)
         {
             //! In MarketMode::Sell mode max volume is just the base_max_taker_vol
@@ -1058,7 +1054,7 @@ namespace atomic_dex
         {
             m_preferred_order->operator[]("capped") = false;
             this->set_price(QString::fromStdString(utils::format_float(safe_float(m_preferred_order->at("price").get<std::string>()))));
-            this->determine_max_volume();
+            this->determine_max_volume("set_preferred_order");
             QString min_vol = QString::fromStdString(utils::format_float(safe_float(m_preferred_order->at("base_min_volume").get<std::string>())));
             this->set_min_trade_vol(min_vol);
 
@@ -1110,7 +1106,7 @@ namespace atomic_dex
                         .toStdString();
                 !max_dust_str.empty())
             {
-                this->determine_error_cases();
+                this->determine_error_cases("determine_total_amount");
             }
         }
     }
@@ -1247,7 +1243,7 @@ namespace atomic_dex
     }
 
     void
-    trading_page::determine_error_cases()
+    trading_page::determine_error_cases(QString trigger)
     {
         if (!m_system_manager.has_system<mm2_service>())
             return;
@@ -1268,6 +1264,7 @@ namespace atomic_dex
         const bool        is_selected_min_max =
             has_preferred_order && m_preferred_order->at("base_min_volume").get<std::string>() == m_preferred_order->at("base_max_volume").get<std::string>();
 
+        SPDLOG_DEBUG("[trading_page::determine_error_cases] Trigger: {}", trigger.toStdString());
         SPDLOG_DEBUG("rel_min_taker_vol: {}", rel_min_taker_vol);
 
         if (left_cfg.has_parent_fees_ticker && left_cfg.ticker != "QTUM")
@@ -1496,7 +1493,7 @@ namespace atomic_dex
             min_trade_vol            = QString::fromStdString(utils::adjust_precision(min_trade_vol.toStdString()));
             m_minimal_trading_amount = std::move(min_trade_vol);
             emit minTradeVolChanged();
-            this->determine_error_cases();
+            this->determine_error_cases("set_min_trade_vol");
         }
     }
 
@@ -1524,9 +1521,8 @@ namespace atomic_dex
     void
     trading_page::reset_fees()
     {
-        SPDLOG_DEBUG("reset_fees");
         this->set_fees(QVariantMap());
-        this->determine_error_cases();
+        this->determine_error_cases("reset_fees");
     }
 } // namespace atomic_dex
 
@@ -1566,7 +1562,7 @@ namespace atomic_dex
                 (m_market_mode == MarketMode::Sell) ? t_float_50(cex_price + (cex_price * percent)) : t_float_50(cex_price - (cex_price * percent));
 
             this->set_price(QString::fromStdString(utils::format_float(target_price)));
-            this->determine_max_volume();
+            this->determine_max_volume("set_preferred_settings");
             this->update_volume(get_max_volume(), "set_preferred_settings");
             t_float_50 volume     = safe_float(get_volume().toStdString());
             t_float_50 min_volume = volume * min_volume_percent;

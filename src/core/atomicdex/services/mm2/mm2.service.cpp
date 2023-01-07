@@ -1488,13 +1488,16 @@ namespace atomic_dex
         if (orderbook.base.empty() && orderbook.rel.empty())
         {
             ec = dextop_error::orderbook_empty;
+            SPDLOG_DEBUG("[mm2_service::get_orderbook] Orderbook for {} is empty", pair);
             return {};
         }
         if (pair != orderbook.base + "/" + rel)
         {
+            SPDLOG_DEBUG("[mm2_service::get_orderbook] Orderbook pair {} is not base/rel {}", pair, orderbook.base + "/" + rel);
             ec = dextop_error::orderbook_ticker_not_found;
             return {};
         }
+        SPDLOG_DEBUG("[mm2_service::get_orderbook] for {}", pair);
         return orderbook;
     }
 
@@ -1589,6 +1592,7 @@ namespace atomic_dex
                 if (orderbook_answer.rpc_result_code == 200)
                 {
                     m_orderbook = orderbook_answer;
+                    SPDLOG_DEBUG("[mm2_service::process_orderbook]");
                     this->dispatcher_.trigger<process_orderbook_finished>(is_a_reset);
                 }
             }
