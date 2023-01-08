@@ -1,5 +1,5 @@
 if (APPLE)
-    message(STATUS "ICON ->>>> ${ICON}")
+    message(STATUS "ICON -> ${ICON}")
     set_target_properties(${PROJECT_NAME} PROPERTIES
             MACOSX_BUNDLE_BUNDLE_NAME "${PROJECT_NAME}"
             RESOURCE ${ICON}

@@ -17,6 +17,10 @@
 t_float_50
 safe_float(const std::string& from, std::optional<QString> trigger)
 {
+    if (from.empty())
+    {
+        return t_float_50(0);
+    }
     try
     {
         t_float_50 out(boost::algorithm::replace_all_copy(from, ",", "."));

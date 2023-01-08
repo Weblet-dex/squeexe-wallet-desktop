@@ -47,6 +47,8 @@ namespace atomic_dex
         Q_PROPERTY(QString max_total_chart READ get_max_total_chart NOTIFY maxTotalChartChanged)
         Q_PROPERTY(QVariant wallet_stats READ get_wallet_stats NOTIFY walletStatsChanged)
 
+        Q_PROPERTY(bool dex_active MEMBER m_dex_active NOTIFY dexActiveChanged)
+
         //! Private members fields
         ag::ecs::system_manager& m_system_manager;
         portfolio_model*         m_portfolio_mdl;
@@ -54,6 +56,7 @@ namespace atomic_dex
         QString                  m_current_balance_all{"0"};
         QString                  m_main_current_balance_all{"0"};
         WalletChartsCategories   m_current_chart_category;
+        bool                     m_dex_active{false};
 
       public:
         //! Constructor
@@ -105,6 +108,7 @@ namespace atomic_dex
         void minTotalChartChanged();
         void maxTotalChartChanged();
         void walletStatsChanged();
+        void dexActiveChanged();
     };
 } // namespace atomic_dex
 
