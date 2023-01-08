@@ -107,13 +107,6 @@ namespace atomic_dex
     }
 
     void
-    trading_page::swap_market_pair()
-    {
-        const auto* market_selector_mdl = get_market_pairs_mdl();
-        set_current_orderbook(market_selector_mdl->get_right_selected_coin(), market_selector_mdl->get_left_selected_coin(), "swap_market_pair");
-    }
-
-    void
     trading_page::on_gui_enter_dex()
     {
         set_dex_active(true);
@@ -509,7 +502,13 @@ namespace atomic_dex
                         const auto base_max_taker_vol = safe_float(wrapper->get_base_max_taker_vol().toJsonObject()["decimal"].toString().toStdString());
                         auto       rel_max_taker      = wrapper->get_rel_max_taker_vol().toJsonObject()["decimal"].toString().toStdString();
                         const auto rel_max_taker_vol  = safe_float(rel_max_taker);
+                        const auto max_vol = get_max_volume();
+                        SPDLOG_DEBUG("[trading_actions::post_process_orderbook_finished] max vol: ", max_vol.toStdString());
 
+                        if (max_vol == "0" && this->m_current_trading_mode == TradingModeGadget::Simple)
+                        {
+                            this->determine_max_volume("process_trading_actions");
+                        }
                         if (rel_max_taker.empty())
                         {
                             rel_max_taker = "0";
@@ -1056,19 +1055,17 @@ namespace atomic_dex
 
         if (is_swap)
         {
-            swap_market_pair();
-            base = market_pair->get_left_selected_coin();
-            rel  = market_pair->get_right_selected_coin();
+            set_current_orderbook(market_pair->get_right_selected_coin(), market_pair->get_left_selected_coin(), "set_pair is_swap");
         }
         else
         {
             if (base == rel || base.isEmpty() || rel.isEmpty())
             {
-                set_current_orderbook(DEX_PRIMARY_COIN, DEX_SECOND_PRIMARY_COIN, "set_pair");
+                set_current_orderbook(DEX_PRIMARY_COIN, DEX_SECOND_PRIMARY_COIN, "set_pair (default)");
             }
             else
             {
-                set_current_orderbook(base, rel, "set_pair");
+                set_current_orderbook(base, rel, "set_pair base/rel");
             }
         }
         this->determine_cex_rates("set_pair");

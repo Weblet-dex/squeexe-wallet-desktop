@@ -152,7 +152,6 @@ namespace atomic_dex
         Q_INVOKABLE void     clear_forms(QString trigger);
 
         //! Trading business
-        Q_INVOKABLE void swap_market_pair();
         Q_INVOKABLE bool set_pair(bool is_left_side, const QString& changed_ticker, QString trigger);
         Q_INVOKABLE void set_current_orderbook(const QString& base, const QString& rel, QString trigger);
 
