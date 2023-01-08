@@ -267,8 +267,8 @@ namespace atomic_dex
     {
         m_orderbook_clock = std::chrono::high_resolution_clock::now();
         m_info_clock      = std::chrono::high_resolution_clock::now();
-        dispatcher_.sink<gui_enter_trading>().connect<&mm2_service::on_gui_enter_trading>(*this);
-        dispatcher_.sink<gui_leave_trading>().connect<&mm2_service::on_gui_leave_trading>(*this);
+        dispatcher_.sink<gui_enter_dex>().connect<&mm2_service::on_gui_enter_dex>(*this);
+        dispatcher_.sink<gui_leave_dex>().connect<&mm2_service::on_gui_leave_dex>(*this);
         dispatcher_.sink<orderbook_refresh>().connect<&mm2_service::on_refresh_orderbook>(*this);
         SPDLOG_INFO("mm2_service created");
     }
@@ -321,8 +321,8 @@ namespace atomic_dex
     mm2_service::~mm2_service()
     {
         SPDLOG_INFO("destroying mm2 service...");
-        dispatcher_.sink<gui_enter_trading>().disconnect<&mm2_service::on_gui_enter_trading>(*this);
-        dispatcher_.sink<gui_leave_trading>().disconnect<&mm2_service::on_gui_leave_trading>(*this);
+        dispatcher_.sink<gui_enter_dex>().disconnect<&mm2_service::on_gui_enter_dex>(*this);
+        dispatcher_.sink<gui_leave_dex>().disconnect<&mm2_service::on_gui_leave_dex>(*this);
         dispatcher_.sink<orderbook_refresh>().disconnect<&mm2_service::on_refresh_orderbook>(*this);
         SPDLOG_INFO("mm2 signals successfully disconnected");
         bool mm2_stopped = false;
@@ -2068,7 +2068,7 @@ namespace atomic_dex
     }
 
     void
-    mm2_service::on_gui_enter_trading([[maybe_unused]] const gui_enter_trading& evt)
+    mm2_service::on_gui_enter_dex([[maybe_unused]] const gui_enter_dex& evt)
     {
         SPDLOG_DEBUG("{} l{} f[{}]", __FUNCTION__, __LINE__, std::filesystem::path(__FILE__).filename().string());
 
@@ -2076,7 +2076,7 @@ namespace atomic_dex
     }
 
     void
-    mm2_service::on_gui_leave_trading([[maybe_unused]] const gui_leave_trading& evt)
+    mm2_service::on_gui_leave_dex([[maybe_unused]] const gui_leave_dex& evt)
     {
         SPDLOG_DEBUG("{} l{} f[{}]", __FUNCTION__, __LINE__, std::filesystem::path(__FILE__).filename().string());
         m_orderbook_thread_active = false;

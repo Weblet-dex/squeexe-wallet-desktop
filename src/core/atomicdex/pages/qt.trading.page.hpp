@@ -43,6 +43,7 @@ namespace atomic_dex
         Q_PROPERTY(QVariant buy_sell_last_rpc_data READ get_buy_sell_last_rpc_data WRITE set_buy_sell_last_rpc_data NOTIFY buySellLastRpcDataChanged)
         Q_PROPERTY(bool buy_sell_rpc_busy READ is_buy_sell_rpc_busy WRITE set_buy_sell_rpc_busy NOTIFY buySellRpcStatusChanged)
         Q_PROPERTY(bool preimage_rpc_busy READ is_preimage_busy WRITE set_preimage_busy NOTIFY preImageRpcStatusChanged)
+        Q_PROPERTY(bool dex_active  READ is_dex_active WRITE set_dex_active NOTIFY dexActiveChanged)
 
         // Trading logic Q properties
         Q_PROPERTY(MarketMode market_mode READ get_market_mode WRITE set_market_mode NOTIFY marketModeChanged)
@@ -101,6 +102,7 @@ namespace atomic_dex
         std::atomic_bool         m_rpc_preimage_busy{false};
         std::atomic_bool         m_post_clear_forms{false};
         t_qt_synchronized_json   m_rpc_buy_sell_result;
+        bool                     m_dex_active{false};
 
         //! Trading Logic
         MarketMode                             m_market_mode{MarketModeGadget::Sell};
@@ -169,6 +171,9 @@ namespace atomic_dex
         [[nodiscard]] market_pairs*         get_market_pairs_mdl() const;
         [[nodiscard]] bool                  is_buy_sell_rpc_busy() const;
         void                                set_buy_sell_rpc_busy(bool status);
+        [[nodiscard]] bool                  is_dex_active() const;
+        void                                set_dex_active(bool status);
+
 
         //! Trading Logic
         [[nodiscard]] MarketMode            get_market_mode() const;
@@ -220,6 +225,7 @@ namespace atomic_dex
         void buySellLastRpcDataChanged();
         void buySellRpcStatusChanged();
         void preImageRpcStatusChanged();
+        void dexActiveChanged();
 
         //! Trading logic
         void priceChanged();

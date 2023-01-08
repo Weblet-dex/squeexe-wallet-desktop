@@ -74,7 +74,7 @@ namespace atomic_dex
     }
 
     void
-    trading_page::set_current_orderbook(const QString& base, const QString& rel, QString trigger)
+    trading_page::set_current_orderbook(const QString& base, const QString& rel, QString trigger = "")
     {
         if (base.toStdString() == "" || rel.toStdString() == "" || rel == base)
         {
@@ -115,8 +115,16 @@ namespace atomic_dex
     void
     trading_page::on_gui_enter_dex()
     {
-        SPDLOG_DEBUG("Enter DEX");
-        dispatcher_.trigger<gui_enter_trading>(); // triggers mm2_service::on_gui_enter_trading
+        set_dex_active(true);
+        if (this->m_current_trading_mode == TradingModeGadget::Pro)
+        {
+            SPDLOG_INFO("= = = = = = = = = = = = = On DEX Pro View");
+        }
+        else
+        {
+            SPDLOG_INFO("= = = = = = = = = = = = = On DEX Simple View");
+        }
+        dispatcher_.trigger<gui_enter_dex>(); // sets mm2_service::m_orderbook_thread_active to true
         if (this->m_system_manager.has_system<auto_update_maker_order_service>() && m_system_manager.get_system<mm2_service>().is_orderbook_thread_active())
         {
             this->m_system_manager.get_system<auto_update_maker_order_service>().force_update();
@@ -126,8 +134,9 @@ namespace atomic_dex
     void
     trading_page::on_gui_leave_dex()
     {
+        set_dex_active(false);
         m_system_manager.get_system<settings_page>().garbage_collect_qml();
-        dispatcher_.trigger<gui_leave_trading>(); // triggers mm2_service::on_gui_leave_trading
+        dispatcher_.trigger<gui_leave_dex>(); // sets mm2_service::m_orderbook_thread_active to false
     }
 
     void
@@ -618,6 +627,29 @@ namespace atomic_dex
             emit marketModeChanged();
         }
     }
+
+    bool
+    trading_page::is_dex_active() const
+    {
+        return m_dex_active;
+    }
+
+    void
+    trading_page::set_dex_active(bool status)
+    {
+        if (status){
+            // make sure pair tickers are set. Ticker change events should not trigger things if not m_dex_active yet.
+            SPDLOG_DEBUG("======================== Dex is active");
+        }
+        else
+        {
+            SPDLOG_DEBUG("========================  Dex is not active");
+        }
+        m_dex_active = status;
+        emit dexActiveChanged();
+    }
+
+
 
     QString
     trading_page::get_price() const

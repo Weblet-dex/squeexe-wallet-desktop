@@ -149,9 +149,9 @@ namespace atomic_dex
        //! Events
        void on_refresh_orderbook(const orderbook_refresh& evt);
 
-       void on_gui_enter_trading(const gui_enter_trading& evt);
+       void on_gui_enter_dex(const gui_enter_dex& evt);
 
-       void on_gui_leave_trading(const gui_leave_trading& evt);
+       void on_gui_leave_dex(const gui_leave_dex& evt);
 
        //! Spawn mm2 instance with given seed
        void spawn_mm2_instance(std::string wallet_name, std::string passphrase, bool with_pin_cfg = false);

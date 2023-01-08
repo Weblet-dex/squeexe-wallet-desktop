@@ -26,8 +26,8 @@ namespace atomic_dex
 {
     using mm2_started           = entt::tag<"mm2_started"_hs>;
     using post_login            = entt::tag<"post_login"_hs>;
-    using gui_enter_trading     = entt::tag<"gui_enter_trading"_hs>;
-    using gui_leave_trading     = entt::tag<"gui_leave_trading"_hs>;
+    using gui_enter_dex         = entt::tag<"gui_enter_dex"_hs>;
+    using gui_leave_dex         = entt::tag<"gui_leave_dex"_hs>;
     using mm2_initialized       = entt::tag<"mm2_running_and_enabling"_hs>;
     using default_coins_enabled = entt::tag<"default_coins_enabled"_hs>;
     using band_oracle_refreshed     = entt::tag<"band_oracle_refreshed"_hs>;

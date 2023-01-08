@@ -22,10 +22,7 @@ Item
         API.app.trading_pg.orders.cancel_order(order_id)
     }
 
-    Component.onCompleted: {
-        API.app.trading_pg.on_gui_enter_dex()
-    }
-
+    Component.onCompleted: API.app.trading_pg.on_gui_enter_dex()
     Component.onDestruction: API.app.trading_pg.on_gui_leave_dex()
 
     Trade

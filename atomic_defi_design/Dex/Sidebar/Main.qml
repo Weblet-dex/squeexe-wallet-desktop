@@ -103,8 +103,6 @@ Item
             {
                 if (currentLineType === lineType)
                     return;
-                if (currentLineType == LineType.DEX)
-                    API.app.trading_pg.on_gui_leave_dex()
                 currentLineType = lineType;
                 root.lineSelected(lineType);
             }

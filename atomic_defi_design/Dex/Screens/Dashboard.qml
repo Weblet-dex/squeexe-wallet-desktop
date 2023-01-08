@@ -84,17 +84,22 @@ Item
 
     Layout.fillWidth: true
 
-    onCurrentPageChanged: {
-        sidebar.currentLineType = currentPage
-        if (currentPage == Dashboard.PageType.DEX)
-        {
-            if (API.app.trading_pg.current_trading_mode == TradingMode.Pro)
+    onCurrentPageChanged: sidebar.currentLineType = currentPage
+
+    Connections {
+        target: API.app.trading_pg
+
+        function onDexActiveChanged() {
+            if (currentPage == Dashboard.PageType.DEX)
             {
-                API.app.trading_pg.set_pair(false, api_wallet_page.ticker, "dashboard")
-            }
-            else
-            {
-                API.app.trading_pg.set_pair(true, api_wallet_page.ticker, "dashboard")
+                if (API.app.trading_pg.current_trading_mode == TradingMode.Pro)
+                {
+                    API.app.trading_pg.set_pair(false, api_wallet_page.ticker, "dashboard")
+                }
+                else
+                {
+                    API.app.trading_pg.set_pair(true, api_wallet_page.ticker, "dashboard")
+                }
             }
         }
     }
