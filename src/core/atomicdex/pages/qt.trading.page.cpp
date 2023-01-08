@@ -505,7 +505,7 @@ namespace atomic_dex
                         const auto max_vol = get_max_volume();
                         SPDLOG_DEBUG("[trading_actions::post_process_orderbook_finished] max vol: ", max_vol.toStdString());
 
-                        if (max_vol == "0" && this->m_current_trading_mode == TradingModeGadget::Simple)
+                        if (max_vol == "0")
                         {
                             this->determine_max_volume("process_trading_actions");
                         }

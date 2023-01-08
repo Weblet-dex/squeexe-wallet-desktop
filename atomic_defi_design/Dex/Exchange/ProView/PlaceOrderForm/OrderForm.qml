@@ -60,6 +60,15 @@ ColumnLayout
         }
 
         function onPriceChanged() {
+            reset_subfields()
+        }
+
+        function onMaxVolumeChanged() {
+            reset_subfields()
+        }
+    }
+
+    function reset_subfields() {
             price_usd_value.left_rect.color = input_price.text == "0" ? Dex.CurrentTheme.buttonColorDisabled : Dex.CurrentTheme.buttonColorEnabled
             price_usd_value.middle_rect.color = input_price.text == "0" ? Dex.CurrentTheme.buttonColorDisabled : Dex.CurrentTheme.buttonColorEnabled
             price_usd_value.right_rect.color = input_price.text == "0" ? Dex.CurrentTheme.buttonColorDisabled : Dex.CurrentTheme.buttonColorEnabled
@@ -73,7 +82,6 @@ ColumnLayout
             volume_usd_value.right_tooltip_text = input_price.text == "0" ? qsTr("Enter price first") : qsTr("Swap 100% of your tradable balance.")
             price_usd_value.left_tooltip_text = input_price.text == "0" ? qsTr("Enter price first") : qsTr("Reduce 1% relative to CEX market price.")
             price_usd_value.right_tooltip_text = input_price.text == "0" ? qsTr("Enter price first") : qsTr("Increase 1% relative to CEX market price.")
-        }
     }
 
     Item
