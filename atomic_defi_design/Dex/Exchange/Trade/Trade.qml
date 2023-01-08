@@ -30,7 +30,7 @@ Item
         }
         else
         {
-            onOpened()
+            onOpened(General.default_rel)
         }
         dashboard.current_ticker = undefined
     }

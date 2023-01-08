@@ -81,7 +81,7 @@ namespace atomic_dex
        t_synchronized_ticker m_current_ticker{g_primary_dex_coin};
 
        //! Current orderbook
-       t_synchronized_ticker_pair   m_synchronized_ticker_pair{std::make_pair(g_primary_dex_coin, g_second_primary_dex_coin)};
+       t_synchronized_ticker_pair   m_synchronized_ticker_pair{std::make_pair(g_second_primary_dex_coin, g_primary_dex_coin)};
        t_synchronized_max_taker_vol m_synchronized_max_taker_vol;
        t_synchronized_min_taker_vol m_synchronized_min_taker_vol;
 
