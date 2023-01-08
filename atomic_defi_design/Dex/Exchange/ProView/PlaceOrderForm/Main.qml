@@ -175,9 +175,11 @@ Widget
                 Layout.preferredWidth: 30
                 Layout.rightMargin: 5
                 foregroundColor: Dex.CurrentTheme.noColor
+                hoverEnabled: true
                 onClicked:
                 {
-                    console.log("Resetting order on red selected order cancel box")
+                    General.setVolume("0")
+                    General.resetPrice()
                     reset_fees_state()
                 }
 

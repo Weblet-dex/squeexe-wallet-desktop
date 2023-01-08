@@ -100,8 +100,6 @@ Item
             General.initialized_orderbook_pair = true
         }
         setPair(true, ticker)
-        // triggers chart reload (why the duplication?)
-        // app.pairChanged(base_ticker, rel_ticker)
     }
 
     function setPair(is_left_side, changed_ticker, is_swap=false) {

@@ -570,8 +570,11 @@ QtObject {
         })
     }
 
-    function setPrice(v) {
+    function resetPrice() {
+        setPrice(String(General.formatDouble(API.app.trading_pg.cex_price)))
+    }
 
+    function setPrice(v) {
         API.app.trading_pg.price = v
     }
 
