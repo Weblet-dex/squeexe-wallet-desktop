@@ -80,7 +80,12 @@ namespace atomic_dex
     portfolio_proxy_model::filterAcceptsRow(int source_row, const QModelIndex& source_parent) const
     {
         QModelIndex idx       = this->sourceModel()->index(source_row, 0, source_parent);
-        assert(this->sourceModel()->hasIndex(idx.row(), 0));
+
+        if (not this->sourceModel()->hasIndex(idx.row(), 0))
+        {
+            return false;
+        }
+
         QString     ticker    = this->sourceModel()->data(idx, atomic_dex::portfolio_model::TickerRole).toString();
         QString     type      = this->sourceModel()->data(idx, atomic_dex::portfolio_model::CoinType).toString();
 

@@ -83,6 +83,7 @@ namespace atomic_dex
     qt_orderbook_wrapper::refresh_orderbook(t_orderbook_answer answer, QString trigger)
     {
         SPDLOG_WARN("[qt_orderbook_wrapper::refresh_orderbook] trigger: {}", trigger.toStdString());
+        this->set_both_taker_vol();
         this->m_asks->refresh_orderbook(answer.asks, "asks");
         this->m_bids->refresh_orderbook(answer.bids, "bids");
         const auto data = this->m_system_manager.get_system<orderbook_scanner_service>().get_data();
@@ -98,18 +99,22 @@ namespace atomic_dex
         {
             m_best_orders->refresh_orderbook(data, "refresh_orderbook");
         }
-        this->set_both_taker_vol();
     }
 
     void
     qt_orderbook_wrapper::reset_orderbook(t_orderbook_answer answer, QString trigger)
     {
+        this->set_both_taker_vol();
+        std::string sync_rel     = m_system_manager.get_system<mm2_service>().get_synchronized_rel_ticker();
+        std::string sync_base    = m_system_manager.get_system<mm2_service>().get_synchronized_base_ticker();
+
         SPDLOG_WARN("[qt_orderbook_wrapper::reset_orderbook] trigger: {}", trigger.toStdString());
+        SPDLOG_WARN("[qt_orderbook_wrapper::reset_orderbook] sync_base: {}", sync_base);
+        SPDLOG_WARN("[qt_orderbook_wrapper::reset_orderbook] sync_rel: {}", sync_rel);
         this->m_asks->reset_orderbook(answer.asks, "asks");
         this->m_bids->reset_orderbook(answer.bids, "bids");
         this->m_best_orders->clear_orderbook("reset_orderbook");
         this->m_system_manager.get_system<orderbook_scanner_service>().process_best_orders(); ///< re process the model
-        this->set_both_taker_vol();
         if (m_selected_best_order->has_value())
         {
             m_system_manager.get_system<trading_page>().set_preferred_order(m_selected_best_order->value());
@@ -160,7 +165,6 @@ namespace atomic_dex
         emit baseMinTakerVolChanged();
         this->m_rel_min_taker_vol = QString::fromStdString(min_rel.min_trading_vol);
         emit relMinTakerVolChanged();
-
         emit currentMinTakerVolChanged();
     }
 } // namespace atomic_dex

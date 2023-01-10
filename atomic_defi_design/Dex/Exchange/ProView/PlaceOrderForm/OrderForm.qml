@@ -68,6 +68,8 @@ ColumnLayout
         }
     }
 
+    // baseMaxTakerVolChanged
+
     function reset_subfields() {
             price_usd_value.left_rect.color = input_price.text == "0" ? Dex.CurrentTheme.buttonColorDisabled : Dex.CurrentTheme.buttonColorEnabled
             price_usd_value.middle_rect.color = input_price.text == "0" ? Dex.CurrentTheme.buttonColorDisabled : Dex.CurrentTheme.buttonColorEnabled

@@ -119,7 +119,6 @@ namespace atomic_dex
         boost::synchronized_value<QVariantMap> m_fees;
 
         //! Private function
-        void                       determine_max_volume(QString trigger = "");
         void                       determine_total_amount();
         void                       determine_cex_rates(QString trigger = "");
         void                       cap_volume(QString trigger = "");
@@ -144,6 +143,7 @@ namespace atomic_dex
         void disconnect_signals();
         void clear_models() const;
         void disable_coins(const QStringList& coins);
+        void                       determine_max_volume(QString trigger = "");
 
         //! Public QML API
         Q_INVOKABLE void     on_gui_enter_dex();

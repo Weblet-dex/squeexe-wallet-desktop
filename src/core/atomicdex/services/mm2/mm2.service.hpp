@@ -254,6 +254,10 @@ namespace atomic_dex
        [[nodiscard]] t_pair_max_vol get_taker_vol() const;
        [[nodiscard]] t_pair_min_vol get_min_vol() const;
 
+       //! Get sync'd base/rel
+       [[nodiscard]] std::string get_synchronized_base_ticker();
+       [[nodiscard]] std::string get_synchronized_rel_ticker();
+
        //! Pin cfg api
        [[nodiscard]] bool is_pin_cfg_enabled() const;
        void               reset_fake_balance_to_zero(const std::string& ticker);

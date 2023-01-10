@@ -36,6 +36,7 @@
 #include "atomicdex/config/mm2.cfg.hpp"
 #include "atomicdex/config/coins.cfg.hpp"
 #include "atomicdex/constants/dex.constants.hpp"
+#include "atomicdex/pages/qt.trading.page.hpp"
 #include "atomicdex/managers/qt.wallet.manager.hpp"
 #include "atomicdex/services/internet/internet.checker.service.hpp"
 #include "atomicdex/services/mm2/mm2.service.hpp"
@@ -1530,7 +1531,7 @@ namespace atomic_dex
 
     void mm2_service::process_orderbook(bool is_a_reset, QString trigger)
     {
-        SPDLOG_DEBUG("[trading_page::process_orderbook] trigger: {}", trigger.toStdString());
+        SPDLOG_DEBUG("[mm2_service::process_orderbook] trigger: {}", trigger.toStdString());
         auto batch = prepare_batch_orderbook(is_a_reset);
         if (batch.empty())
             return;
@@ -1539,6 +1540,8 @@ namespace atomic_dex
         {
             auto&& [base, rel] = m_synchronized_ticker_pair.get();
             auto answer        = mm2::basic_batch_answer(resp);
+            bool                 force_update = false;
+            auto&                trading_pg = m_system_manager.get_system<trading_page>();
             if (answer.is_array())
             {
                 if (answer.size() < 1)
@@ -1562,7 +1565,12 @@ namespace atomic_dex
                     {
                         if (base == base_max_taker_vol_answer.result->coin)
                         {
-                            this->m_synchronized_max_taker_vol->first = base_max_taker_vol_answer.result.value();
+                            if (this->m_synchronized_max_taker_vol->first.decimal != base_max_taker_vol_answer.result->decimal)
+                            {
+                                SPDLOG_DEBUG("[Updating m_synchronized_max_taker_vol->first] {} {}", base_max_taker_vol_answer.result->coin, base_max_taker_vol_answer.result->decimal);
+                                this->m_synchronized_max_taker_vol->first = base_max_taker_vol_answer.result.value();
+                                force_update = true;
+                            }
                         }
                     }
 
@@ -1571,6 +1579,7 @@ namespace atomic_dex
                     {
                         if (rel == rel_max_taker_vol_answer.result->coin)
                         {
+                            SPDLOG_DEBUG("[Updating m_synchronized_max_taker_vol->second] {} {}", rel_max_taker_vol_answer.result->coin, rel_max_taker_vol_answer.result->decimal);
                             this->m_synchronized_max_taker_vol->second = rel_max_taker_vol_answer.result.value();
                         }
                     }
@@ -1578,15 +1587,20 @@ namespace atomic_dex
                     auto base_min_taker_vol_answer = mm2::rpc_process_answer_batch<t_min_volume_answer>(answer[3], "min_trading_vol");
                     if (base_min_taker_vol_answer.rpc_result_code == 200)
                     {
+                        SPDLOG_DEBUG("[Updating m_synchronized_min_taker_vol->first] {} {}", base_min_taker_vol_answer.result->coin, base_min_taker_vol_answer.result->min_trading_vol);
                         m_synchronized_min_taker_vol->first = base_min_taker_vol_answer.result.value();
-
                     }
 
                     auto rel_min_taker_vol_answer = mm2::rpc_process_answer_batch<t_min_volume_answer>(answer[4], "min_trading_vol");
                     if (rel_min_taker_vol_answer.rpc_result_code == 200)
                     {
-                        m_synchronized_min_taker_vol->second = rel_min_taker_vol_answer.result.value();
+                        SPDLOG_DEBUG("[Updating m_synchronized_min_taker_vol->second] {} {}", rel_min_taker_vol_answer.result->coin, rel_min_taker_vol_answer.result->min_trading_vol);
+                        m_synchronized_min_taker_vol->second = rel_min_taker_vol_answer.result.value();                            
                     }
+                }
+                if (force_update)
+                {
+                    trading_pg.get_orderbook_wrapper()->refresh_orderbook(orderbook_answer, "process_orderbook");
                 }
 
                 if (orderbook_answer.rpc_result_code == 200)
@@ -2065,6 +2079,17 @@ namespace atomic_dex
         {
             process_orderbook(true, "on_refresh_orderbook");
         }
+    }
+
+    std::string
+    mm2_service::get_synchronized_base_ticker()
+    {
+        return this->m_synchronized_ticker_pair->first;
+    }
+    std::string
+    mm2_service::get_synchronized_rel_ticker()
+    {
+        return this->m_synchronized_ticker_pair->second;
     }
 
     void

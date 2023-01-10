@@ -89,13 +89,14 @@ Item
         {
             if (API.app.trading_pg.current_trading_mode == TradingMode.Pro)
             {
-                API.app.trading_pg.set_current_orderbook(General.default_base,
-                                                     General.default_rel, "trade Opened")
+                API.app.trading_pg.set_current_orderbook(General.default_rel, 
+                                                         General.default_base,
+                                                         "trade Opened Pro")
             }
             else
             {
                 API.app.trading_pg.set_current_orderbook(General.default_rel,
-                                                     General.default_base, "trade Opened")
+                                                     General.default_base, "trade Opened Simple")
             }
             General.initialized_orderbook_pair = true
         }

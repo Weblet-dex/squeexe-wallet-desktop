@@ -87,7 +87,7 @@ namespace atomic_dex
             SPDLOG_WARN("{} is wallet only - skipping", base.toStdString());
             return;
         }
-        SPDLOG_DEBUG("Setting current orderbook: {}/{} (base/rel)", base.toStdString(), rel.toStdString());
+        SPDLOG_DEBUG("Setting current orderbook: {}/{} (base/rel), trigger: {}", base.toStdString(), rel.toStdString(), trigger.toStdString());
         auto* market_selector_mdl = get_market_pairs_mdl();
 
         const bool to_change = base != market_selector_mdl->get_left_selected_coin() || rel != market_selector_mdl->get_right_selected_coin();
@@ -484,12 +484,57 @@ namespace atomic_dex
             case trading_actions::post_process_orderbook_finished:
             {
                 SPDLOG_DEBUG("[trading_actions::post_process_orderbook_finished]");
+                auto* wrapper = get_orderbook_wrapper();
+
+                auto       adjust_functor    = [this, wrapper]()
+                {
+                    if (m_post_clear_forms && this->m_current_trading_mode == TradingModeGadget::Pro)
+                    {
+                        this->determine_max_volume("process_trading_actions");
+                        this->update_volume(get_max_volume(), "process_trading_actions");
+                        this->update_price(m_cex_price, "process_trading_actions");
+                        this->set_min_trade_vol(wrapper->get_current_min_taker_vol(), "process_trading_actions");
+                        m_post_clear_forms = false;
+                    }
+                };
+
+                auto base_max_taker_vol            = nlohmann::json::parse(QString(QJsonDocument(QVariant(wrapper->get_base_max_taker_vol()).toJsonObject()).toJson()).toStdString());
+                if (!base_max_taker_vol.contains("coin")) {
+                    SPDLOG_WARN("--------------------------------------------- [trading_page::process_trading_actions] base_max_taker_vol not initialised");
+                    m_system_manager.get_system<mm2_service>().fetch_current_orderbook_thread(true);
+                }
+                else
+                {
+                    auto rel_max_taker_vol             = nlohmann::json::parse(QString(QJsonDocument(QVariant(wrapper->get_rel_max_taker_vol()).toJsonObject()).toJson()).toStdString());
+                    std::string sync_rel               = m_system_manager.get_system<mm2_service>().get_synchronized_rel_ticker();
+                    std::string sync_base              = m_system_manager.get_system<mm2_service>().get_synchronized_base_ticker();
+
+                    std::string base_max_taker_vol_coin = base_max_taker_vol.at("coin").get<std::string>();
+                    if (base_max_taker_vol.at("coin").get<std::string>() == "") {
+                        SPDLOG_WARN("--------------------------------------------- base_max_taker_vol is empty");
+                    }
+                        
+                    else if (base_max_taker_vol_coin != sync_base)
+                    {
+                        SPDLOG_WARN("--------------------------------------------- base_max_taker_vol updating...");
+                        SPDLOG_WARN("--------------------------------------------- [trading_page::process_trading_actions] base_max_taker_vol coin: {}", base_max_taker_vol.dump());
+                        SPDLOG_WARN("--------------------------------------------- [trading_page::process_trading_actions] sync_base: {}", sync_base);                        
+                    }
+                    else
+                    {
+                        SPDLOG_WARN("--------------------------------------------- base_max_taker_vol READY!");
+
+                    }
+                    SPDLOG_WARN("--------------------------------------------- [trading_page::process_trading_actions] base_max_taker_vol coin: {}", base_max_taker_vol.dump());
+                    SPDLOG_WARN("--------------------------------------------- [trading_page::process_trading_actions] rel_max_taker_vol coin: {}", rel_max_taker_vol.dump());
+                    SPDLOG_WARN("--------------------------------------------- [trading_page::process_trading_actions] sync_base: {}", sync_base);
+                    SPDLOG_WARN("--------------------------------------------- [trading_page::process_trading_actions] sync_rel: {}", sync_rel);
+                }
                 std::error_code    ec;
                 t_orderbook_answer result = mm2_system.get_orderbook(ec);
-                
+
                 if (!ec)
                 {
-                    auto* wrapper = get_orderbook_wrapper();
                     m_models_actions[orderbook_need_a_reset] ? wrapper->reset_orderbook(result, "process_trading_actions") : wrapper->refresh_orderbook(result, "process_trading_actions");
 
                     if (m_models_actions[orderbook_need_a_reset] && this->m_current_trading_mode == TradingModeGadget::Pro)
@@ -515,17 +560,6 @@ namespace atomic_dex
                         }
 
                         t_float_50 min_vol           = safe_float(m_minimal_trading_amount.toStdString());
-                        auto       adjust_functor    = [this, wrapper]()
-                        {
-                            if (m_post_clear_forms && this->m_current_trading_mode == TradingModeGadget::Pro)
-                            {
-                                this->determine_max_volume("process_trading_actions");
-                                this->update_volume(get_max_volume(), "process_trading_actions");
-                                this->update_price(m_cex_price, "process_trading_actions");
-                                this->set_min_trade_vol(wrapper->get_current_min_taker_vol(), "process_trading_actions");
-                                m_post_clear_forms = false;
-                            }
-                        };
 
                         if ((m_market_mode == MarketMode::Buy && rel_max_taker_vol > 0 && min_vol <= 0) ||
                             (m_market_mode == MarketMode::Sell && base_max_taker_vol > 0 && min_vol <= 0))
@@ -536,6 +570,7 @@ namespace atomic_dex
 
                     this->determine_error_cases("process_trading_actions");
                 }
+                
                 break;
             }
             default:
