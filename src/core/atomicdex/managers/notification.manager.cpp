@@ -64,7 +64,10 @@ namespace atomic_dex
         SPDLOG_INFO(
             "balance update notification: am_i_sender: {} amount: {} ticker: {} human_date: {}", evt.am_i_sender, evt.amount.toStdString(),
             evt.ticker.toStdString(), evt.human_date.toStdString());
-        emit balanceUpdateStatus(evt.am_i_sender, evt.amount, evt.ticker, evt.human_date, evt.timestamp);
+        if (evt.ticker.toStdString() != "MATIC")
+        {
+            emit balanceUpdateStatus(evt.am_i_sender, evt.amount, evt.ticker, evt.human_date, evt.timestamp);
+        }
     }
 
     void
