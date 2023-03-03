@@ -20,5 +20,5 @@ mkdir b
 cd b
 cmake --version
 # TODO: make variable for debug builds
-cmake -DCMAKE_BUILD_TYPE="$Env:CMAKE_BUILD_TYPE" -GNinja ../
+Invoke-Expression "cmake -DCMAKE_BUILD_TYPE=$Env:CMAKE_BUILD_TYPE -GNinja ../"
 ninja install
