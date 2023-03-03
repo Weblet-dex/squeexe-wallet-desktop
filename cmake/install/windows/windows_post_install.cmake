@@ -64,9 +64,16 @@ message(STATUS "manifest output: ${MANIFEST_RESULT} ${MANIFEST_OUTPUT} ${MANIFES
 message(STATUS "Creating Installer")
 set(IFW_BINDIR $ENV{QT_ROOT}/Tools/QtInstallerFramework/4.5/bin)
 message(STATUS "IFW_BIN PATH IS ${IFW_BINDIR}")
+
 if (NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/bin/${DEX_PROJECT_NAME}.7z)
-	message(STATUS "command is: [${IFW_BINDIR}/archivegen.exe ${DEX_PROJECT_NAME}.7z .]")
-	execute_process(COMMAND ${IFW_BINDIR}/archivegen.exe ${DEX_PROJECT_NAME}.7z .
+	message(STATUS "command is: [${IFW_BINDIR}/archivegen.exe ${DEX_PROJECT_NAME}.7z ${PROJECT_APP_PATH} WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin]")
+	execute_process(COMMAND pwd)
+	execute_process(COMMAND ls  WORKING_DIRECTORY ${PROJECT_APP_PATH})
+	execute_process(COMMAND pwd)
+	execute_process(COMMAND ls .)
+	execute_process(COMMAND pwd WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin)
+	execute_process(COMMAND ls . WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin)
+	execute_process(COMMAND ${IFW_BINDIR}/archivegen.exe ${DEX_PROJECT_NAME}.7z ${PROJECT_APP_PATH}
 		WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin
 		ECHO_OUTPUT_VARIABLE
 		ECHO_ERROR_VARIABLE
