@@ -90,7 +90,11 @@ if (UNIX)
     configure_file(${jl777-coins_SOURCE_DIR}/utils/coins_config.json ${CMAKE_CURRENT_SOURCE_DIR}/assets/config/${PROJECT_VERSION}-coins.json COPYONLY)
     configure_file(${jl777-coins_SOURCE_DIR}/coins ${CMAKE_CURRENT_SOURCE_DIR}/assets/tools/mm2/coins COPYONLY)
     configure_file(${mm2_SOURCE_DIR}/mm2 ${CMAKE_CURRENT_SOURCE_DIR}/assets/tools/mm2/${DEX_API} COPYONLY)
+<<<<<<< HEAD
     message(STATUS "CMAKE_BINARY_DIR PATH IS ${CMAKE_CURRENT_SOURCE_DIR}")
+=======
+    message(STATUS "CMAKE_CURRENT_SOURCE_DIR PATH IS ${CMAKE_CURRENT_SOURCE_DIR}")
+>>>>>>> win_ci_installer
     file(COPY ${jl777-coins_SOURCE_DIR}/icons/ DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/atomic_defi_design/assets/images/coins/)
 else ()
     configure_file(${jl777-coins_SOURCE_DIR}/utils/coins_config.json ${CMAKE_BINARY_DIR}/bin/assets/config/${PROJECT_VERSION}-coins.json COPYONLY)
