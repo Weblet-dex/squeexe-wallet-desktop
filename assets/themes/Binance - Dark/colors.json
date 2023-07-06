@@ -104,7 +104,7 @@
   "sidebarLineTextHovered": "#C43402",
   "sidebarLineTextSelected": "#FFFFFF",
   
-  "tradeSellModeSelectorBackgroundColorStart": "#E52167",
+  "tradeSellModeSelectorBackgroundColorStart": "#C43402",
   "tradeSellModeSelectorBackgroundColorEnd": "#CD0F53",
   "tradeBuyModeSelectorBackgroundColorStart": "#0BC05F",
   "tradeBuyModeSelectorBackgroundColorEnd": "#037B3A",
@@ -125,7 +125,7 @@
   "addressBookTagColors": ["#627EEA", "#FFD87A", "#F7931A"],
   
   "okColor": "#00C058",
-  "warningColor": "#E52167",
+  "warningColor": "#C43402",
   "swapIconColor": "#005FBE",
   
   "senderColorStart": "#F85757",
