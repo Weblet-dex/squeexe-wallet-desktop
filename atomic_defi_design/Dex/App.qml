@@ -474,11 +474,11 @@ DexRectangle
         }
     }
 
-    Shortcut
-    {
-        sequence: "Ctrl+R"
-        onActivated: loadTheme()
-    }
+//    Shortcut
+//    {
+//        sequence: "Ctrl+R"
+//        onActivated: loadTheme()
+//    }
 
     color: Dex.CurrentTheme.backgroundColor
     radius: 0

@@ -1,5 +1,5 @@
 {
-  "accentColor": "#F0B90BFF",
+  "accentColor": "#C43402FF",
   "foregroundColor": "#FFFFFFFF",
   "foregroundColor2": "#8790B2FF",
   "foregroundColor3": "#ABC0D3FF",
@@ -7,56 +7,56 @@
   "secondBackgroundColor": "#0E111AFF",
   "backgroundColorDeep": "#060A10FF",
   
-  "busyIndicatorColor": "#F0B90BFF",
+  "busyIndicatorColor": "#C43402FF",
   
-  "buttonColorDisabled": "#745804FF",
-  "buttonColorEnabled": "#F0B90BFF",
-  "buttonColorHovered": "#FFC200FF",
-  "buttonColorPressed": "#F0B90B6C",
+  "buttonColorDisabled": "#741A04FF",
+  "buttonColorEnabled": "#C43402FF",
+  "buttonColorHovered": "#FF3B06FF",
+  "buttonColorPressed": "#C434026C",
   
   "buttonTextDisabledColor": "#444444FF",
   "buttonTextEnabledColor": "#FFFFFF",
   "buttonTextHoveredColor": "#000000FF",
   "buttonTextPressedColor": "#000000FF",
   
-  "buttonSecondaryColorDisabled": "#745804",
-  "buttonSecondaryColorEnabled": "#CFA00B",
-  "buttonSecondaryColorHovered": "#FFC200FF",
-  "buttonSecondaryColorPressed": "#F0B90B6C",
+  "buttonSecondaryColorDisabled": "#741A04",
+  "buttonSecondaryColorEnabled": "#A62D02",
+  "buttonSecondaryColorHovered": "#FF3B06FF",
+  "buttonSecondaryColorPressed": "#C434026C",
   
   "buttonCancelColorDisabled": "#2C3D66FF",
-  "buttonCancelColorEnabled": "#5B4606FF",
-  "buttonCancelColorHovered": "#FFC200FF",
-  "buttonCancelColorPressed": "#F0B90B6C",
+  "buttonCancelColorEnabled": "#591707FF",
+  "buttonCancelColorHovered": "#FF3B06FF",
+  "buttonCancelColorPressed": "#C434026C",
   
-  "gradientButtonStartColor": "#F0B90BAD",
-  "gradientButtonEndColor": "#F0B90BFF",
-  "gradientButtonDisabledStartColor": "#F0B90B4D",
-  "gradientButtonDisabledEndColor": "#F0B90B34",
-  "gradientButtonHoveredStartColor": "#FFC200FF",
-  "gradientButtonHoveredEndColor": "#FFD346FF",
-  "gradientButtonPressedStartColor": "#F0B90BFF",
-  "gradientButtonPressedEndColor": "#F0B90BFF",
+  "gradientButtonStartColor": "#C43402AD",
+  "gradientButtonEndColor": "#C43402FF",
+  "gradientButtonDisabledStartColor": "#C434024D",
+  "gradientButtonDisabledEndColor": "#C4340234",
+  "gradientButtonHoveredStartColor": "#FF3B06FF",
+  "gradientButtonHoveredEndColor": "#FF6700FF",
+  "gradientButtonPressedStartColor": "#C43402FF",
+  "gradientButtonPressedEndColor": "#C43402FF",
   "gradientButtonTextEnabledColor": "#000000FF",
   "gradientButtonTextDisabledColor": "#000000FF",
   "gradientButtonTextHoveredColor": "#000000FF",
   "gradientButtonTextPressedColor": "#000000FF",
 
   "checkBoxTickColor": "#000000",
-  "checkBoxGradientStartColor": "#F0B90BFF",
-  "checkBoxGradientEndColor": "#F0B90BFF",
+  "checkBoxGradientStartColor": "#C43402FF",
+  "checkBoxGradientEndColor": "#C43402FF",
 
-  "switchGradientStartColor": "#F0B90BFF",
-  "switchGradientEndColor": "#F0B90BFF",
+  "switchGradientStartColor": "#C43402FF",
+  "switchGradientEndColor": "#C43402FF",
   "switchGradientStartColor2": "#000000",
   "switchGradientEndColor2": "#000000",
   
   "comboBoxBackgroundColor": "#1D232FFF",
   "comboBoxArrowsColor": "#FFFFFFFF",
-  "comboBoxDropdownItemHighlightedColor": "#F0B90BFF",
+  "comboBoxDropdownItemHighlightedColor": "#C43402FF",
   
-  "modalPageCounterGradientStartColor": "#F0B90BFF",
-  "modalPageCounterGradientEndColor": "#F0B90BFF",
+  "modalPageCounterGradientStartColor": "#C43402FF",
+  "modalPageCounterGradientEndColor": "#C43402FF",
   
   "notifPopupBackgroundColor": "#0E111AFF",
   "notifPopupTextColor": "#FFFFFFFF",
@@ -68,40 +68,40 @@
   "scrollBarIndicatorColor": "#8790B2",
   "scrollBarBackgroundColor": "#94A3B1",
   
-  "tabSelectedColor": "#F0B90B",
+  "tabSelectedColor": "#C43402",
   
   "textDisabledColor": "#707070",
-  "textSelectionColor": "#F0B90B",
-  "textPlaceholderColor": "#5A4400",
+  "textSelectionColor": "#C43402",
+  "textPlaceholderColor": "#591707",
   "textSelectedColor": "#211D0E",
   
   "textFieldBackgroundColor": "#262424",
   "textFieldActiveBackgroundColor": "#262424",
-  "textFieldPrefixColor": "#F0B90B",
-  "textFieldSuffixColor": "#F0B90B",
+  "textFieldPrefixColor": "#C43402",
+  "textFieldSuffixColor": "#C43402",
   
   "tickerBadgeBackgroundColor": "#161515",
   
   "chartTradingLineBackgroundColor": "#161515",
-  "chartTradingLineColor": "#F0B90B",
+  "chartTradingLineColor": "#C43402",
   
   "innerBackgroundColor": "#161515",
   
   "floatingBackgroundColor": "#161515",
   
-  "rangeSliderBackgroundColor": "#F0B90B",
-  "rangeSliderDistanceColor": "#F0B90B33",
-  "rangeSliderIndicatorBackgroundStartColor": "#F0B90B",
-  "rangeSliderIndicatorBackgroundEndColor": "#F0B90B",
+  "rangeSliderBackgroundColor": "#C43402",
+  "rangeSliderDistanceColor": "#C4340233",
+  "rangeSliderIndicatorBackgroundStartColor": "#C43402",
+  "rangeSliderIndicatorBackgroundEndColor": "#C43402",
   
-  "userIconColorStart": "#F0B90B",
-  "userIconColorEnd": "#F0B90B33",
+  "userIconColorStart": "#C43402",
+  "userIconColorEnd": "#C4340233",
   
   "sidebarBgColor": "#000000",
-  "sidebarVersionTextColor": "#F0B90B",
-  "sidebarCursorStartColor": "#F0B90B",
+  "sidebarVersionTextColor": "#C43402",
+  "sidebarCursorStartColor": "#C43402",
   "sidebarCursorEndColor": "#16151500",
-  "sidebarLineTextHovered": "#F0B90B",
+  "sidebarLineTextHovered": "#C43402",
   "sidebarLineTextSelected": "#FFFFFF",
   
   "tradeSellModeSelectorBackgroundColorStart": "#E52167",
@@ -109,10 +109,10 @@
   "tradeBuyModeSelectorBackgroundColorStart": "#0BC05F",
   "tradeBuyModeSelectorBackgroundColorEnd": "#037B3A",
   
-  "inputModifierBackgroundColor": "#F0B90B21",
+  "inputModifierBackgroundColor": "#C4340221",
   "inputFieldBackgroundColor": "#161515",
   
-  "inputFieldBorderColor": "#F0B90B",
+  "inputFieldBorderColor": "#C43402",
   "inputPlaceholderTextColor": "#FF00FF",
   "inputRightIconColor": "#FFFFFF",
   "inputLeftIconColor": "#FFFFFF",
@@ -120,7 +120,7 @@
   
   "listItemOddBackground": "#000000",
   "listItemEvenBackground": "#161515",
-  "listItemHoveredBackground": "#5B4704",
+  "listItemHoveredBackground": "#591707",
   
   "addressBookTagColors": ["#627EEA", "#FFD87A", "#F7931A"],
   

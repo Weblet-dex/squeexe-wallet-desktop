@@ -381,46 +381,46 @@ Qaterial.Dialog
                                 }
                             }
 
-                            RowLayout
-                            {
-                                Layout.topMargin: 20
-                                width: parent.width - 30
-                                anchors.horizontalCenter: parent.horizontalCenter
-                                height: 50
+//                            RowLayout
+//                            {
+//                                Layout.topMargin: 20
+//                                width: parent.width - 30
+//                                anchors.horizontalCenter: parent.horizontalCenter
+//                                height: 50
 
-                                Dex.Text
-                                {
-                                    Layout.alignment: Qt.AlignVCenter
-                                    Layout.fillWidth: true
-                                    font: DexTypo.subtitle1
-                                    text: qsTr("Theme")
-                                }
+//                                Dex.Text
+//                                {
+//                                    Layout.alignment: Qt.AlignVCenter
+//                                    Layout.fillWidth: true
+//                                    font: DexTypo.subtitle1
+//                                    text: qsTr("Theme")
+//                                }
 
-                                Item { Layout.fillWidth: true }
+//                                Item { Layout.fillWidth: true }
 
-                                Dex.ComboBox
-                                {
-                                    Layout.alignment: Qt.AlignVCenter
-                                    model: API.qt_utilities.get_themes_list()
-                                    currentIndex: model.indexOf(atomic_settings2.value("CurrentTheme"))
+//                                Dex.ComboBox
+//                                {
+//                                    Layout.alignment: Qt.AlignVCenter
+//                                    model: API.qt_utilities.get_themes_list()
+//                                    currentIndex: model.indexOf(atomic_settings2.value("CurrentTheme"))
 
-                                    onActivated:
-                                    {
-                                        let chosenTheme = model[index];
+//                                    onActivated:
+//                                    {
+//                                        let chosenTheme = model[index];
 
-                                        console.info(qsTr("Changing theme to %1").arg(chosenTheme));
-                                        atomic_settings2.setValue("CurrentTheme", chosenTheme);
-                                        atomic_settings2.sync();
-                                        Dex.CurrentTheme.loadFromFilesystem(chosenTheme);
-                                    }
+//                                        console.info(qsTr("Changing theme to %1").arg(chosenTheme));
+//                                        atomic_settings2.setValue("CurrentTheme", chosenTheme);
+//                                        atomic_settings2.sync();
+//                                        Dex.CurrentTheme.loadFromFilesystem(chosenTheme);
+//                                    }
 
-                                    Component.onCompleted:
-                                    {
-                                        let current = atomic_settings2.value("CurrentTheme")
-                                        currentIndex = model.indexOf(current)
-                                    }
-                                }
-                            }
+//                                    Component.onCompleted:
+//                                    {
+//                                        let current = atomic_settings2.value("CurrentTheme")
+//                                        currentIndex = model.indexOf(current)
+//                                    }
+//                                }
+//                            }
                         }
                     }
                     Item
@@ -666,22 +666,22 @@ Qaterial.Dialog
             anchors.rightMargin: 10
             anchors.verticalCenter: parent.verticalCenter
 
-            DexAppButton
-            {
-                text: qsTr("Search Update")
-                height: 48
-                radius: 20
-                leftPadding: 20
-                rightPadding: 20
-                font: Qt.font(
-                {
-                    pixelSize: 19,
-                    letterSpacing: 0.15,
-                    family: DexTypo.fontFamily,
-                    weight: Font.Normal
-                })
-                onClicked: newUpdateModal.open()
-            }
+//            DexAppButton
+//            {
+//                text: qsTr("Search Update")
+//                height: 48
+//                radius: 20
+//                leftPadding: 20
+//                rightPadding: 20
+//                font: Qt.font(
+//                {
+//                    pixelSize: 19,
+//                    letterSpacing: 0.15,
+//                    family: DexTypo.fontFamily,
+//                    weight: Font.Normal
+//                })
+//                onClicked: newUpdateModal.open()
+//            }
 
             DexAppButton
             {
