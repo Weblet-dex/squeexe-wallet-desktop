@@ -81,6 +81,8 @@
   ],
   "possible_currencies": [
     "USD",
+	"FZ45T",
+	"MATIC",
     "BTC",
     "KMD",
     "LTC"

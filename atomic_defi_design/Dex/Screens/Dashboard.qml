@@ -31,7 +31,8 @@ Item
     {
         Portfolio,
         Wallet,
-        DEX,            // DEX == Trading page
+        DEX,          // DEX == Trading page
+        FzDashboard
         //Addressbook
     }
 
