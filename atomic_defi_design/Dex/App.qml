@@ -442,22 +442,22 @@ DexRectangle
         return showDialog(data);
     }
 
-    Component.onCompleted: 
-    {
-        loadTheme()
-        if(API.app.wallet_mgr.log_status()) 
-        {
-            window.logged = true
-        }
-    }
+//    Component.onCompleted:
+//    {
+//        loadTheme()
+//        if(API.app.wallet_mgr.log_status())
+//        {
+//            window.logged = true
+//        }
+//    }
 
-    Timer
-    {
-        interval: 5000
-        repeat: true
-        running: false
-        onTriggered: loadTheme()
-    }
+//    Timer
+//    {
+//        interval: 5000
+//        repeat: true
+//        running: false
+//        onTriggered: loadTheme()
+//    }
 
     Gradient
     {
