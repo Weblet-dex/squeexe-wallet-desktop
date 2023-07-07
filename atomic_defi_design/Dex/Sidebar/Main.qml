@@ -2,6 +2,7 @@ import QtQuick 2.12
 
 import "../Components"
 import "../Constants"
+//import "../Screens"
 import Dex.Themes 1.0 as Dex
 
 Item
@@ -13,11 +14,12 @@ Item
         Portfolio,
         Wallet,
         DEX,         // DEX == Trading page
-        Addressbook,
+        FzDashboard,
+        //Addressbook,
         Support
     }
 
-    property bool   isExpanded: containsMouse
+    property bool   isExpanded: true
     property real   lineHeight: 44
     property var    currentLineType: Main.LineType.Portfolio
     property alias  _selectionCursor: _selectionCursor
@@ -28,11 +30,22 @@ Item
     signal supportClicked()
     signal addCryptoClicked()
     signal privacySwitched(var checked)
-    signal expanded(var isExpanded)
-    signal expandStarted(var isExpanding)
+//    signal expanded(var isExpanded)
+//    signal expandStarted(var isExpanding)
 
-    width: isExpanded ? 200 : 80
+    width: 200
     height: parent.height
+
+//    Timer {
+//        interval: 250
+//        repeat: false
+//        triggeredOnStart: false
+//        running: true
+//        onTriggered: {
+//            currentLineType = Main.LineType.FzDash;
+//            root.lineSelected(Main.LineType.FzDash);
+//        }
+//    }
 
     // Background Rectangle
     DefaultRectangle
@@ -48,10 +61,21 @@ Item
     }
 
     // Animation when changing width.
-    Behavior on width
-    {
-        NumberAnimation { duration: 300; targets: [width, _selectionCursor.width]; properties: "width"; onRunningChanged: { if (!running) expanded(isExpanded); else expandStarted(isExpanded); } }
-    }
+//    Behavior on width
+//    {
+//        NumberAnimation {
+//            duration: 300;
+//            targets: [width, _selectionCursor.width];
+//            properties: "width";
+//            onRunningChanged: {
+//                if (!running) {
+//                    expanded(isExpanded);
+//                }else{
+//                    expandStarted(isExpanded);
+//                }
+//            }
+//        }
+//    }
 
     // Selection Cursor
     AnimatedRectangle

@@ -15,10 +15,11 @@ import "../Settings"
 import "../Support"
 import "../Sidebar" as Sidebar
 import "../Fiat"
+import "../Squeexe"
 import "../Settings" as SettingsPage
 import "../Support" as SupportPage
 import "../Screens"
-import "../Addressbook" as Addressbook
+//import "../Addressbook" as Addressbook
 import Dex.Themes 1.0 as Dex
 import AtomicDEX.TradingMode 1.0
 
@@ -31,11 +32,11 @@ Item
         Portfolio,
         Wallet,
         DEX,            // DEX == Trading page
-        Addressbook
+        //Addressbook
     }
 
     property var currentPage: Dashboard.PageType.Portfolio
-    property var availablePages: [portfolio, wallet, exchange, addressbook]
+    property var availablePages: [portfolio, wallet, exchange, squeexe]
 
     property alias webEngineView: webEngineView
 
@@ -163,10 +164,17 @@ Item
 
         Component
         {
-            id: addressbook
+            id: squeexe
 
-            Addressbook.Main { }
+            SqueexeDash {}
         }
+
+//        Component
+//        {
+//            id: addressbook
+
+//            Addressbook.Main { }
+//        }
 
         WebEngineView
         {

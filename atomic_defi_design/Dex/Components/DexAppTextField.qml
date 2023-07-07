@@ -77,8 +77,8 @@ Item
         height: parent.height
         radius: 4
         color: Dex.CurrentTheme.inputFieldBackgroundColor
-        border.color: control.error ? Dex.CurrentTheme.warningColor : input_field.focus ? Dex.CurrentTheme.inputFieldBorderColor : color
-        border.width: input_field.focus ? 1 : 0
+        border.color: control.error ? Dex.CurrentTheme.warningColor : input_field.focus ? Dex.CurrentTheme.inputFieldBorderColor : Dex.CurrentTheme.buttonColorDisabled
+        border.width: 1
 
         Behavior on x
         {

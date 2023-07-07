@@ -27,8 +27,9 @@ MouseArea
                 _portfolioLine.label.opacity = 0;
                 _walletLine.label.opacity = 0;
                 _dexLine.label.opacity = 0;
-                _addressBookLine.label.opacity = 0;
-                _fiatLine.label.opacity = 0;
+                _fzdashLine.label.opacity = 0;
+                //_addressBookLine.label.opacity = 0;
+                //_fiatLine.label.opacity = 0;
             }
         }
     }
@@ -36,7 +37,7 @@ MouseArea
     NumberAnimation
     {
         id: waitForSidebarExpansionAnimation
-        targets: [_portfolioLine.label, _walletLine.label, _dexLine.label, _addressBookLine.label, _fiatLine.label]
+        targets: [_portfolioLine.label, _walletLine.label, _dexLine.label, _fzdashLine]//_addressBookLine.label, _fiatLine.label]
         properties: "opacity"
         duration: 200
         from: 0
@@ -47,7 +48,7 @@ MouseArea
     NumberAnimation
     {
         id: labelsOpacityAnimation
-        targets: [_portfolioLine.label, _walletLine.label, _dexLine.label, _addressBookLine.label, _fiatLine.label]
+        targets: [_portfolioLine.label, _walletLine.label, _dexLine.label, _fzdashLine]//_addressBookLine.label, _fiatLine.label]
         properties: "opacity"
         duration: 350
         from: 0.0
@@ -94,24 +95,36 @@ MouseArea
 
         FigurativeLine
         {
-            id: _addressBookLine
+            id: _fzdashLine
 
+            label.enabled: true
             Layout.fillWidth: true
-            type: Main.LineType.Addressbook
-            label.text: isExpanded ? qsTr("Address Book") : ""
-            icon.source: General.image_path + "menu-news-white.svg"
-            onClicked: lineSelected(type)
-        }
-
-        FigurativeLine
-        {
-            id: _fiatLine
-
-            label.enabled: false
-            icon.enabled: false
-            Layout.fillWidth: true
-            label.text: isExpanded ? qsTr("Fiat") : ""
+            type: Main.LineType.FzDashboard
+            label.text: isExpanded ? qsTr("Fz Dashboard") : ""
             icon.source: General.image_path + "bill.svg"
+            //onClicked: lineSelected(type)
         }
+
+//        FigurativeLine
+//        {
+//            id: _addressBookLine
+
+//            Layout.fillWidth: true
+//            type: Main.LineType.Addressbook
+//            label.text: isExpanded ? qsTr("Address Book") : ""
+//            icon.source: General.image_path + "menu-news-white.svg"
+//            onClicked: lineSelected(type)
+//        }
+
+//        FigurativeLine
+//        {
+//            id: _fiatLine
+
+//            label.enabled: false
+//            icon.enabled: false
+//            Layout.fillWidth: true
+//            label.text: isExpanded ? qsTr("Fiat") : ""
+//            icon.source: General.image_path + "bill.svg"
+//        }
     }
 }

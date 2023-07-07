@@ -26,17 +26,17 @@ MouseArea
             }
         }
 
-        function onExpandStarted(isExpanding)
-        {
-            if (!isExpanding)
-            {
-                versionLabel.opacity = 0;
-                dexLogo.scale = .5;
-                dexLogo.source = Dex.CurrentTheme.logoPath;
-                dexLogo.sourceSize.width = 80;
-                versionLabel.opacity = 0;
-            }
-        }
+//        function onExpandStarted(isExpanding)
+//        {
+//            if (!isExpanding)
+//            {
+//                versionLabel.opacity = 0;
+//                dexLogo.scale = .5;
+//                dexLogo.source = Dex.CurrentTheme.logoPath;
+//                dexLogo.sourceSize.width = 80;
+//                versionLabel.opacity = 0;
+//            }
+//        }
     }
 
     NumberAnimation
