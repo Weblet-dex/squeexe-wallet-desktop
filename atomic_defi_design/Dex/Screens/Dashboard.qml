@@ -167,7 +167,7 @@ Item
         {
             id: squeexe
 
-            SqueexeDash {}
+            Squeexe {}
         }
 
 //        Component
