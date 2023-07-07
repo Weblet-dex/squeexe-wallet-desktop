@@ -103,7 +103,7 @@ execute_process(COMMAND ${IFW_BINDIR}/binarycreator.exe -c ./config/config.xml -
 	WORKING_DIRECTORY ${PROJECT_ROOT_DIR}/ci_tools_atomic_dex/installer/windows
 	ECHO_OUTPUT_VARIABLE
 	ECHO_ERROR_VARIABLE)
-file(COPY ${PROJECT_ROOT_DIR}/ci_tools_atomic_dex/installer/windows/${DEX_PROJECT_NAME}_installer.exe DESTINATION ${TARGET_APP_PATH})
+#file(COPY ${PROJECT_ROOT_DIR}/ci_tools_atomic_dex/installer/windows/${DEX_PROJECT_NAME}_installer.exe DESTINATION ${TARGET_APP_PATH})
 
 message(STATUS "Contents of folder: ls ${TARGET_APP_PATH}")
 execute_process(COMMAND ls "${TARGET_APP_PATH}")
