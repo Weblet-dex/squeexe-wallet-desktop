@@ -1,5 +1,5 @@
 {
-  "name": "atomicdex-desktop",
+  "name": "squeexedex-desktop",
   "version-string": "0.5.8",
   "dependencies": [
     "entt",

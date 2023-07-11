@@ -1,4 +1,4 @@
-name: AtomicDex-Desktop CI
+name: SqueexeDex-Desktop CI
 
 on:
   workflow_dispatch:
@@ -7,22 +7,20 @@ on:
   push:
     branches:
       - master
-  schedule:
-    - cron: '0 0 * * 1'
 
 env:
   DEX_API: "mm2"
   DEX_RPCPORT: 7762
   DEX_RPC: "http://127.0.0.1:7762"
-  DEX_PROJECT_NAME: "atomicdex-desktop"
-  DEX_DISPLAY_NAME: "AtomicDex Desktop"
+  DEX_PROJECT_NAME: "squeexedex-desktop"
+  DEX_DISPLAY_NAME: "SqueexeDex Desktop"
   DEX_COMPANY: "KomodoPlatform"
   DEX_VERSION: "0.5.8"
   DEX_WEBSITE: "https://atomicdex.io/"
   VCPKG_DEFAULT_BINARY_CACHE: ${{ github.workspace }}/b/vcpkg_cache
   VCPKG_BINARY_SOURCES: clear;x-gha,readwrite
-  RUNVCPKG_VCPKG_ROOT: ${{ github.workspace }}\atomicDEX-Desktop\ci_tools_atomic_dex\vcpkg-repo
-  VCPKG_ROOT: ${{ github.workspace }}\atomicDEX-Desktop\ci_tools_atomic_dex\vcpkg-repo
+  RUNVCPKG_VCPKG_ROOT: ${{ github.workspace }}\squeexeDEX-Desktop\ci_tools_atomic_dex\vcpkg-repo
+  VCPKG_ROOT: ${{ github.workspace }}\squeexeDEX-Desktop\ci_tools_atomic_dex\vcpkg-repo
 
 jobs:
 
@@ -196,7 +194,7 @@ jobs:
           vcpkgJsonGlob: 'vcpkg.json'
 
       - name: import code signing certificates (macos)
-        if: runner.os == 'macOS'  && 'KomodoPlatform/atomicDEX-Desktop' == github.repository
+        if: runner.os == 'macOS'  && 'Weblet-dex/squeexeDEX-Desktop' == github.repository
         uses: Apple-Actions/import-codesign-certs@v1
         with:
           keychain: ${{ github.run_id }}
@@ -205,7 +203,7 @@ jobs:
           p12-password: ${{ secrets.CERTIFICATES_P12_PASSWORD }}
 
       - name: import installer code signing certificates (macos)
-        if: runner.os == 'macOS'  && 'KomodoPlatform/atomicDEX-Desktop' == github.repository
+        if: runner.os == 'macOS'  && 'Weblet-dex/squeexeDEX-Desktop' == github.repository
         uses: apple-actions/import-codesign-certs@v1
         with:
           keychain: ${{ github.run_id }}
@@ -352,7 +350,7 @@ jobs:
       - name: Running Tests (Linux)
         working-directory: ci_tools_atomic_dex
         continue-on-error: true
-        if: runner.os == 'Linux' && 'KomodoPlatform/atomicDEX-Desktop' == github.repository
+        if: runner.os == 'Linux' && 'Weblet-dex/squeexeDEX-Desktop' == github.repository
         run: |
           export REPORT_CI_TOKEN=${{ secrets.REPORT_CI_TOKEN_SECRET }}
           export ATOMICDEX_TEST_SEED=${{ secrets.ATOMICDEX_TEST_SEED }}
@@ -371,7 +369,7 @@ jobs:
       - name: Running Tests (MacOS)
         working-directory: ci_tools_atomic_dex
         continue-on-error: true
-        if: runner.os == 'macOS' &&  'KomodoPlatform/atomicDEX-Desktop' == github.repository
+        if: runner.os == 'macOS' &&  'Weblet-dex/squeexeDEX-Desktop' == github.repository
         run: |
           export MAC_SIGN_IDENTITY="${{ secrets.MAC_SIGN_IDENTITY }}"
           export INSTALLER_MAC_SIGN_IDENTITY="${{ secrets.INSTALLER_MAC_SIGN_IDENTITY }}"
@@ -395,7 +393,7 @@ jobs:
       - name: Running Tests (Windows)
         shell: powershell
         continue-on-error: true
-        if: runner.os == 'Windows' && 'KomodoPlatform/atomicDEX-Desktop' == github.repository
+        if: runner.os == 'Windows' && 'Weblet-dex/squeexeDEX-Desktop' == github.repository
         run: |
           #echo "Running tests"
           $Env:REPORT_CI_TOKEN = "${{ secrets.REPORT_CI_TOKEN_SECRET }}"
