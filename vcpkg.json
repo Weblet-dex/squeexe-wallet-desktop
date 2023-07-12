@@ -1,6 +1,6 @@
 {
-  "name": "squeexedex-desktop",
-  "version-string": "0.5.8",
+  "name": "squeexedex-wallet",
+  "version-string": "0.6.0",
   "dependencies": [
     "entt",
     "boost-multiprecision",
