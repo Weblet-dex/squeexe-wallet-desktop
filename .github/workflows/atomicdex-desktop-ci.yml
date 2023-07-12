@@ -195,7 +195,7 @@ jobs:
 
       - name: import code signing certificates (macos)
         if: runner.os == 'macOS'  && 'Weblet-dex/squeexeDEX-Desktop' == github.repository
-        uses: Apple-Actions/import-codesign-certs@v2
+        uses: Apple-Actions/import-codesign-certs@v1
         with:
           keychain: ${{ github.run_id }}
           keychain-password: ${{ github.run_id }}
@@ -204,7 +204,7 @@ jobs:
 
       - name: import installer code signing certificates (macos)
         if: runner.os == 'macOS'  && 'Weblet-dex/squeexeDEX-Desktop' == github.repository
-        uses: apple-actions/import-codesign-certs@v2
+        uses: apple-actions/import-codesign-certs@v1
         with:
           keychain: ${{ github.run_id }}
           keychain-password: ${{ github.run_id }}
