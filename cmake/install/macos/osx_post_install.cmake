@@ -77,17 +77,17 @@ if (NOT EXISTS ${CMAKE_SOURCE_DIR}/bin/${DEX_PROJECT_NAME}.dmg)
     else ()
         message(FATAL_ERROR "Didn't find PACKAGER_PATH")
     endif ()
-
+    message(STATUS "1")
     execute_process(COMMAND ${PACKAGER_PATH} ${DEX_PROJECT_NAME} ${DEX_PROJECT_NAME} ${CMAKE_SOURCE_DIR}/bin/
             WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
             ECHO_OUTPUT_VARIABLE
             ECHO_ERROR_VARIABLE)
-
+    message(STATUS "2")
     execute_process(COMMAND codesign --deep --force -v -s "$ENV{MAC_SIGN_IDENTITY}" -o runtime --timestamp ${CMAKE_SOURCE_DIR}/bin/${DEX_PROJECT_NAME}.dmg
             WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
             ECHO_OUTPUT_VARIABLE
             ECHO_ERROR_VARIABLE)
-
+    message(STATUS "3")
     execute_process(COMMAND ${PROJECT_ROOT_DIR}/cmake/install/macos/macos_notarize.sh --asc-public-id=$ENV{ASC_PUBLIC_ID} --app-specific-password=$ENV{APPLE_ATOMICDEX_PASSWORD} --apple-id=$ENV{APPLE_ID} --primary-bundle-id=com.komodoplatform.atomicdex --target-binary=${CMAKE_SOURCE_DIR}/bin/${DEX_PROJECT_NAME}.dmg
             WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
             ECHO_OUTPUT_VARIABLE
@@ -95,10 +95,11 @@ if (NOT EXISTS ${CMAKE_SOURCE_DIR}/bin/${DEX_PROJECT_NAME}.dmg)
 else()
     message(STATUS "dmg already generated - skipping")
 endif ()
-
+message(STATUS "4")
 file(COPY ${CMAKE_SOURCE_DIR}/bin/${DEX_PROJECT_NAME}.dmg DESTINATION ${TARGET_APP_PATH})
-
+message(STATUS "5")
 get_filename_component(QT_ROOT_DIR $ENV{QT_ROOT} DIRECTORY)
+message(STATUS "6")
 set(IFW_BINDIR ${QT_ROOT_DIR}/Tools/QtInstallerFramework/4.5/bin)
 message(STATUS "IFW_BIN PATH IS ${IFW_BINDIR}")
 if (NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/bin/${DEX_PROJECT_NAME}.7z)
