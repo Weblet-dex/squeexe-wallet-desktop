@@ -12,8 +12,8 @@ env:
   DEX_API: "mm2"
   DEX_RPCPORT: 7762
   DEX_RPC: "http://127.0.0.1:7762"
-  DEX_PROJECT_NAME: "squeexedex-wallet"
-  DEX_DISPLAY_NAME: "SqueexeDex Wallet"
+  DEX_PROJECT_NAME: "squeexe-wallet"
+  DEX_DISPLAY_NAME: "Squeexe Wallet"
   DEX_COMPANY: "KomodoPlatform"
   DEX_VERSION: "0.6.0"
   DEX_WEBSITE: "https://atomicdex.io/"
@@ -214,7 +214,7 @@ jobs:
 
 
 
-      - name: Build Komodo Wallet (MacOS)
+      - name: Build Squeexe Wallet (MacOS)
         if: runner.os == 'macOS'
         run: |
           xcrun --sdk macosx --show-sdk-path
@@ -238,7 +238,7 @@ jobs:
 
 
 
-      - name: Build Komodo Wallet (Linux)
+      - name: Build Squeexe Wallet (Linux)
         if: runner.os == 'Linux'
         run: |
           export QT_INSTALL_CMAKE_PATH=${{ github.workspace }}/Qt/${{ matrix.qt }}/gcc_64/lib/cmake
@@ -256,7 +256,7 @@ jobs:
           ./ci_tools_atomic_dex bundle ${{ matrix.type }}
 
 
-      - name: Build Komodo Wallet (Windows)
+      - name: Build Squeexe Wallet (Windows)
         if: runner.os == 'Windows'
         shell: powershell
         run: |

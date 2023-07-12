@@ -81,16 +81,16 @@ struct tests_context : public antara::gaming::world::app
             SPDLOG_INFO("Using default password from the application");
         }
 
-        if (not wallet_manager.get_wallets().contains("komodo-wallet_tests"))
+        if (not wallet_manager.get_wallets().contains("squeexe-wallet_tests"))
         {
             wallet_manager.create(
-                test_password != nullptr ? test_password : "fakepasswordtemporary", test_seed != nullptr ? test_seed : "fake seed", "komodo-wallet_tests");
+                test_password != nullptr ? test_password : "fakepasswordtemporary", test_seed != nullptr ? test_seed : "fake seed", "squeexe-wallet_tests");
         }
         else
         {
-            SPDLOG_INFO("komodo-wallet_tests already exists - skipping");
+            SPDLOG_INFO("squeexe-wallet_tests already exists - skipping");
         }
-        wallet_manager.login(test_password != nullptr ? test_password : "fakepasswordtemporary", "komodo-wallet_tests");
+        wallet_manager.login(test_password != nullptr ? test_password : "fakepasswordtemporary", "squeexe-wallet_tests");
 
         //! Waits for mm2 to be initialized before running tests
         while (!mm2.is_mm2_running() && !m_test_context_ready) { std::this_thread::sleep_for(std::chrono::milliseconds(100)); }

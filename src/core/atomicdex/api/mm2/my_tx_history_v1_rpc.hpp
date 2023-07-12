@@ -1,4 +1,4 @@
-// komodo-wallet
+// squeexe-wallet
 // Author(s): syl
 
 #pragma once
