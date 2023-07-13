@@ -132,7 +132,7 @@ execute_process(COMMAND ${PROJECT_ROOT_DIR}/cmake/install/macos/macos_notarize.s
         ECHO_OUTPUT_VARIABLE
         ECHO_ERROR_VARIABLE)
 
-file(COPY ${PROJECT_ROOT_DIR}/ci_tools_atomic_dex/installer/osx/${DEX_PROJECT_NAME}_installer.app DESTINATION ${TARGET_APP_PATH})
+##file(COPY ${PROJECT_ROOT_DIR}/ci_tools_atomic_dex/installer/osx/${DEX_PROJECT_NAME}_installer.app DESTINATION ${TARGET_APP_PATH})
 
 
 execute_process(COMMAND ${IFW_BINDIR}/archivegen ${PROJECT_ROOT_DIR}/ci_tools_atomic_dex/installer/osx/${DEX_PROJECT_NAME}_installer.7z ${DEX_PROJECT_NAME}_installer.app
@@ -140,4 +140,9 @@ execute_process(COMMAND ${IFW_BINDIR}/archivegen ${PROJECT_ROOT_DIR}/ci_tools_at
         ECHO_OUTPUT_VARIABLE
         ECHO_ERROR_VARIABLE)
 
-file(COPY ${PROJECT_ROOT_DIR}/ci_tools_atomic_dex/installer/osx/${DEX_PROJECT_NAME}_installer.7z DESTINATION ${TARGET_APP_PATH})
+
+if (NOT EXISTS ${PROJECT_ROOT_DIR}/ci_tools_atomic_dex/installer/osx/${DEX_PROJECT_NAME}_installer.7z)
+
+else()
+    file(COPY ${PROJECT_ROOT_DIR}/ci_tools_atomic_dex/installer/osx/${DEX_PROJECT_NAME}_installer.7z DESTINATION ${TARGET_APP_PATH})
+endif()
