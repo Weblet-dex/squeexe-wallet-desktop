@@ -233,7 +233,6 @@ jobs:
           export MACOSX_DEPLOYMENT_TARGET=12.1
           export CC=clang
           export CXX=clang++
-          export CMAKE_MAKE_PROGRAM=/usr/bin/ninja
           cd ci_tools_atomic_dex
           nimble build -y
           ./ci_tools_atomic_dex bundle ${{ matrix.type }} --osx_sdk=$HOME/sdk/MacOSX12.1.sdk --compiler=clang++
@@ -247,7 +246,7 @@ jobs:
           export QT_ROOT=${{ github.workspace }}/Qt/${{ matrix.qt }}
           export PATH=${{ github.workspace }}/Qt/${{ matrix.qt }}/gcc_64/bin:$PATH
           export PATH=$HOME/.nimble/bin:$PATH
-          export PATH=usr/bin/ninja:$PATH
+          export CMAKE_MAKE_PROGRAM=/usr/bin/ninja
           #export CXXFLAGS=-stdlib=libc++
           #export LDFLAGS=-stdlib=libc++
           export CXX=clang++-12
