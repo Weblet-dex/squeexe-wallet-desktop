@@ -186,6 +186,7 @@ jobs:
         run: |
           echo "CXX=clang++-12" >> $GITHUB_ENV
           echo "CC=clang-12" >> $GITHUB_ENV
+          echo "CMAKE_MAKE_PROGRAM=/usr/bin/ninja" >> $GITHUB_ENV
 
       - name: vcpkg deps (All)
         uses: lukka/run-vcpkg@v11
@@ -232,6 +233,7 @@ jobs:
           export MACOSX_DEPLOYMENT_TARGET=12.1
           export CC=clang
           export CXX=clang++
+          export CMAKE_MAKE_PROGRAM=/usr/bin/ninja
           cd ci_tools_atomic_dex
           nimble build -y
           ./ci_tools_atomic_dex bundle ${{ matrix.type }} --osx_sdk=$HOME/sdk/MacOSX12.1.sdk --compiler=clang++
