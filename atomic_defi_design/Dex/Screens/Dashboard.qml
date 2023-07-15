@@ -46,6 +46,7 @@ Item
     readonly property int idx_exchange_history: 2
 
     property var current_ticker
+    property var fz_page: 0
 
     property var notifications_list: ([])
 

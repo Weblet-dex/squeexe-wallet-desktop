@@ -12,6 +12,8 @@ import Dex.Themes 1.0 as Dex
 
 Item {
     id: monitor
+    visible: dashboard.fz_page == 1 ? true : false;
+    enabled: visible
 
     GradientButton{
         x: 20
@@ -19,7 +21,17 @@ Item {
         radius: width
         width: 200
         text: qsTr("Back")
-        onClicked: parent.inMonitr = false;
+        onClicked: dashboard.fz_page = 0;
+    }
+
+    SquareButton{
+        x: 20
+        y: 100
+        width: 60
+        height: 60
+        icon.source: Qaterial.Icons.chevronLeft
+        Layout.alignment: Qt.AlignVCenter
+        onClicked: dashboard.fz_page = 0;
     }
 
     FzChart{

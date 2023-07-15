@@ -14,61 +14,66 @@ Item {
     id: squeexe
     anchors.fill: parent
 
-    property bool inMonitr: false
+    Item{
+        id: fzdboard
+        anchors.fill: parent
+        visible: dashboard.fz_page == 0 ? true : false;
+        enabled: visible
 
-    GradientButton{
-        y: 20
-        height: 60
-        width: 300
-        anchors.horizontalCenter: parent.horizontalCenter
-        radius: width
-        text: qsTr("Monitor")
-        onClicked: inMonitr = true;
+        GradientButton{
+            y: 20
+            height: 60
+            width: 300
+            anchors.horizontalCenter: squeexe.horizontalCenter
+            radius: width
+            text: qsTr("Monitor")
+            onClicked: dashboard.fz_page = 1;
+        }
+
+        DexGradientAppButton{
+            y: 100
+            height: 60
+            width: 300
+            anchors.horizontalCenter: squeexe.horizontalCenter
+            iconSource: Qaterial.Icons.plus
+            radius: 15
+            padding: 25
+            font: DexTypo.body2
+            text: qsTr("Monitor")
+            onClicked: dashboard.fz_page = 1;
+        }    
+
+        DefaultButton{
+            y: 180
+            height: 60
+            width: 300
+            anchors.horizontalCenter: squeexe.horizontalCenter
+            radius: 18
+            label.text: qsTr("Monitor")
+            label.font.pixelSize: 16
+            content.anchors.centerIn: content.parent
+            content.anchors.leftMargin: enabled ? 23 : 48
+            content.anchors.rightMargin: 23
+            onClicked: dashboard.fz_page = 1;
+        }
+
+        DexAppOutlineButton{
+            y: 260
+            height: 60
+            width: 300
+            anchors.horizontalCenter: parent.horizontalCenter
+            text: qsTr("Monitor")
+            leftPadding: 40
+            rightPadding: 40
+            radius: 18
+            onClicked: dashboard.fz_page = 1;
+        }
     }
-
-    DexGradientAppButton{
-        y: 100
-        height: 60
-        width: 300
-        anchors.horizontalCenter: parent.horizontalCenter
-        iconSource: Qaterial.Icons.plus
-        radius: 15
-        padding: 25
-        font: DexTypo.body2
-        text: qsTr("Monitor")
-        onClicked: inMonitr = true;
-    }    
-
-    DefaultButton{
-        y: 180
-        height: 60
-        width: 300
-        anchors.horizontalCenter: parent.horizontalCenter
-        radius: 18
-        label.text: qsTr("Monitor")
-        label.font.pixelSize: 16
-        content.anchors.left: content.parent.left
-        content.anchors.leftMargin: enabled ? 23 : 48
-        content.anchors.rightMargin: 23
-        onClicked: inMonitr = true;
-    }
-
-    DexAppOutlineButton{
-        y: 260
-        height: 60
-        width: 300
-        anchors.horizontalCenter: parent.horizontalCenter
-        text: qsTr("Monitor")
-        leftPadding: 40
-        rightPadding: 40
-        radius: 18
-        onClicked: inMonitr = true;
-    }    
 
     Monitor{
         id: monitr
         anchors.fill: parent
-        visible: inMonitr
+        visible: dashboard.fz_page == 1 ? true : false;
         enabled: visible
     }
 //    DexRectangle{

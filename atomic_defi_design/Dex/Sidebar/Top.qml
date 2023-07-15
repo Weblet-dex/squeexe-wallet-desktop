@@ -15,16 +15,16 @@ MouseArea
     {
         target: parent.parent
 
-        function onExpanded(isExpanded)
-        {
-            if (isExpanded)
-            {
-                fadeInTextVerAnimation.start();
-                dexLogo.scale = .8;
-                dexLogo.source = Dex.CurrentTheme.bigLogoPath;
-                dexLogo.sourceSize.width = 200;
-            }
-        }
+        // function onExpanded(isExpanded)
+        // {
+        //     if (isExpanded)
+        //     {
+        //         fadeInTextVerAnimation.start();
+        //         dexLogo.scale = .8;
+        //         dexLogo.source = Dex.CurrentTheme.bigLogoPath;
+        //         dexLogo.sourceSize.width = 200;
+        //     }
+        // }
 
 //        function onExpandStarted(isExpanding)
 //        {
