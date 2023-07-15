@@ -24,7 +24,7 @@ Item {
             y: 20
             height: 60
             width: 300
-            anchors.horizontalCenter: squeexe.horizontalCenter
+            anchors.horizontalCenter: parent.horizontalCenter
             radius: width
             text: qsTr("Monitor")
             onClicked: dashboard.fz_page = 1;
@@ -34,7 +34,7 @@ Item {
             y: 100
             height: 60
             width: 300
-            anchors.horizontalCenter: squeexe.horizontalCenter
+            anchors.horizontalCenter: parent.horizontalCenter
             iconSource: Qaterial.Icons.plus
             radius: 15
             padding: 25
@@ -47,7 +47,7 @@ Item {
             y: 180
             height: 60
             width: 300
-            anchors.horizontalCenter: squeexe.horizontalCenter
+            anchors.horizontalCenter: parent.horizontalCenter
             radius: 18
             label.text: qsTr("Monitor")
             label.font.pixelSize: 16
