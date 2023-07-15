@@ -11,17 +11,17 @@ Item
 
     enum LineType
     {
+        FzDashboard,
         Portfolio,
         Wallet,
         DEX,         // DEX == Trading page
-        FzDashboard,
         //Addressbook,
         Support
     }
 
     property bool   isExpanded: true
     property real   lineHeight: 44
-    property var    currentLineType: Main.LineType.Portfolio
+    property var    currentLineType: Main.LineType.FzDashboard
     property alias  _selectionCursor: _selectionCursor
     property bool   containsMouse: mouseArea.containsMouse
 

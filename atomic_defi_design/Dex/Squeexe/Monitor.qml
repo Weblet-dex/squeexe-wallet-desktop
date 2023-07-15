@@ -11,66 +11,24 @@ import App 1.0
 import Dex.Themes 1.0 as Dex
 
 Item {
-    id: squeexe
-    anchors.fill: parent
-
-    property bool inMonitr: false
+    id: monitor
 
     GradientButton{
+        x: 20
         y: 20
-        height: 60
-        width: 300
-        anchors.horizontalCenter: parent.horizontalCenter
         radius: width
-        text: qsTr("Monitor")
-        onClicked: inMonitr = true;
+        width: 200
+        text: qsTr("Back")
+        onClicked: parent.inMonitr = false;
     }
 
-    DexGradientAppButton{
-        y: 100
-        height: 60
-        width: 300
-        anchors.horizontalCenter: parent.horizontalCenter
-        iconSource: Qaterial.Icons.plus
-        radius: 15
-        padding: 25
-        font: DexTypo.body2
-        text: qsTr("Monitor")
-        onClicked: inMonitr = true;
-    }    
-
-    DefaultButton{
-        y: 180
-        height: 60
-        width: 300
-        anchors.horizontalCenter: parent.horizontalCenter
-        radius: 18
-        label.text: qsTr("Monitor")
-        label.font.pixelSize: 16
-        content.anchors.left: content.parent.left
-        content.anchors.leftMargin: enabled ? 23 : 48
-        content.anchors.rightMargin: 23
-        onClicked: inMonitr = true;
+    FzChart{
+        id: fzchart
+        width: 600
+        height: 280
+        anchors.centerIn: parent
     }
 
-    DexAppOutlineButton{
-        y: 260
-        height: 60
-        width: 300
-        anchors.horizontalCenter: parent.horizontalCenter
-        text: qsTr("Monitor")
-        leftPadding: 40
-        rightPadding: 40
-        radius: 18
-        onClicked: inMonitr = true;
-    }    
-
-    Monitor{
-        id: monitr
-        anchors.fill: parent
-        visible: inMonitr
-        enabled: visible
-    }
 //    DexRectangle{
 //        id: rect_one
 //        enabled: true

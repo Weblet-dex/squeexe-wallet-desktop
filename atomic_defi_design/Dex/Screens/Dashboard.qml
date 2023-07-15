@@ -29,15 +29,15 @@ Item
 
     enum PageType
     {
+        FzDashboard,
         Portfolio,
         Wallet,
-        DEX,          // DEX == Trading page
-        FzDashboard
+        DEX          // DEX == Trading page
         //Addressbook
     }
 
-    property var currentPage: Dashboard.PageType.Portfolio
-    property var availablePages: [portfolio, wallet, exchange, squeexe]
+    property var currentPage: Dashboard.PageType.FzDashboard
+    property var availablePages: [squeexe, portfolio, wallet, exchange]
 
     property alias webEngineView: webEngineView
 

@@ -24,10 +24,10 @@ MouseArea
             if (isExpanded) waitForSidebarExpansionAnimation.start();
             else
             {
+                _fzdashLine.label.opacity = 0;
                 _portfolioLine.label.opacity = 0;
                 _walletLine.label.opacity = 0;
                 _dexLine.label.opacity = 0;
-                _fzdashLine.label.opacity = 0;
                 //_addressBookLine.label.opacity = 0;
                 //_fiatLine.label.opacity = 0;
             }
@@ -37,7 +37,7 @@ MouseArea
     NumberAnimation
     {
         id: waitForSidebarExpansionAnimation
-        targets: [_portfolioLine.label, _walletLine.label, _dexLine.label, _fzdashLine]//_addressBookLine.label, _fiatLine.label]
+        targets: [_fzdashLine.label, _portfolioLine.label, _walletLine.label, _dexLine.label]//_addressBookLine.label, _fiatLine.label]
         properties: "opacity"
         duration: 200
         from: 0
@@ -48,7 +48,7 @@ MouseArea
     NumberAnimation
     {
         id: labelsOpacityAnimation
-        targets: [_portfolioLine.label, _walletLine.label, _dexLine.label, _fzdashLine]//_addressBookLine.label, _fiatLine.label]
+        targets: [_fzdashLine.label, _portfolioLine.label, _walletLine.label, _dexLine.label]//_addressBookLine.label, _fiatLine.label]
         properties: "opacity"
         duration: 350
         from: 0.0
@@ -60,6 +60,18 @@ MouseArea
     {
         id: _columnLayout
         anchors.fill: parent
+        FigurativeLine
+        {
+            id: _fzdashLine
+
+            //label.enabled: true
+            Layout.fillWidth: true
+            type: Main.LineType.FzDashboard
+            label.text: isExpanded ? qsTr("Fz Dashboard") : ""
+            icon.source: General.image_path + "bill.svg"
+            onClicked: lineSelected(type)
+        }
+
         FigurativeLine
         {
             id: _portfolioLine
@@ -91,18 +103,6 @@ MouseArea
             label.text: isExpanded ? qsTr("DEX") : ""
             icon.source: General.image_path + "menu-exchange-white.svg"
             onClicked: lineSelected(type)
-        }
-
-        FigurativeLine
-        {
-            id: _fzdashLine
-
-            label.enabled: true
-            Layout.fillWidth: true
-            type: Main.LineType.FzDashboard
-            label.text: isExpanded ? qsTr("Fz Dashboard") : ""
-            icon.source: General.image_path + "bill.svg"
-            //onClicked: lineSelected(type)
         }
 
 //        FigurativeLine
