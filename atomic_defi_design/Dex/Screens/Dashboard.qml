@@ -40,6 +40,7 @@ Item
     property var availablePages: [squeexe, portfolio, wallet, exchange]
 
     property alias webEngineView: webEngineView
+    property alias fzWebEngn: fzWebEngn
 
     readonly property int idx_exchange_trade: 0
     readonly property int idx_exchange_orders: 1
