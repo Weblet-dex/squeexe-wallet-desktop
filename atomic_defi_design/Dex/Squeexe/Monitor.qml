@@ -36,7 +36,7 @@ Item {
 
     FzChart{
         id: fzchart
-        width: 600
+        width: 440
         height: 280
         anchors.centerIn: parent
     }

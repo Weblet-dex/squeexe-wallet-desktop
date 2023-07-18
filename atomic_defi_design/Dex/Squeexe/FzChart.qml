@@ -25,8 +25,8 @@ Item
 
         let chart_html = ""
         let symbol = ""
-        let widget_x = 390
-        let widget_y = 150
+        let widget_x = 440
+        let widget_y = 280
         let scale_x = rootfz.width / widget_x
         let scale_y = rootfz.height / widget_y
 
@@ -66,7 +66,7 @@ Item
                     }
                 </style>
                 <script defer src="https://www.livecoinwatch.com/static/lcw-widget.js"></script>
-                <div class="livecoinwatch-widget-1" lcw-coin="${rel_ticker}" lcw-base="${base_ticker}" lcw-secondary="USDC" lcw-period="w" lcw-color-tx="${Dex.CurrentTheme.foregroundColor}" lcw-color-pr="#58c7c5" lcw-color-bg="${Dex.CurrentTheme.comboBoxBackgroundColor}" lcw-border-w="0" lcw-digits="8" ></div>
+                <div class="livecoinwatch-widget-1" lcw-coin="${rel_ticker}" lcw-base="${base_ticker}" lcw-secondary="USDC" lcw-period="w" lcw-color-tx="${Dex.CurrentTheme.foregroundColor}" lcw-color-pr="${Dex.CurrentTheme.buttonColorHovered}" lcw-color-bg="${Dex.CurrentTheme.backgroundColorDeep}" lcw-border-w="0" lcw-digits="8" ></div>
                 `
             }
         }
@@ -133,7 +133,7 @@ Item
         {
             // loadChart(left_ticker?? atomic_app_primary_coin,
             //           right_ticker?? atomic_app_secondary_coin)
-            loadChart("KMD", "LTC")
+            loadChart("KMD", "BTC")
         }
         catch (e) { console.error(e) }
     }
