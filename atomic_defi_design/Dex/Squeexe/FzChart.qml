@@ -32,19 +32,19 @@ Item
 
         if (source == "livecoinwatch")
         {
-            selected_testcoin = ""
-            if (General.is_testcoin(left_ticker))
-            {
-                pair_supported = false
-                selected_testcoin = left_ticker
-                return
-            }
-            if (General.is_testcoin(right_ticker))
-            {
-                pair_supported = false
-                selected_testcoin = right_ticker
-                return
-            }
+            // selected_testcoin = ""
+            // if (General.is_testcoin(left_ticker))
+            // {
+            //     pair_supported = false
+            //     selected_testcoin = left_ticker
+            //     return
+            // }
+            // if (General.is_testcoin(right_ticker))
+            // {
+            //     pair_supported = false
+            //     selected_testcoin = right_ticker
+            //     return
+            // }
 
             let rel_ticker = General.getChartTicker(right_ticker)
             let base_ticker = General.getChartTicker(left_ticker)
@@ -124,15 +124,16 @@ Item
             </div>
             <!-- TradingView Widget END -->`
         }
-        dashboard.webEngineView.loadHtml(chart_html)
+        dashboard.fzWebEngn.loadHtml(chart_html)
     }
 
     Component.onCompleted:
     {
         try
         {
-            loadChart(left_ticker?? atomic_app_primary_coin,
-                      right_ticker?? atomic_app_secondary_coin)
+            // loadChart(left_ticker?? atomic_app_primary_coin,
+            //           right_ticker?? atomic_app_secondary_coin)
+            loadChart("KMD", "LTC")
         }
         catch (e) { console.error(e) }
     }
@@ -140,8 +141,9 @@ Item
     onWidthChanged: {
         try
         {
-            loadChart(left_ticker?? atomic_app_primary_coin,
-                      right_ticker?? atomic_app_secondary_coin)
+            // loadChart(left_ticker?? atomic_app_primary_coin,
+            //           right_ticker?? atomic_app_secondary_coin)
+            loadChart("KMD", "LTC")
         }
         catch (e) { console.error(e) }
     }
@@ -191,19 +193,19 @@ Item
 
         Component.onCompleted:
         {
-            dashboard.webEngineView.parent = webEngineViewPlaceHolderFz
-            dashboard.webEngineView.anchors.fill = webEngineViewPlaceHolderFz
+            dashboard.fzWebEngn.parent = webEngineViewPlaceHolderFz
+            dashboard.fzWebEngn.anchors.fill = webEngineViewPlaceHolderFz
         }
         Component.onDestruction:
         {
-            dashboard.webEngineView.visible = false
-            dashboard.webEngineView.stop()
+            dashboard.fzWebEngn.visible = false
+            dashboard.fzWebEngn.stop()
         }
-        onVisibleChanged: dashboard.webEngineView.visible = visible
+        onVisibleChanged: dashboard.fzWebEngn.visible = visible
 
         Connections
         {
-            target: dashboard.webEngineView
+            target: dashboard.fzWebEngn
 
             function onLoadingChanged(webEngineLoadReq)
             {
@@ -216,30 +218,31 @@ Item
         }
     }
 
-    Connections
-    {
-        target: app
-        function onPairChanged(left, right)
-        {
-            if (API.app.trading_pg.market_mode == MarketMode.Sell)
-            {
-                rootfz.loadChart(left, right)
-            }
-            else
-            {
-                rootfz.loadChart(right, left)
-            }
-        }
-    }
+    // Connections
+    // {
+    //     target: app
+    //     function onPairChanged(left, right)
+    //     {
+    //         if (API.app.trading_pg.market_mode == MarketMode.Sell)
+    //         {
+    //             rootfz.loadChart(left, right)
+    //         }
+    //         else
+    //         {
+    //             rootfz.loadChart(right, left)
+    //         }
+    //     }
+    // }
 
     Connections
     {
         target: Dex.CurrentTheme
         function onThemeChanged()
         {
-            loadChart(left_ticker?? atomic_app_primary_coin,
-                      right_ticker?? atomic_app_secondary_coin,
-                      true)
+            // loadChart(left_ticker?? atomic_app_primary_coin,
+            //           right_ticker?? atomic_app_secondary_coin,
+            //           true)
+            loadChart("KMD", "LTC")
         }
     }
 }

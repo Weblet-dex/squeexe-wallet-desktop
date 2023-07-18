@@ -180,6 +180,12 @@ Item
 
         WebEngineView
         {
+            id: fzWebEngn
+            backgroundColor: "transparent"
+        }
+
+        WebEngineView
+        {
             id: webEngineView
             backgroundColor: "transparent"
         }
