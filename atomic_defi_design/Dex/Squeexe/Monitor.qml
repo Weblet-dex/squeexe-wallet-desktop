@@ -15,6 +15,13 @@ Item {
     visible: dashboard.fz_page == 1 ? true : false;
     enabled: visible
 
+    Image {
+        id: sqx_bg
+        source: "qrc:///assets/images/dashconcept.png"
+        anchors.fill: parent
+        visible: true
+    }
+
     GradientButton{
         x: 20
         y: 20

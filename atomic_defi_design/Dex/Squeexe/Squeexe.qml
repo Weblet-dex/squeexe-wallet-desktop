@@ -14,12 +14,12 @@ Item {
     id: squeexe
     anchors.fill: parent
 
-    Shortcut {
-        sequence: "F8"
-        onActivated: {
-            sqx_labl.text = sqx_rect.width + " - " + sqx_rect.height
-        }
-    }
+    // Shortcut {
+    //     sequence: "F8"
+    //     onActivated: {
+    //         sqx_labl.text = sqx_rect.width + " - " + sqx_rect.height
+    //     }
+    // }
 
     Item{
         id: fzdboard
@@ -76,18 +76,18 @@ Item {
             onClicked: dashboard.fz_page = 1;
         }
 
-        Label{
-            id: sqx_labl
-            anchors.horizontalCenter: parent.horizontalCenter
-            y: 360
-            text: "empty"
-        }        
+        // Label{
+        //     id: sqx_labl
+        //     anchors.horizontalCenter: parent.horizontalCenter
+        //     y: 360
+        //     text: "empty"
+        // }        
 
-        Rectangle{
-            id: sqx_rect
-            anchors.fill: parent
-            color: 'red'
-        }
+        // Rectangle{
+        //     id: sqx_rect
+        //     anchors.fill: parent
+        //     color: 'red'
+        // }
     }
 
     Monitor{
