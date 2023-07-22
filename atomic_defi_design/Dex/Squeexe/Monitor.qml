@@ -21,8 +21,7 @@ Item {
         y: parent.height * 0.14
         width: parent.width * 0.426
         height: parent.height * 0.492
-        fzcWidth: parent.width * 0.426
-        fzcHeight: parent.height * 0.492
+        anchors.centerIn: parent
     }
 
     Image {

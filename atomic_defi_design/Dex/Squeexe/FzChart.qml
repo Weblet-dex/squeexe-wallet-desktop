@@ -16,8 +16,6 @@ Item
     property string loaded_symbol
     property bool pair_supported: false
     property string selected_testcoin
-    property real fzcWidth: 20.0
-    property real fzcHeight: 20.0
     onPair_supportedChanged: if (!pair_supported) webEngineViewPlaceHolderFz.visible = false
 
     function loadChart(right_ticker, left_ticker, force = false, source="livecoinwatch")
@@ -27,10 +25,10 @@ Item
 
         let chart_html = ""
         let symbol = ""
-        let widget_x = fzcWidth
-        let widget_y = fzcHeight
-        // let scale_x = rootfz.width / widget_x
-        // let scale_y = rootfz.height / widget_y
+        let widget_x = 380
+        let widget_y = 200
+        let scale_x = rootfz.width / widget_x
+        let scale_y = rootfz.height / widget_y
 
         if (source == "livecoinwatch")
         {
@@ -63,9 +61,8 @@ Item
                 <style>
                     body { margin: auto; }
                     .livecoinwatch-widget-1 {
-                        width: ${widget_x};
-                        height: ${widget_y};
-                        transform-origin: top left;
+                        transform-origin: 0 0;
+                        transform: scaleX(${scale_x}) scaleY(${scale_y});
                     }
                 </style>
                 <script defer src="https://www.livecoinwatch.com/static/lcw-widget.js"></script>
