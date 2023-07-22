@@ -25,10 +25,10 @@ Item
 
         let chart_html = ""
         let symbol = ""
-        let widget_x = 380
-        let widget_y = 200
-        let scale_x = (rootfz.width - 4) / widget_x
-        let scale_y = (rootfz.height - 3) / widget_y
+        let widget_x = (380 - 4)
+        let widget_y = (200 - 3)
+        let scale_x = rootfz.width / widget_x
+        let scale_y = rootfz.height / widget_y
 
         if (source == "livecoinwatch")
         {

@@ -34,8 +34,8 @@ jobs:
         name: [
             # ubuntu-release,
             # ubuntu-debug,
-            # osx-release,
-            # osx-debug,
+            osx-release,
+            osx-debug,
             windows-release,
             windows-debug
         ]
@@ -53,17 +53,17 @@ jobs:
           #   type: 'Debug'
           #   host: 'linux'
 
-          # - name: osx-release
-          #   os: macos-11
-          #   qt: '5.15.2'
-          #   type: 'Release'
-          #   host: 'mac'
+          - name: osx-release
+            os: macos-11
+            qt: '5.15.2'
+            type: 'Release'
+            host: 'mac'
 
-          # - name: osx-debug
-          #   os: macos-11
-          #   qt: '5.15.2'
-          #   type: 'Debug'
-          #   host: 'mac'
+          - name: osx-debug
+            os: macos-11
+            qt: '5.15.2'
+            type: 'Debug'
+            host: 'mac'
 
           - name: windows-release
             os: windows-latest
@@ -112,18 +112,18 @@ jobs:
           Copy-Item "${{ github.workspace }}\libwally-core\wally.dll" -Destination "${{ github.workspace }}\wally\wally.dll" -force
 
 
-      # - name: Install QT (macOS)
-      #   if: runner.os == 'macOS'
-      #   uses: jurplel/install-qt-action@v3.0.0
-      #   with:
-      #     version: ${{ matrix.qt }}
-      #     host: ${{ matrix.host }}
-      #     dir: '${{ github.workspace }}'
-      #     target: 'desktop'
-      #     modules: 'qtcharts debug_info qtwebengine'
-      #     tools: 'tools_ifw'
-      #     setup-python: 'false'
-      #     cache: true
+      - name: Install QT (macOS)
+        if: runner.os == 'macOS'
+        uses: jurplel/install-qt-action@v3.0.0
+        with:
+          version: ${{ matrix.qt }}
+          host: ${{ matrix.host }}
+          dir: '${{ github.workspace }}'
+          target: 'desktop'
+          modules: 'qtcharts debug_info qtwebengine'
+          tools: 'tools_ifw'
+          setup-python: 'false'
+          cache: true
 
       # - name: Install QT (Linux)
       #   if: runner.os == 'Linux'
@@ -170,16 +170,16 @@ jobs:
       #     echo ${{ github.sha }}
       #     sudo ./ci_tools_atomic_dex/ci_scripts/linux_script.sh
 
-      # - name: Install deps (MacOS)
-      #   if: runner.os == 'macOS'
-      #   run: |
-      #     ./ci_tools_atomic_dex/ci_scripts/osx_script.sh
+      - name: Install deps (MacOS)
+        if: runner.os == 'macOS'
+        run: |
+          ./ci_tools_atomic_dex/ci_scripts/osx_script.sh
 
-      # - name: Upload env variable for vpkg (MacOS)
-      #   if: runner.os == 'macOS'
-      #   run: |
-      #     echo "CXX=/usr/local/opt/llvm/bin/clang++" >> $GITHUB_ENV
-      #     echo "CC=/usr/local/opt/llvm/bin/clang" >> $GITHUB_ENV
+      - name: Upload env variable for vpkg (MacOS)
+        if: runner.os == 'macOS'
+        run: |
+          echo "CXX=/usr/local/opt/llvm/bin/clang++" >> $GITHUB_ENV
+          echo "CC=/usr/local/opt/llvm/bin/clang" >> $GITHUB_ENV
 
       # - name: Upload env variable for vpkg (Linux)
       #   if: runner.os == 'Linux'
@@ -193,48 +193,48 @@ jobs:
           vcpkgDirectory: '${{ github.workspace }}/ci_tools_atomic_dex/vcpkg-repo'
           vcpkgJsonGlob: 'vcpkg.json'
 
-      # - name: import code signing certificates (macos)
-      #   if: runner.os == 'macOS'  && 'Weblet-dex/squeexeDEX-Desktop' == github.repository
-      #   uses: Apple-Actions/import-codesign-certs@v1
-      #   with:
-      #     keychain: ${{ github.run_id }}
-      #     keychain-password: ${{ github.run_id }}
-      #     p12-file-base64: ${{ secrets.CERTIFICATES_P12 }}
-      #     p12-password: ${{ secrets.CERTIFICATES_P12_PASSWORD }}
+      - name: import code signing certificates (macos)
+        if: runner.os == 'macOS'  && 'Weblet-dex/squeexeDEX-Desktop' == github.repository
+        uses: Apple-Actions/import-codesign-certs@v1
+        with:
+          keychain: ${{ github.run_id }}
+          keychain-password: ${{ github.run_id }}
+          p12-file-base64: ${{ secrets.CERTIFICATES_P12 }}
+          p12-password: ${{ secrets.CERTIFICATES_P12_PASSWORD }}
 
-      # - name: import installer code signing certificates (macos)
-      #   if: runner.os == 'macOS'  && 'Weblet-dex/squeexeDEX-Desktop' == github.repository
-      #   uses: apple-actions/import-codesign-certs@v1
-      #   with:
-      #     keychain: ${{ github.run_id }}
-      #     keychain-password: ${{ github.run_id }}
-      #     create-keychain: false
-      #     p12-file-base64: ${{ secrets.CERTIFICATES_INSTALLER_P12 }}
-      #     p12-password: ${{ secrets.CERTIFICATES_P12_PASSWORD }}
+      - name: import installer code signing certificates (macos)
+        if: runner.os == 'macOS'  && 'Weblet-dex/squeexeDEX-Desktop' == github.repository
+        uses: apple-actions/import-codesign-certs@v1
+        with:
+          keychain: ${{ github.run_id }}
+          keychain-password: ${{ github.run_id }}
+          create-keychain: false
+          p12-file-base64: ${{ secrets.CERTIFICATES_INSTALLER_P12 }}
+          p12-password: ${{ secrets.CERTIFICATES_P12_PASSWORD }}
 
 
 
-      # - name: Build Squeexe Wallet (MacOS)
-      #   if: runner.os == 'macOS'
-      #   run: |
-      #     xcrun --sdk macosx --show-sdk-path
-      #     export SDK_PATH=$(xcrun --sdk macosx --show-sdk-path)
-      #     ls /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs
-      #     echo $HOME/sdk
-      #     ls $HOME/sdk
-      #     export MAC_SIGN_IDENTITY="${{ secrets.MAC_SIGN_IDENTITY }}"
-      #     export INSTALLER_MAC_SIGN_IDENTITY="${{ secrets.INSTALLER_MAC_SIGN_IDENTITY }}"
-      #     export APPLE_ATOMICDEX_PASSWORD="${{ secrets.APPLE_ATOMICDEX_PASSWORD }}"
-      #     export APPLE_ID="${{ secrets.APPLE_ID }}"
-      #     export ASC_PUBLIC_ID="${{ secrets.ASC_PUBLIC_ID }}"
-      #     export QT_INSTALL_CMAKE_PATH=${{ github.workspace }}/Qt/${{ matrix.qt }}/clang_64/lib/cmake
-      #     export QT_ROOT=${{ github.workspace }}/Qt/${{ matrix.qt }}
-      #     export MACOSX_DEPLOYMENT_TARGET=12.1
-      #     export CC=clang
-      #     export CXX=clang++
-      #     cd ci_tools_atomic_dex
-      #     nimble build -y
-      #     ./ci_tools_atomic_dex bundle ${{ matrix.type }} --osx_sdk=$HOME/sdk/MacOSX12.1.sdk --compiler=clang++
+      - name: Build Squeexe Wallet (MacOS)
+        if: runner.os == 'macOS'
+        run: |
+          xcrun --sdk macosx --show-sdk-path
+          export SDK_PATH=$(xcrun --sdk macosx --show-sdk-path)
+          ls /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs
+          echo $HOME/sdk
+          ls $HOME/sdk
+          export MAC_SIGN_IDENTITY="${{ secrets.MAC_SIGN_IDENTITY }}"
+          export INSTALLER_MAC_SIGN_IDENTITY="${{ secrets.INSTALLER_MAC_SIGN_IDENTITY }}"
+          export APPLE_ATOMICDEX_PASSWORD="${{ secrets.APPLE_ATOMICDEX_PASSWORD }}"
+          export APPLE_ID="${{ secrets.APPLE_ID }}"
+          export ASC_PUBLIC_ID="${{ secrets.ASC_PUBLIC_ID }}"
+          export QT_INSTALL_CMAKE_PATH=${{ github.workspace }}/Qt/${{ matrix.qt }}/clang_64/lib/cmake
+          export QT_ROOT=${{ github.workspace }}/Qt/${{ matrix.qt }}
+          export MACOSX_DEPLOYMENT_TARGET=12.1
+          export CC=clang
+          export CXX=clang++
+          cd ci_tools_atomic_dex
+          nimble build -y
+          ./ci_tools_atomic_dex bundle ${{ matrix.type }} --osx_sdk=$HOME/sdk/MacOSX12.1.sdk --compiler=clang++
 
 
 
@@ -300,27 +300,27 @@ jobs:
       #     path: ./bundled/linux/${{ env.target_name_appimage }}
       #     retention-days: 7
 
-      # - name: Upload env variable for artifacts (macOS)
-      #   if: runner.os == 'macOS'
-      #   run: |
-      #     echo "artifact_name_dmg=${{ env.DEX_PROJECT_NAME }}-${{ matrix.name }}-$(git rev-parse --short HEAD).dmg" >> $GITHUB_ENV
-      #     echo "artifact_name_installer=${{ env.DEX_PROJECT_NAME }}-installer-${{ matrix.name }}-$(git rev-parse --short HEAD).7z" >> $GITHUB_ENV
+      - name: Upload env variable for artifacts (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          echo "artifact_name_dmg=${{ env.DEX_PROJECT_NAME }}-${{ matrix.name }}-$(git rev-parse --short HEAD).dmg" >> $GITHUB_ENV
+          echo "artifact_name_installer=${{ env.DEX_PROJECT_NAME }}-installer-${{ matrix.name }}-$(git rev-parse --short HEAD).7z" >> $GITHUB_ENV
 
-      # - name: Upload artifacts (MacOS dmg)
-      #   if: runner.os == 'macOS'
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: ${{ env.artifact_name_dmg }}
-      #     path: ./bundled/osx/${{ env.DEX_PROJECT_NAME }}.dmg
-      #     retention-days: 7
+      - name: Upload artifacts (MacOS dmg)
+        if: runner.os == 'macOS'
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ env.artifact_name_dmg }}
+          path: ./bundled/osx/${{ env.DEX_PROJECT_NAME }}.dmg
+          retention-days: 7
 
-      # - name: Upload artifacts (MacOS installer)
-      #   if: runner.os == 'macOS'
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: ${{ env.artifact_name_installer }}
-      #     path: ./bundled/osx/${{ env.DEX_PROJECT_NAME }}_installer.7z
-      #     retention-days: 7
+      - name: Upload artifacts (MacOS installer)
+        if: runner.os == 'macOS'
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ env.artifact_name_installer }}
+          path: ./bundled/osx/${{ env.DEX_PROJECT_NAME }}_installer.7z
+          retention-days: 7
 
       - name: Upload env variable for artifacts (Windows)
         if: runner.os == 'Windows'
@@ -366,29 +366,29 @@ jobs:
       #     #cd build-${{ matrix.type }}/bin/AntaraAtomicDexTestsAppDir/usr/bin
       #     #cat ${{ env.DEX_PROJECT_NAME }}-tests-result.xml
 
-      # - name: Running Tests (MacOS)
-      #   working-directory: ci_tools_atomic_dex
-      #   continue-on-error: true
-      #   if: runner.os == 'macOS' &&  'Weblet-dex/squeexe-wallet-desktop' == github.repository
-      #   run: |
-      #     export MAC_SIGN_IDENTITY="${{ secrets.MAC_SIGN_IDENTITY }}"
-      #     export INSTALLER_MAC_SIGN_IDENTITY="${{ secrets.INSTALLER_MAC_SIGN_IDENTITY }}"
-      #     export APPLE_ATOMICDEX_PASSWORD="${{ secrets.APPLE_ATOMICDEX_PASSWORD }}"
-      #     export APPLE_ID="${{ secrets.APPLE_ID }}"
-      #     export ASC_PUBLIC_ID="${{ secrets.ASC_PUBLIC_ID }}"
-      #     export MACOSX_DEPLOYMENT_TARGET=12.1
-      #     export REPORT_CI_TOKEN=${{ secrets.REPORT_CI_TOKEN_SECRET }}
-      #     export ATOMICDEX_TEST_SEED=${{ secrets.ATOMICDEX_TEST_SEED }}
-      #     export ATOMICDEX_PASSWORD=${{ secrets.ATOMICDEX_PASSWORD }}
-      #     export QT_INSTALL_CMAKE_PATH=${{ github.workspace }}/Qt/${{ matrix.qt }}/clang_64/lib/cmake
-      #     export QT_ROOT=${{ github.workspace }}/Qt/${{ matrix.qt }}
-      #     export CC=clang
-      #     export CXX=clang++
-      #     #echo "Running tests"
-      #     #nimble build -y
-      #     #./ci_tools_atomic_dex tests ${{ matrix.type }}
-      #     #cd build-${{ matrix.type }}/bin/${{ env.DEX_PROJECT_NAME }}_tests.app/Contents/MacOS
-      #     #cat ${{ env.DEX_PROJECT_NAME }}-tests-result.xml
+      - name: Running Tests (MacOS)
+        working-directory: ci_tools_atomic_dex
+        continue-on-error: true
+        if: runner.os == 'macOS' &&  'Weblet-dex/squeexe-wallet-desktop' == github.repository
+        run: |
+          export MAC_SIGN_IDENTITY="${{ secrets.MAC_SIGN_IDENTITY }}"
+          export INSTALLER_MAC_SIGN_IDENTITY="${{ secrets.INSTALLER_MAC_SIGN_IDENTITY }}"
+          export APPLE_ATOMICDEX_PASSWORD="${{ secrets.APPLE_ATOMICDEX_PASSWORD }}"
+          export APPLE_ID="${{ secrets.APPLE_ID }}"
+          export ASC_PUBLIC_ID="${{ secrets.ASC_PUBLIC_ID }}"
+          export MACOSX_DEPLOYMENT_TARGET=12.1
+          export REPORT_CI_TOKEN=${{ secrets.REPORT_CI_TOKEN_SECRET }}
+          export ATOMICDEX_TEST_SEED=${{ secrets.ATOMICDEX_TEST_SEED }}
+          export ATOMICDEX_PASSWORD=${{ secrets.ATOMICDEX_PASSWORD }}
+          export QT_INSTALL_CMAKE_PATH=${{ github.workspace }}/Qt/${{ matrix.qt }}/clang_64/lib/cmake
+          export QT_ROOT=${{ github.workspace }}/Qt/${{ matrix.qt }}
+          export CC=clang
+          export CXX=clang++
+          #echo "Running tests"
+          #nimble build -y
+          #./ci_tools_atomic_dex tests ${{ matrix.type }}
+          #cd build-${{ matrix.type }}/bin/${{ env.DEX_PROJECT_NAME }}_tests.app/Contents/MacOS
+          #cat ${{ env.DEX_PROJECT_NAME }}-tests-result.xml
 
       - name: Running Tests (Windows)
         shell: powershell
