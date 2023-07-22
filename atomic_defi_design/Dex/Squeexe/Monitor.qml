@@ -15,6 +15,16 @@ Item {
     visible: dashboard.fz_page == 1 ? true : false;
     enabled: visible
 
+    FzChart{
+        id: fzchart
+        x: parent.width * 0.526
+        y: parent.height * 0.14
+        width: parent.width * 0.426
+        height: parent.height * 0.492
+        fzcWidth: parent.width * 0.426
+        fzcHeight: parent.height * 0.492
+    }
+
     Image {
         id: sqx_bg
         source: "qrc:///assets/images/dashconcept.png"
@@ -24,7 +34,7 @@ Item {
 
     GradientButton{
         x: 20
-        y: 20
+        y: 0
         radius: width
         width: 200
         text: qsTr("Back")
@@ -33,19 +43,12 @@ Item {
 
     SquareButton{
         x: 20
-        y: 100
-        width: 60
-        height: 60
+        y: 48
+        width: 48
+        height: 48
         icon.source: Qaterial.Icons.chevronLeft
         Layout.alignment: Qt.AlignVCenter
         onClicked: dashboard.fz_page = 0;
-    }
-
-    FzChart{
-        id: fzchart
-        width: 440
-        height: 280
-        anchors.centerIn: parent
     }
 
 //    DexRectangle{
