@@ -21,13 +21,17 @@ Item {
         y: parent.height * 0.14
         width: parent.width * 0.426
         height: parent.height * 0.492
-        anchors.centerIn: parent
+        //anchors.centerIn: parent
     }
 
     Image {
         id: sqx_bg
         source: "qrc:///assets/images/dashconcept.png"
-        anchors.fill: parent
+        width: parent.width
+        height: parent.height
+        x: 0
+        y: 0
+        fillMode: Image.Stretch
         visible: true
     }
 
