@@ -27,8 +27,8 @@ Item
         let symbol = ""
         let widget_x = 380
         let widget_y = 200
-        let scale_x = rootfz.width / widget_x
-        let scale_y = rootfz.height / widget_y
+        let scale_x = (rootfz.width - 4) / widget_x
+        let scale_y = (rootfz.height - 3) / widget_y
 
         if (source == "livecoinwatch")
         {
@@ -63,10 +63,11 @@ Item
                     .livecoinwatch-widget-1 {
                         transform-origin: 0 0;
                         transform: scaleX(${scale_x}) scaleY(${scale_y});
+                        overflow: hidden;
                     }
                 </style>
                 <script defer src="https://www.livecoinwatch.com/static/lcw-widget.js"></script>
-                <div class="livecoinwatch-widget-1" lcw-coin="${rel_ticker}" lcw-base="${base_ticker}" lcw-secondary="USDC" lcw-period="w" lcw-color-tx="${Dex.CurrentTheme.foregroundColor}" lcw-color-pr="${Dex.CurrentTheme.buttonColorHovered}" lcw-color-bg="${Dex.CurrentTheme.backgroundColorDeep}" lcw-border-w="0" lcw-digits="8" ></div>
+                <div class="livecoinwatch-widget-1" lcw-coin="${rel_ticker}" lcw-base="${base_ticker}" lcw-secondary="USDC" lcw-period="w" lcw-color-tx="${Dex.CurrentTheme.foregroundColor}" lcw-color-pr="${Dex.CurrentTheme.buttonColorHovered}" lcw-color-bg="${Dex.CurrentTheme.backgroundColor}" lcw-border-w="0" lcw-digits="8" ></div>
                 `
             }
         }

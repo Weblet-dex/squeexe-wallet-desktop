@@ -201,7 +201,7 @@ init_dpi()
     {
         int          ac = 0;
         QApplication tmp(ac, nullptr);
-        double       min_window_size = 800.0;
+        double       min_window_size = 900.0;
         auto         screens         = tmp.screens();
         for (auto&& cur_screen: screens)
         {

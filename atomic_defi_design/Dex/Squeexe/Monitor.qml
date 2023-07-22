@@ -17,10 +17,10 @@ Item {
 
     FzChart{
         id: fzchart
-        x: parent.width * 0.526
-        y: parent.height * 0.14
-        width: parent.width * 0.426
-        height: parent.height * 0.492
+        x: parent.width * 0.52
+        y: parent.height * 0.136
+        width: parent.width * 0.44
+        height: parent.height * 0.5
         //anchors.centerIn: parent
     }
 
