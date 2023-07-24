@@ -73,6 +73,12 @@ namespace atomic_dex
         return out;
     }
 
+    QString
+    trading_page::ag_price() const
+    {
+        return QString::fromStdString(m_system_manager.get_system<global_price_service>().get_ag_price());
+    }
+
     void
     trading_page::set_current_orderbook(const QString& base, const QString& rel)
     {

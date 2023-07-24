@@ -30,6 +30,7 @@ namespace
                                                               return cfg;
                                                           }()};
     t_http_client_ptr g_openrates_client = std::make_unique<web::http::client::http_client>(FROM_STD_STR("https://rates.komodo.earth"), g_openrates_cfg);
+    t_http_client_ptr g_metals_client = std::make_unique<web::http::client::http_client>(FROM_STD_STR("https://api.metalpriceapi.com/v1"), g_openrates_cfg);
     pplx::cancellation_token_source g_token_source;
 
     pplx::task<web::http::http_response>
@@ -40,6 +41,16 @@ namespace
         req.set_request_uri(FROM_STD_STR("api/v1/usd_rates"));
         //SPDLOG_INFO("req: {}", TO_STD_STR(req.to_string()));
         return g_openrates_client->request(req, g_token_source.get_token());
+    }
+
+    pplx::task<web::http::http_response>
+    async_fetch_ag_price()
+    {
+        web::http::http_request req;
+        req.set_method(web::http::methods::GET);
+        req.set_request_uri(FROM_STD_STR("latest?api_key=044ff0fada374042de59631a1bd28340&base=USD&currencies=EUR,XAU,XAG"));
+        //SPDLOG_INFO("req: {}", TO_STD_STR(req.to_string()));
+        return g_metals_client->request(req, g_token_source.get_token());
     }
 
     nlohmann::json
@@ -408,6 +419,20 @@ namespace atomic_dex
             SPDLOG_ERROR("Exception caught: {}, base: {}, rel: {}", error.what(), base, rel);
             return "0.00";
         }
+    }
+
+    std::string 
+    global_price_service::get_ag_price() const
+    {
+        async_fetch_ag_price()
+            .then(
+                [this](web::http::http_response resp)
+                {
+                    if (resp.status_code() == 200)
+                    {
+                        return TO_STD_STR(resp.extract_string(true).get());
+                    }
+                });
     }
 
     void

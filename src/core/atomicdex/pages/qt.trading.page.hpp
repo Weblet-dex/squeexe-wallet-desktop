@@ -164,6 +164,7 @@ namespace atomic_dex
         Q_INVOKABLE void determine_fees();
         Q_INVOKABLE void determine_error_cases();
         Q_INVOKABLE void reset_fees();
+        Q_INVOKABLE QString ag_price(); const;
 
         //! Properties
         [[nodiscard]] qt_orderbook_wrapper* get_orderbook_wrapper() const;

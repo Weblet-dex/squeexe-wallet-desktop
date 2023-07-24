@@ -13,6 +13,16 @@ import Dex.Themes 1.0 as Dex
 Item {
     id: squeexe
     anchors.fill: parent
+    property var silvrep = "empty"
+    property string silvrstr = "empty"
+
+    Shortcut {
+        equence: "F8"
+        onActivated: {
+            silvrep = API.app.trading_pg.ag_price(nota, confs)
+            sqx_labl.text = silvrep
+        }
+    }
 
     Item{
         id: fzdboard
@@ -76,6 +86,15 @@ Item {
         visible: dashboard.fz_page == 1 ? true : false;
         enabled: visible
     }
+
+    Label{
+        id: sqx_labl
+        anchors.horizontalCenter: parent.horizontalCenter
+        y: 360
+        font.pixelSize: 22
+        text: "empty"
+        color: "#FFFFFF"
+    } 
 //    DexRectangle{
 //        id: rect_one
 //        enabled: true
