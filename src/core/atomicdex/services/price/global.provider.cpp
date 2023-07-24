@@ -425,9 +425,10 @@ namespace atomic_dex
     global_price_service::get_ag_price() const
     {
         static std::atomic_size_t nb_try = 0;
+        std::string dfalt = "got none";
         nb_try += 1;
         SPDLOG_INFO("Forcing update providers");
-        auto error_functor = [this](pplx::task<void> previous_task)
+        auto error_functor = [](pplx::task<void> previous_task)
         {
             try
             {
@@ -442,7 +443,7 @@ namespace atomic_dex
         };
         async_fetch_ag_price()
             .then(
-                [this](web::http::http_response resp)
+                [](web::http::http_response resp)
                 {
                     if (resp.status_code() == 200)
                     {
