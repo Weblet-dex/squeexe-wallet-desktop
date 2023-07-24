@@ -428,7 +428,7 @@ namespace atomic_dex
         std::string dfalt = "got none";
         nb_try += 1;
         SPDLOG_INFO("Forcing update providers");
-        auto error_functor = [](pplx::task<void> previous_task)
+        auto error_functor = [](pplx::task<_ExpectedParameterType> previous_task)
         {
             try
             {
@@ -448,6 +448,8 @@ namespace atomic_dex
                     if (resp.status_code() == 200)
                     {
                         return TO_STD_STR(resp.extract_string(true).get());
+                    }else{
+                        return dfalt;
                     }
                 })
             .then(error_functor);
