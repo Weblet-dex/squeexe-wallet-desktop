@@ -74,7 +74,7 @@ namespace atomic_dex
     }
 
     QString
-    trading_page::ag_price() const
+    trading_page::ag_price()
     {
         return QString::fromStdString(m_system_manager.get_system<global_price_service>().get_ag_price());
     }

@@ -424,6 +424,22 @@ namespace atomic_dex
     std::string 
     global_price_service::get_ag_price() const
     {
+        static std::atomic_size_t nb_try = 0;
+        nb_try += 1;
+        SPDLOG_INFO("Forcing update providers");
+        auto error_functor = [this](pplx::task<void> previous_task)
+        {
+            try
+            {
+                previous_task.wait();
+            }
+            catch (const std::exception& e)
+            {
+                SPDLOG_ERROR("pplx task error from async_fetch_ag_price: {} - nb_try {}", e.what(), nb_try);
+                using namespace std::chrono_literals;
+                std::this_thread::sleep_for(1s);
+            };
+        };
         async_fetch_ag_price()
             .then(
                 [this](web::http::http_response resp)
@@ -432,7 +448,8 @@ namespace atomic_dex
                     {
                         return TO_STD_STR(resp.extract_string(true).get());
                     }
-                });
+                })
+            .then(error_functor);
     }
 
     void
