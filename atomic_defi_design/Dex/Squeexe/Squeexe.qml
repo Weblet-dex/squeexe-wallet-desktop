@@ -16,8 +16,8 @@ Item {
     property var silvrep : "empty"
     //property string silvrstr : "empty"
 
-    Shortcut {
-        equence: "F8"
+    Shortcut{
+        sequence: "F8"
         onActivated: {
             silvrep = API.app.trading_pg.ag_price()
             sqx_labl.text = silvrep
