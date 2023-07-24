@@ -443,7 +443,7 @@ namespace atomic_dex
         };
         async_fetch_ag_price()
             .then(
-                [](web::http::http_response resp)
+                [dfalt](web::http::http_response resp)
                 {
                     if (resp.status_code() == 200)
                     {
