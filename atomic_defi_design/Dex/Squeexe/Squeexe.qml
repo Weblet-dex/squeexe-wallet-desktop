@@ -13,13 +13,13 @@ import Dex.Themes 1.0 as Dex
 Item {
     id: squeexe
     anchors.fill: parent
-    property var silvrep = "empty"
-    property string silvrstr = "empty"
+    property var silvrep : "empty"
+    //property string silvrstr : "empty"
 
     Shortcut {
         equence: "F8"
         onActivated: {
-            silvrep = API.app.trading_pg.ag_price(nota, confs)
+            silvrep = API.app.trading_pg.ag_price()
             sqx_labl.text = silvrep
         }
     }
