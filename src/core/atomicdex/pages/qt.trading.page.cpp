@@ -16,6 +16,7 @@
 
 #include <QJsonDocument>
 #include <QSettings>
+#include <cpprest/filestream.h>
 
 //! Project Headers
 #include "atomicdex/api/mm2/rpc.buy.hpp"
