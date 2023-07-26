@@ -133,18 +133,18 @@ namespace atomic_dex
     void
     trading_page::upt_ag_price()
     {
-    auto fileStream = std::make_shared<ostream>(); //Open stream to output file.
-    pplx::task<void> requestTask = fstream::open_ostream(U("results.html")).then([=](ostream outFile)
+    auto fileStream = std::make_shared<concurrency::streams::ostream>(); //Open stream to output file.
+    pplx::task<void> requestTask = concurrency::streams::fstream::open_ostream(U("results.html")).then([=](concurrency::streams::ostream outFile)
         {
             *fileStream = outFile;
             http_client client(U("https://api.metalpriceapi.com/v1/latest")); // Create http_client to send the request.
-            uri_builder builder(U("?api_key=044ff0fada374042de59631a1bd28340&base=USD&currencies=EUR,XAU,XAG"));
+            web::uri_builder builder(U("?api_key=044ff0fada374042de59631a1bd28340&base=USD&currencies=EUR,XAU,XAG"));
             //builder.append(U("&base=USD"));
             //builder.append(U("&currencies=EUR,XAU,XAG"));
             //builder.append_query(U("?"), U("cpprestsdk github"));
-            return client.request(methods::GET, builder.to_string()); // Build request URI and start the request.
+            return client.request(web::http::methods::GET, builder.to_string()); // Build request URI and start the request.
         })
-            .then([=](http_response resp)
+            .then([=](web::http::http_response resp)
                 {
                     //printf("Received response status code:%u\n", resp.status_code());
                     //std::wcout << resp.extract_string(true).get() << std::endl;
@@ -152,7 +152,7 @@ namespace atomic_dex
                     emit agPriceChanged();
                     return resp.body().read_to_end(fileStream->streambuf()); // Write response body into the file.
                 })
-                    .then([=](size_t)
+                    .then([=](size_t) 
                         {
                             return fileStream->close(); // Close the file stream.
                         });
