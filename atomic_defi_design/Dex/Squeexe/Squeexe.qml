@@ -13,14 +13,14 @@ import Dex.Themes 1.0 as Dex
 Item {
     id: squeexe
     anchors.fill: parent
-    property var silvrep : "empty"
+    //property var silvrep : "empty"
     //property string silvrstr : "empty"
 
     Shortcut{
         sequence: "F8"
         onActivated: {
-            silvrep = API.app.trading_pg.ag_price()
-            sqx_labl.text = silvrep
+            API.app.trading_pg.upt_ag_price()
+            //sqx_labl.text = silvrep
         }
     }
 
@@ -92,7 +92,7 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
         y: 360
         font.pixelSize: 22
-        text: "empty"
+        text: API.app.trading_pg.ag_price
         color: "#FFFFFF"
     } 
 //    DexRectangle{

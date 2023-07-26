@@ -73,12 +73,6 @@ namespace atomic_dex
         return out;
     }
 
-    QString
-    trading_page::ag_price()
-    {
-        return QString::fromStdString(m_system_manager.get_system<global_price_service>().get_ag_price());
-    }
-
     void
     trading_page::set_current_orderbook(const QString& base, const QString& rel)
     {
@@ -134,6 +128,42 @@ namespace atomic_dex
     {
         m_system_manager.get_system<settings_page>().garbage_collect_qml();
         dispatcher_.trigger<gui_leave_trading>();
+    }
+
+    void
+    trading_page::upt_ag_price()
+    {
+    auto fileStream = std::make_shared<ostream>(); //Open stream to output file.
+    pplx::task<void> requestTask = fstream::open_ostream(U("results.html")).then([=](ostream outFile)
+        {
+            *fileStream = outFile;
+            http_client client(U("https://api.metalpriceapi.com/v1/latest")); // Create http_client to send the request.
+            uri_builder builder(U("?api_key=044ff0fada374042de59631a1bd28340&base=USD&currencies=EUR,XAU,XAG"));
+            //builder.append(U("&base=USD"));
+            //builder.append(U("&currencies=EUR,XAU,XAG"));
+            //builder.append_query(U("?"), U("cpprestsdk github"));
+            return client.request(methods::GET, builder.to_string()); // Build request URI and start the request.
+        })
+            .then([=](http_response resp)
+                {
+                    //printf("Received response status code:%u\n", resp.status_code());
+                    //std::wcout << resp.extract_string(true).get() << std::endl;
+                    m_ag_price = std::move(QString::fromStdString(resp.extract_string(true).get()));
+                    emit agPriceChanged();
+                    return resp.body().read_to_end(fileStream->streambuf()); // Write response body into the file.
+                })
+                    .then([=](size_t)
+                        {
+                            return fileStream->close(); // Close the file stream.
+                        });
+                try
+                {
+                    requestTask.wait(); // Wait for all the outstanding I/O to complete and handle any exceptions
+                }
+                catch (const std::exception& e)
+                {
+                    printf("Error exception:%s\n", e.what());
+                }
     }
 
     void
@@ -1375,6 +1405,13 @@ namespace atomic_dex
     trading_page::get_cex_price() const
     {
         return m_cex_price;
+    }
+
+    QString
+    trading_page::get_ag_price() const
+    {
+        return m_ag_price
+        //return QString::fromStdString(m_system_manager.get_system<global_price_service>().get_ag_price());
     }
 
     bool

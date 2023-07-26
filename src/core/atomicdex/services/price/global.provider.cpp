@@ -30,7 +30,7 @@ namespace
                                                               return cfg;
                                                           }()};
     t_http_client_ptr g_openrates_client = std::make_unique<web::http::client::http_client>(FROM_STD_STR("https://rates.komodo.earth"), g_openrates_cfg);
-    t_http_client_ptr g_metals_client = std::make_unique<web::http::client::http_client>(FROM_STD_STR("https://api.metalpriceapi.com/v1"), g_openrates_cfg);
+    //t_http_client_ptr g_metals_client = std::make_unique<web::http::client::http_client>(FROM_STD_STR("https://api.metalpriceapi.com/v1"), g_openrates_cfg);
     pplx::cancellation_token_source g_token_source;
 
     pplx::task<web::http::http_response>
@@ -43,15 +43,15 @@ namespace
         return g_openrates_client->request(req, g_token_source.get_token());
     }
 
-    pplx::task<web::http::http_response>
-    async_fetch_ag_price()
-    {
-        web::http::http_request req;
-        req.set_method(web::http::methods::GET);
-        req.set_request_uri(FROM_STD_STR("latest?api_key=044ff0fada374042de59631a1bd28340&base=USD&currencies=EUR,XAU,XAG"));
-        //SPDLOG_INFO("req: {}", TO_STD_STR(req.to_string()));
-        return g_metals_client->request(req, g_token_source.get_token());
-    }
+    // pplx::task<web::http::http_response>
+    // async_fetch_ag_price()
+    // {
+    //     web::http::http_request req;
+    //     req.set_method(web::http::methods::GET);
+    //     req.set_request_uri(FROM_STD_STR("latest?api_key=044ff0fada374042de59631a1bd28340&base=USD&currencies=EUR,XAU,XAG"));
+    //     //SPDLOG_INFO("req: {}", TO_STD_STR(req.to_string()));
+    //     return g_metals_client->request(req, g_token_source.get_token());
+    // }
 
     nlohmann::json
     process_fetch_fiat_answer(web::http::http_response resp)
@@ -421,39 +421,39 @@ namespace atomic_dex
         }
     }
 
-    std::string 
-    global_price_service::get_ag_price() const
-    {
-        static std::atomic_size_t nb_try = 0;
-        std::string dfalt = "got none";
-        nb_try += 1;
-        SPDLOG_INFO("Forcing update providers");
-        auto error_functor = [](pplx::task<std::basic_string<char>> previous_task)
-        {
-            try
-            {
-                previous_task.wait();
-            }
-            catch (const std::exception& e)
-            {
-                SPDLOG_ERROR("pplx task error from async_fetch_ag_price: {} - nb_try {}", e.what(), nb_try);
-                using namespace std::chrono_literals;
-                std::this_thread::sleep_for(1s);
-            };
-        };
-        async_fetch_ag_price()
-            .then(
-                [dfalt](web::http::http_response resp)
-                {
-                    if (resp.status_code() == 200)
-                    {
-                        return TO_STD_STR(resp.extract_string(true).get());
-                    }else{
-                        return dfalt;
-                    }
-                })
-            .then(error_functor);
-    }
+    // std::string 
+    // global_price_service::get_ag_price() const
+    // {
+    //     static std::atomic_size_t nb_try = 0;
+    //     std::string dfalt = "got none";
+    //     nb_try += 1;
+    //     SPDLOG_INFO("Forcing update providers");
+    //     auto error_functor = [](pplx::task<std::basic_string<char>> previous_task)
+    //     {
+    //         try
+    //         {
+    //             previous_task.wait();
+    //         }
+    //         catch (const std::exception& e)
+    //         {
+    //             SPDLOG_ERROR("pplx task error from async_fetch_ag_price: {} - nb_try {}", e.what(), nb_try);
+    //             using namespace std::chrono_literals;
+    //             std::this_thread::sleep_for(1s);
+    //         };
+    //     };
+    //     async_fetch_ag_price()
+    //         .then(
+    //             [dfalt](web::http::http_response resp)
+    //             {
+    //                 if (resp.status_code() == 200)
+    //                 {
+    //                     return TO_STD_STR(resp.extract_string(true).get());
+    //                 }else{
+    //                     return dfalt;
+    //                 }
+    //             })
+    //         .then(error_functor);
+    // }
 
     void
     global_price_service::on_force_update_providers([[maybe_unused]] const force_update_providers& evt)

@@ -59,6 +59,7 @@ namespace atomic_dex
         Q_PROPERTY(SelectedOrderStatus selected_order_status READ get_selected_order_status WRITE set_selected_order_status NOTIFY selectedOrderStatusChanged)
         Q_PROPERTY(QString price_reversed READ get_price_reversed NOTIFY priceReversedChanged)
         Q_PROPERTY(QString cex_price READ get_cex_price NOTIFY cexPriceChanged)
+        Q_PROPERTY(QString ag_price READ get_ag_price NOTIFY agPriceChanged)
         Q_PROPERTY(QString cex_price_reversed READ get_cex_price_reversed NOTIFY cexPriceReversedChanged)
         Q_PROPERTY(QString cex_price_diff READ get_cex_price_diff NOTIFY cexPriceDiffChanged)
         Q_PROPERTY(QString min_trade_vol READ get_min_trade_vol WRITE set_min_trade_vol NOTIFY minTradeVolChanged)
@@ -113,6 +114,7 @@ namespace atomic_dex
         QString                                m_max_volume{"0"};
         QString                                m_total_amount{"0.00777"};
         QString                                m_cex_price{"0"};
+        QString                                m_ag_price{"0"};
         QString                                m_minimal_trading_amount{"0.0001"};
         std::optional<nlohmann::json>          m_preferred_order;
         boost::synchronized_value<QVariantMap> m_fees;
@@ -164,7 +166,7 @@ namespace atomic_dex
         Q_INVOKABLE void determine_fees();
         Q_INVOKABLE void determine_error_cases();
         Q_INVOKABLE void reset_fees();
-        Q_INVOKABLE QString ag_price();
+        Q_INVOKABLE void upt_ag_price();
 
         //! Properties
         [[nodiscard]] qt_orderbook_wrapper* get_orderbook_wrapper() const;
@@ -196,6 +198,7 @@ namespace atomic_dex
         [[nodiscard]] QString         get_base_amount() const;
         [[nodiscard]] QString         get_rel_amount() const;
         [[nodiscard]] QString         get_cex_price() const;
+        [[nodiscard]] QString         get_ag_price() const;
         [[nodiscard]] QString         get_cex_price_reversed() const;
         [[nodiscard]] QString         get_cex_price_diff() const;
         [[nodiscard]] bool            get_invalid_cex_price() const;
@@ -236,6 +239,7 @@ namespace atomic_dex
         void relAmountChanged();
         void feesChanged();
         void cexPriceChanged();
+        void agPriceChanged();
         void cexPriceReversedChanged();
         void cexPriceDiffChanged();
         void invalidCexPriceChanged();

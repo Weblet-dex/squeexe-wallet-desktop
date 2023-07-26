@@ -331,17 +331,17 @@ DexWindow
                 }
             }
 
-//            Item
-//            {
-//                width: 15
-//                height: 1
-//            }
+           Item
+           {
+               width: 15
+               height: 1
+           }
 
-//            Settings
-//            {
-//                id: atomic_settings0
-//                fileName: atomic_cfg_file
-//            }
+           Settings
+           {
+               id: atomic_settings0
+               fileName: atomic_cfg_file
+           }
 
             // Theme toggle
 //            DexIconButton
