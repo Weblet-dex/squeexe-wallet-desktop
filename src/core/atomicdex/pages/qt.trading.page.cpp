@@ -134,7 +134,7 @@ namespace atomic_dex
     trading_page::upt_ag_price()
     {
     auto fileStream = std::make_shared<concurrency::streams::ostream>(); //Open stream to output file.
-    pplx::task<void> requestTask = concurrency::streams::fstream::open_ostream(U("results.html")).then([=](concurrency::streams::ostream outFile)
+    pplx::task<void> requestTask = Concurrency::streams::fstream::open_ostream(U("results.html"), std::ios_base::in | std::ios_base::out).then([=](concurrency::streams::ostream outFile)
         {
             *fileStream = outFile;
             http_client client(U("https://api.metalpriceapi.com/v1/latest")); // Create http_client to send the request.
