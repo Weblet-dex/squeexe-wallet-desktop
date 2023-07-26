@@ -135,11 +135,11 @@ namespace atomic_dex
     trading_page::upt_ag_price()
     {
     auto fileStream = std::make_shared<concurrency::streams::ostream>(); //Open stream to output file.
-    pplx::task<void> requestTask = Concurrency::streams::fstream::open_ostream(U("results.html"), std::ios_base::in | std::ios_base::out).then([=](concurrency::streams::ostream outFile)
+    pplx::task<void> requestTask = concurrency::streams::fstream::open_ostream("results.html", std::ios_base::in | std::ios_base::out).then([=](concurrency::streams::ostream outFile)
         {
             *fileStream = outFile;
-            http_client client(U("https://api.metalpriceapi.com/v1/latest")); // Create http_client to send the request.
-            web::uri_builder builder(U("?api_key=044ff0fada374042de59631a1bd28340&base=USD&currencies=EUR,XAU,XAG"));
+            http_client client("https://api.metalpriceapi.com/v1/latest"); // Create http_client to send the request.
+            web::uri_builder builder("?api_key=044ff0fada374042de59631a1bd28340&base=USD&currencies=EUR,XAU,XAG");
             //builder.append(U("&base=USD"));
             //builder.append(U("&currencies=EUR,XAU,XAG"));
             //builder.append_query(U("?"), U("cpprestsdk github"));
