@@ -132,40 +132,59 @@ namespace atomic_dex
     }
 
     void
-    trading_page::upt_ag_price()
-    {
-    auto fileStream = std::make_shared<concurrency::streams::ostream>(); //Open stream to output file.
-    pplx::task<void> requestTask = concurrency::streams::fstream::open_ostream(("results.html")).then([=](concurrency::streams::ostream outFile)
-        {
-            *fileStream = outFile;
-            http_client client("https://api.metalpriceapi.com/v1/latest"); // Create http_client to send the request.
-            web::uri_builder builder("?api_key=044ff0fada374042de59631a1bd28340&base=USD&currencies=EUR,XAU,XAG");
-            //builder.append(U("&base=USD"));
-            //builder.append(U("&currencies=EUR,XAU,XAG"));
-            //builder.append_query(U("?"), U("cpprestsdk github"));
-            return client.request(web::http::methods::GET, builder.to_string()); // Build request URI and start the request.
-        })
-            .then([=](web::http::http_response resp)
+    trading_page::upt_ag_price(){
+        pplx::task<void> requestTask = async_ap_req()
+            .then([](web::http::http_response response)
                 {
-                    //printf("Received response status code:%u\n", resp.status_code());
-                    //std::wcout << resp.extract_string(true).get() << std::endl;
+                    printf("Received response status code:%u\n", response.status_code());
+                    std::wcout << response.extract_string(true).get() << std::endl;
                     m_ag_price = std::move(QString::fromStdString(resp.extract_string(true).get()));
                     emit agPriceChanged();
-                    return resp.body().read_to_end(fileStream->streambuf()); // Write response body into the file.
-                })
-                    .then([=](size_t) 
-                        {
-                            return fileStream->close(); // Close the file stream.
-                        });
-                try
-                {
-                    requestTask.wait(); // Wait for all the outstanding I/O to complete and handle any exceptions
-                }
-                catch (const std::exception& e)
-                {
-                    printf("Error exception:%s\n", e.what());
-                }
+                    return;
+                });
+        try{
+            requestTask.wait();
+        }
+        catch (const std::exception& e){
+            printf("Error exception:%s\n", e.what());
+        }
     }
+
+    // void
+    // trading_page::upt_ag_price()
+    // {
+    // auto fileStream = std::make_shared<concurrency::streams::ostream>(); //Open stream to output file.
+    // pplx::task<void> requestTask = concurrency::streams::fstream::open_ostream(("results.html")).then([=](concurrency::streams::ostream outFile)
+    //     {
+    //         *fileStream = outFile;
+    //         http_client client("https://api.metalpriceapi.com/v1/latest"); // Create http_client to send the request.
+    //         web::uri_builder builder("?api_key=044ff0fada374042de59631a1bd28340&base=USD&currencies=EUR,XAU,XAG");
+    //         //builder.append(U("&base=USD"));
+    //         //builder.append(U("&currencies=EUR,XAU,XAG"));
+    //         //builder.append_query(U("?"), U("cpprestsdk github"));
+    //         return client.request(web::http::methods::GET, builder.to_string()); // Build request URI and start the request.
+    //     })
+    //         .then([=](web::http::http_response resp)
+    //             {
+    //                 //printf("Received response status code:%u\n", resp.status_code());
+    //                 //std::wcout << resp.extract_string(true).get() << std::endl;
+                    // m_ag_price = std::move(QString::fromStdString(resp.extract_string(true).get()));
+                    // emit agPriceChanged();
+    //                 return resp.body().read_to_end(fileStream->streambuf()); // Write response body into the file.
+    //             })
+    //                 .then([=](size_t) 
+    //                     {
+    //                         return fileStream->close(); // Close the file stream.
+    //                     });
+    //             try
+    //             {
+    //                 requestTask.wait(); // Wait for all the outstanding I/O to complete and handle any exceptions
+    //             }
+    //             catch (const std::exception& e)
+    //             {
+    //                 printf("Error exception:%s\n", e.what());
+    //             }
+    // }
 
     void
     trading_page::place_buy_order(const QString& base_nota, const QString& base_confs)
@@ -1646,3 +1665,12 @@ namespace atomic_dex
         }
     }
 } // namespace atomic_dex
+
+namespace{
+    pplx::task<web::http::http_response>
+    async_ap_req(){
+        web::http::client::http_client client(U("https://api.metalpriceapi.com/v1/latest"));
+        web::uri_builder builder(U("?api_key=044ff0fada374042de59631a1bd28340&base=USD&currencies=EUR,XAU,XAG"));
+        return client.request(web::http::methods::GET, builder.to_string());
+    }
+}
