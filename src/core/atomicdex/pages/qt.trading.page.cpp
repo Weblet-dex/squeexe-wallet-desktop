@@ -137,7 +137,8 @@ namespace atomic_dex
             .then([this](web::http::http_response response)
                 {
                     printf("Received response status code:%u\n", response.status_code());
-                    m_ag_price = QString::fromStdString(response.extract_string(true).get());
+                    std::string body = 
+                    m_ag_price = QString::fromStdString(TO_STD_STR(response.extract_string(true).get()));
                     //std::wcout << response.extract_string(true).get() << std::endl;
                     //m_ag_price = std::move(QString::fromStdString(response.extract_string(true).get()));
                     emit agPriceChanged();
