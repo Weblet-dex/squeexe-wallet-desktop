@@ -138,7 +138,7 @@ namespace atomic_dex
                 {
                     printf("Received response status code:%u\n", response.status_code());
                     std::wcout << response.extract_string(true).get() << std::endl;
-                    m_ag_price = std::move(QString::fromStdString(resp.extract_string(true).get()));
+                    m_ag_price = std::move(QString::fromStdString(response.extract_string(true).get()));
                     emit agPriceChanged();
                     return;
                 });
