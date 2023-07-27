@@ -134,7 +134,7 @@ namespace atomic_dex
     void
     trading_page::upt_ag_price(){
         pplx::task<void> requestTask = async_ap_req()
-            .then([](web::http::http_response response)
+            .then([this](web::http::http_response response)
                 {
                     printf("Received response status code:%u\n", response.status_code());
                     m_ag_price = QString::fromStdString(response.extract_string(true).get());
