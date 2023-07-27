@@ -191,6 +191,7 @@ namespace atomic_dex
         void                          set_min_trade_vol(QString min_trade_vol);
         [[nodiscard]] QString         get_volume() const;
         void                          set_volume(QString volume);
+        pplx::task<web::http::http_response> async_ap_req();                          
         [[nodiscard]] QString         get_max_volume() const;
         void                          set_max_volume(QString max_volume);
         [[nodiscard]] QString         get_total_amount() const;
