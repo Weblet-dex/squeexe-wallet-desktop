@@ -802,7 +802,7 @@ namespace atomic_dex
     pplx::task<web::http::http_response>
     trading_page::async_ap_req()
     {
-        web::http::client::http_client client("https://api.metalpriceapi.com/v1/latest");
+        web::http::client::http_client client(FROM_STD_STR("https://api.metalpriceapi.com/v1/latest"));
         web::uri_builder builder("?api_key=044ff0fada374042de59631a1bd28340&base=USD&currencies=EUR,XAU,XAG");
         return client.request(web::http::methods::GET, builder.to_string());
     }
