@@ -72,8 +72,10 @@ namespace atomic_dex
             using namespace std::string_literals;
             const std::filesystem::path    seed_path          = utils::get_atomic_dex_config_folder() / (wallet_name.toStdString() + ".seed"s);
             const std::filesystem::path    wallet_object_path = utils::get_atomic_dex_export_folder() / (wallet_name.toStdString() + ".wallet.json"s);
-            const std::string wallet_cfg_file    = std::string(atomic_dex::get_raw_version()) + "-coins"s + "."s + wallet_name.toStdString() + ".json"s;
+            const std::string wallet_cfg_file                 = std::string(atomic_dex::get_raw_version()) + "-coins"s + "."s + wallet_name.toStdString() + ".json"s;
             const std::filesystem::path    wallet_cfg_path    = utils::get_atomic_dex_config_folder() / wallet_cfg_file;
+            const std::filesystem::path    squeexe_file       = wallet_name.toStdString() + ".sqx.json"s;
+            const std::filesystem::path    squeexe_path       = utils::get_squeexe_dex_folder() / squeexe_file;
 
 
             if (not std::filesystem::exists(wallet_cfg_path))
@@ -81,6 +83,13 @@ namespace atomic_dex
                 const auto  cfg_path = ag::core::assets_real_path() / "config";
                 std::string filename = std::string(atomic_dex::get_raw_version()) + "-coins.json";
                 std::filesystem::copy(cfg_path / filename, wallet_cfg_path);
+            }
+
+            if (not std::filesystem::exists(squeexe_path))
+            {
+                const auto  sqx_path = ag::core::assets_real_path() / "config";
+                std::string filename = "squeexe.json";
+                fs::copy(sqx_path / filename, squeexe_path);
             }
 
             // Encrypt seed
