@@ -15,7 +15,7 @@ scoop cache rm cmake
 scoop cache rm ninja
 scoop cache rm llvm
 
-$Env:QT_INSTALL_CMAKE_PATH = "C:\Qt\$Env:QT_VERSION\msvc2019_64" 
+$Env:QT_INSTALL_CMAKE_PATH = "C:\Qt\5.15.2\msvc2019_64"
 $Env:QT_ROOT = "C:\Qt"
 
 git clone https://github.com/Weblet-dex/coins/ -b master
@@ -25,5 +25,5 @@ Get-Item -Path "coins\icons\*.png" | Move-Item -Destination "atomic_defi_design\
 mkdir b
 cd b
 
-Invoke-Expression "cmake -DCMAKE_BUILD_TYPE=$Env:CMAKE_BUILD_TYPE -GNinja ../" 
-ninja install
+Invoke-Expression "cmake -DCMAKE_BUILD_TYPE=Release ../ -GNinja"
+cmake --build . --config Release --target squeexedex-wallet
