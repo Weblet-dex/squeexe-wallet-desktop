@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
   # pull_request:
   #   types: [ opened, synchronize, reopened ]
-  push:
-    branches:
-      - initial_changes
+  # push:
+  #   branches:
+  #     - initial_changes
 
 env:
   DEX_API: "mm2"
