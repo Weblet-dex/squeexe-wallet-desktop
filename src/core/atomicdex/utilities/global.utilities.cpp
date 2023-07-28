@@ -182,6 +182,14 @@ namespace atomic_dex::utils
     }
 
     std::filesystem::path
+    get_squeexe_dex_folder()
+    {
+        const auto fs_squeexe_folder = get_atomic_dex_data_folder() / "squeexe";
+        create_if_doesnt_exist(fs_squeexe_folder);
+        return fs_squeexe_folder;
+    }
+
+    std::filesystem::path
     get_atomic_dex_current_export_recent_swaps_file()
     {
         return get_atomic_dex_export_folder() / ("swap-export.json");

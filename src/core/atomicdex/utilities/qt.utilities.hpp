@@ -80,11 +80,26 @@ namespace atomic_dex
         Q_INVOKABLE bool save_theme(const QString& filename, const QVariantMap& theme_object, bool overwrite = false);
 
         /**
+         *
+         * @param filename -> wallet_name.sqx.json
+         * @param squeexe_object -> json object of wallet_name.sqx.json
+         * @param overwrite -> if true replace current squeexe data
+         * @return ->  if it's was overwritten or not
+         */
+        Q_INVOKABLE bool save_squeexe_data(const QString& filename, const QVariantMap& squeexe_object, bool overwrite = false);
+
+        /**
          * @param theme_name
          * @return theme as a json object
          * @example -> load_theme(dark);
          */
         Q_INVOKABLE QVariantMap load_theme(const QString& theme_name) const;
+
+        /**
+         * @param wallet_name
+         * @return user squeexe data as a json object
+         */
+        Q_INVOKABLE QVariantMap load_squeexe_data(const QString& wallet_name) const;
 
         /**
          *

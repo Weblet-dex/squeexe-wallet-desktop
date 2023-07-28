@@ -89,6 +89,8 @@ namespace atomic_dex::utils
 
     std::filesystem::path get_atomic_dex_export_folder();
 
+    std::filesystem::path get_squeexe_dex_folder();
+
     std::filesystem::path get_atomic_dex_current_export_recent_swaps_file();
 
     ENTT_API std::filesystem::path get_themes_path();
