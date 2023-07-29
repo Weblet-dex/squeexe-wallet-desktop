@@ -8,6 +8,7 @@ cd build
 
 Invoke-Expression "cmake -DCMAKE_BUILD_TYPE=Release ../ -GNinja"
 cmake --build . --config Release --target squeexedex-wallet
+cd C:\Users\Shaun\Documents\Squeexe\Builds
+rmdir /s /q squeexe_qt
 Copy-Item "C:\Dev_Squeexe\squeexe-wallet-desktop\build\bin" -Destination "C:\Users\Shaun\Documents\Squeexe\Builds\bin" -force
-git restore
 cmd /c 'pause'
