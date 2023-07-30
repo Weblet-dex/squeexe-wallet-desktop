@@ -206,7 +206,7 @@ Item
 
         Connections
         {
-            target: dashboard.fzWebEngn
+            target: dashboard. fzWebEngn
 
             function onLoadingChanged(webEngineLoadReq)
             {

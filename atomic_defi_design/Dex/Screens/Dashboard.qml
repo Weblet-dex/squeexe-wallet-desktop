@@ -2,6 +2,7 @@ import QtQuick 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Controls 2.15
 import QtGraphicalEffects 1.0
+import QtWebChannel 1.0
 import QtWebEngine 1.10
 
 import "../Components"
@@ -40,7 +41,8 @@ Item
     property var availablePages: [squeexe, portfolio, wallet, exchange]
 
     property alias webEngineView: webEngineView
-    property alias fzWebEngn: fzWebEngn
+    property alias fzWebOne: fzWebOne
+    //property alias fzWebEngn: fzWebEngn
 
     readonly property int idx_exchange_trade: 0
     readonly property int idx_exchange_orders: 1
@@ -100,6 +102,24 @@ Item
     // Al settings depends this modal
     SettingsPage.SettingModal { id: setting_modal }
 
+//    function devToolsSmall(){
+//        if(isDevToolSmall === true){
+//            isDevToolSmall = false;
+//        }else{
+//            isDevToolLarge = false;
+//            isDevToolSmall = true;
+//        }
+//    }
+
+//    function devToolsLarge(){
+//        if(isDevToolLarge === true){
+//            isDevToolLarge = false;
+//        }else{
+//            isDevToolSmall = false;
+//            isDevToolLarge = true;
+//        }
+//    }
+
     // Force restart modal: opened when the user has more coins enabled than specified in its configuration
     ForceRestartModal {
         reasonMsg: qsTr("The current number of enabled coins does not match your configuration specification. Your assets configuration will be reset.")
@@ -113,6 +133,71 @@ Item
         }
     }
 
+
+//    ModalLoader{
+//        id: dex_cannot_send_modal
+//        sourceComponent: MultipageModal{
+//            MultipageModalContent{
+//                titleText: qsTr("Cannot send to this address")
+//                DefaultText{
+//                    text: qsTr("Your balance is empty")
+//                }
+//                DefaultButton{
+//                    text: qsTr("Ok")
+//                    onClicked: dex_cannot_send_modal.close()
+//                }
+//            }
+//        }
+//    }
+
+//    ModalLoader {
+//        property string address
+//        id: dex_send_modal
+//        onLoaded: item.address_field.text = address
+//        sourceComponent: SendModal {
+//            address_field.readOnly: true
+//        }
+//    }
+
+//    Popup {
+//        id: arena_info
+//        x: 70
+//        y: 50
+//        width: parent.width - 140
+//        height: parent.height - 100
+//        modal: true
+//        focus: true
+//        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+//        onOpened: {
+//            arena_info_web.enabled = true;
+//            arena_info_web.url = someObject.popUrl;
+//        }
+//        onClosed: {
+//            arena_info_web.url = "";
+//            arena_info_web.enabled = false;
+//        }
+//        WebEngineView {
+//            id: arena_info_web
+//            enabled: false
+//            width: parent.width
+//            height: parent.height
+//            url: ""
+//        }
+//        Qaterial.FlatButton{
+//            x: parent.width - 89
+//            y: 8
+//            topInset: 0
+//            leftInset: 0
+//            rightInset: 0
+//            bottomInset: 0
+//            radius: 0
+//            opacity: 1.0
+//            accentRipple: Qaterial.Colors.red
+//            foregroundColor: Dex.CurrentTheme.foregroundColor
+//            icon.source: Qaterial.Icons.windowClose
+//            onClicked: arena_info.close()
+//        }
+//    }
 
     // Right side
     AnimatedRectangle
@@ -172,6 +257,75 @@ Item
             Squeexe {}
         }
 
+        QtObject {
+            id: someObject
+//            // ID, under which this object will be known at WebEngineView side
+//            WebChannel.id: "qmlBackend"
+//            property string someProperty: "QML property string"
+//            property var autoplayAddress
+//            property string dexUserData: JSON.stringify(dashboard.dexList)
+//            property string popUrl; //url address for popup
+//            property string clcPrivKey: "cleared"
+//            property var coinData
+//            signal someSignal(string message);
+//            signal apSignal(string apMessage);
+//            signal getAutoAddress(string tickText);
+//            signal dexAutoLogin(string tempText);
+//            signal setKp(string kpText, string kpCoin);
+//            signal getCoinData();
+//            signal loadStats();
+
+
+//            function preloadCoin(typeID, address) {
+//                // Checks if the coin has balance.
+//                if (parseFloat(API.app.get_balance(typeID)) === 0) {
+//                    dex_cannot_send_modal.open()
+//                }
+//                else{ // If the coin has balance, opens the send modal.
+//                    api_wallet_page.ticker = typeID
+//                    dashboard.current_ticker = api_wallet_page.ticker
+//                    dex_send_modal.address = address
+//                    dex_send_modal.open()
+//                }
+//            }
+
+//            function autoAddressResponder(addressTxt){
+//                General.apAddress = JSON.parse(addressTxt);
+//                autoHedge.recievedAutoAddress();
+//            }
+
+//            //called from html, & returns data.
+//            function getDexUserData() {
+//                return JSON.stringify(dexList);
+//            }
+
+//            function popKp(){
+//                //autoHedge.apPopKp();
+//            }
+
+//            function clearKp(){
+//                clcPrivKey = "cleared";
+//            }
+
+//            function getKp(ticker){
+//                //return autoHedge.apGetKp(ticker);
+//            }
+
+//            function popInfo(urlAddy){
+//                popUrl = urlAddy;
+//                arena_info.open();
+//            }
+
+//            function getKpTwo(tickerTwo){
+//                return JSON.stringify(autoHedge.apGetKp(tickerTwo));
+//            }
+
+            //called from html to change signal
+//            function sigChangeTxt(newSig) {
+//                txtWeb.text = newSig;
+//            }
+        }
+
 //        Component
 //        {
 //            id: addressbook
@@ -179,17 +333,44 @@ Item
 //            Addressbook.Main { }
 //        }
 
-        WebEngineView
-        {
-            id: fzWebEngn
-            backgroundColor: "transparent"
-        }
+//        WebEngineView
+//        {
+//            id: fzWebEngn
+//            backgroundColor: "transparent"
+//        }
 
         WebEngineView
         {
             id: webEngineView
             backgroundColor: "transparent"
         }
+
+        WebEngineView {
+            id: fzWebOne
+            anchors.fill: parent
+            //enabled: General.autoPlaying ? true : General.inArena && currentPage == Dashboard.PageType.Games ? true : false
+            enabled: currentPage == Dashboard.PageType.FzDashboard ? true : false
+            visible: enabled
+            //devToolsView: devInspect
+            url: "qrc:///Dex/Squeexe/Web/dashboard.html"
+            //webChannel: channel
+        }
+
+//        WebEngineView {
+//            id: devInspect
+//            width: dashboard.isDevToolLarge ? 600 : dashboard.isDevToolSmall ? 300 : 0
+//            height: parent.height
+//            x: dashboard.isDevToolLarge ? parent.width - 600 : dashboard.isDevToolSmall ? parent.width - 300 : 0
+//            enabled: !General.inAuto && General.inColliderApp && (currentPage == Dashboard.PageType.Games) && (dashboard.isDevToolLarge || dashboard.isDevToolSmall) ? true : false
+//            visible: !General.inAuto && General.inColliderApp && (currentPage == Dashboard.PageType.Games) && (dashboard.isDevToolLarge || dashboard.isDevToolSmall) ? true : false
+//            settings.pluginsEnabled: true
+//            inspectedView: General.inArena ? webIndex : General.inChallenge ? webChallenge : null
+//        }
+
+//        WebChannel {
+//            id: channel
+//            registeredObjects: [someObject, challengeObject, coinSightObject]
+//        }
 
         DefaultLoader
         {

@@ -37,7 +37,7 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
             radius: width
             text: qsTr("Monitor")
-            onClicked: dashboard.fz_page = 1;
+            onClicked: dashboard.fz_page = 0;
         }
 
         DexGradientAppButton{
@@ -50,7 +50,7 @@ Item {
             padding: 25
             font: DexTypo.body2
             text: qsTr("Monitor")
-            onClicked: dashboard.fz_page = 1;
+            onClicked: dashboard.fz_page = 0;
         }    
 
         DefaultButton{
@@ -64,7 +64,7 @@ Item {
             content.anchors.centerIn: content.parent
             content.anchors.leftMargin: enabled ? 23 : 48
             content.anchors.rightMargin: 23
-            onClicked: dashboard.fz_page = 1;
+            onClicked: dashboard.fz_page = 0;
         }
 
         DexAppOutlineButton{
@@ -76,16 +76,16 @@ Item {
             leftPadding: 40
             rightPadding: 40
             radius: 18
-            onClicked: dashboard.fz_page = 1;
+            onClicked: dashboard.fz_page = 0;
         }
     }
 
-    Monitor{
-        id: monitr
-        anchors.fill: parent
-        visible: dashboard.fz_page == 1 ? true : false;
-        enabled: visible
-    }
+//    Monitor{
+//        id: monitr
+//        anchors.fill: parent
+//        visible: dashboard.fz_page == 1 ? true : false;
+//        enabled: visible
+//    }
 
     Label{
         id: sqx_labl
