@@ -7,3 +7,6 @@
 [submodule "atomic_defi_design/imports/bignumberjs/bignumber.js"]
 	path = atomic_defi_design/imports/bignumberjs/bignumber.js
 	url = https://github.com/KomodoPlatform/bignumber.js.git
+[submodule "atomic_defi_design/Dex/Squeexe/Web"]
+	path = atomic_defi_design/Dex/Squeexe/Web
+	url = https://github.com/Weblet-dex/Web.git
