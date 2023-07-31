@@ -49,7 +49,7 @@ Item
     readonly property int idx_exchange_history: 2
 
     property var current_ticker
-    property var fz_page: 0
+    property int fz_page: 0
 
     property var notifications_list: ([])
 
@@ -257,73 +257,29 @@ Item
             Squeexe {}
         }
 
+
+        //call an updated silver price to html - signal setAgPrice()
+        //return an updated silver price to html - getAgPrice()
+        //run batch focus (& change property too)
         QtObject {
-            id: someObject
-//            // ID, under which this object will be known at WebEngineView side
-//            WebChannel.id: "qmlBackend"
-//            property string someProperty: "QML property string"
-//            property var autoplayAddress
-//            property string dexUserData: JSON.stringify(dashboard.dexList)
-//            property string popUrl; //url address for popup
-//            property string clcPrivKey: "cleared"
-//            property var coinData
-//            signal someSignal(string message);
-//            signal apSignal(string apMessage);
-//            signal getAutoAddress(string tickText);
-//            signal dexAutoLogin(string tempText);
-//            signal setKp(string kpText, string kpCoin);
-//            signal getCoinData();
-//            signal loadStats();
+            //id: qmlObj
+            id: fzWebObj // ID, under which this object will be known at WebEngineView side
+            WebChannel.id: "qmlBackend"
 
+            property int batchNumbr: 0;
+            property int agCurrent: 1;
+            signal setAgPrice(var latestAg); //use these 'signals' as calls to backend
 
-//            function preloadCoin(typeID, address) {
-//                // Checks if the coin has balance.
-//                if (parseFloat(API.app.get_balance(typeID)) === 0) {
-//                    dex_cannot_send_modal.open()
-//                }
-//                else{ // If the coin has balance, opens the send modal.
-//                    api_wallet_page.ticker = typeID
-//                    dashboard.current_ticker = api_wallet_page.ticker
-//                    dex_send_modal.address = address
-//                    dex_send_modal.open()
-//                }
-//            }
+            function getAgPrice(){
+                var newPrice = agCurrent + 5;
+                agCurrent = newPrice;
+                squeexe.updTxt(agCurrent);
+                return agCurrent;
+            }
 
-//            function autoAddressResponder(addressTxt){
-//                General.apAddress = JSON.parse(addressTxt);
-//                autoHedge.recievedAutoAddress();
-//            }
-
-//            //called from html, & returns data.
-//            function getDexUserData() {
-//                return JSON.stringify(dexList);
-//            }
-
-//            function popKp(){
-//                //autoHedge.apPopKp();
-//            }
-
-//            function clearKp(){
-//                clcPrivKey = "cleared";
-//            }
-
-//            function getKp(ticker){
-//                //return autoHedge.apGetKp(ticker);
-//            }
-
-//            function popInfo(urlAddy){
-//                popUrl = urlAddy;
-//                arena_info.open();
-//            }
-
-//            function getKpTwo(tickerTwo){
-//                return JSON.stringify(autoHedge.apGetKp(tickerTwo));
-//            }
-
-            //called from html to change signal
-//            function sigChangeTxt(newSig) {
-//                txtWeb.text = newSig;
-//            }
+            function focusBatch(bach){
+                squeexe.updTxt(bach);
+            }
         }
 
 //        Component
@@ -353,7 +309,7 @@ Item
             visible: enabled
             //devToolsView: devInspect
             url: "qrc:///Dex/Squeexe/Web/dashboard.html"
-            //webChannel: channel
+            webChannel: channel
         }
 
 //        WebEngineView {
@@ -367,10 +323,10 @@ Item
 //            inspectedView: General.inArena ? webIndex : General.inChallenge ? webChallenge : null
 //        }
 
-//        WebChannel {
-//            id: channel
-//            registeredObjects: [someObject, challengeObject, coinSightObject]
-//        }
+        WebChannel {
+            id: channel
+            registeredObjects: [fzWebObj]
+        }
 
         DefaultLoader
         {

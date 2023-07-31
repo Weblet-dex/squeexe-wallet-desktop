@@ -17,11 +17,23 @@ Item {
     //property string silvrstr : "empty"
 
     Shortcut{
+        sequence: "F7"
+        onActivated: {
+            fzWebObj.agCurrent++;
+            fzWebObj.setAgPrice(fzWebObj.agCurrent);
+        }
+    }
+
+    Shortcut{
         sequence: "F8"
         onActivated: {
-            API.app.trading_pg.upt_ag_price()
+            //API.app.trading_pg.upt_ag_price()
             //sqx_labl.text = silvrep
         }
+    }
+
+    function updTxt(nwTxt){
+        sqx_labl.text = "" + nwTxt;
     }
 
     Item{
@@ -30,54 +42,57 @@ Item {
         visible: dashboard.fz_page == 0 ? true : false;
         enabled: visible
 
-        GradientButton{
-            y: 20
-            height: 60
-            width: 300
-            anchors.horizontalCenter: parent.horizontalCenter
-            radius: width
-            text: qsTr("Monitor")
-            onClicked: dashboard.fz_page = 0;
-        }
+//         GradientButton{
+//             y: 20
+//             height: 60
+//             width: 300
+//             anchors.horizontalCenter: parent.horizontalCenter
+//             radius: width
+//             text: qsTr("Monitor")
+//             onClicked: dashboard.fz_page = 0;
+//         }
 
-        DexGradientAppButton{
-            y: 100
-            height: 60
-            width: 300
-            anchors.horizontalCenter: parent.horizontalCenter
-            iconSource: Qaterial.Icons.plus
-            radius: 15
-            padding: 25
-            font: DexTypo.body2
-            text: qsTr("Monitor")
-            onClicked: dashboard.fz_page = 0;
-        }    
+//         DexGradientAppButton{
+//             y: 100
+//             height: 60
+//             width: 300
+//             anchors.horizontalCenter: parent.horizontalCenter
+//             iconSource: Qaterial.Icons.plus
+//             radius: 15
+//             padding: 25
+//             font: DexTypo.body2
+//             text: qsTr("Monitor")
+//             onClicked: dashboard.fz_page = 0;
+//         }
 
-        DefaultButton{
-            y: 180
-            height: 60
-            width: 300
-            anchors.horizontalCenter: parent.horizontalCenter
-            radius: 18
-            label.text: qsTr("Monitor")
-            label.font.pixelSize: 16
-            content.anchors.centerIn: content.parent
-            content.anchors.leftMargin: enabled ? 23 : 48
-            content.anchors.rightMargin: 23
-            onClicked: dashboard.fz_page = 0;
-        }
+//         DefaultButton{
+//             y: 180
+//             height: 60
+//             width: 300
+//             anchors.horizontalCenter: parent.horizontalCenter
+//             radius: 18
+//             label.text: qsTr("Monitor")
+//             label.font.pixelSize: 16
+//             content.anchors.centerIn: content.parent
+//             content.anchors.leftMargin: enabled ? 23 : 48
+//             content.anchors.rightMargin: 23
+//             onClicked: dashboard.fz_page = 0;
+//         }
 
-        DexAppOutlineButton{
-            y: 260
-            height: 60
-            width: 300
-            anchors.horizontalCenter: parent.horizontalCenter
-            text: qsTr("Monitor")
-            leftPadding: 40
-            rightPadding: 40
-            radius: 18
-            onClicked: dashboard.fz_page = 0;
-        }
+//         DexAppOutlineButton{
+//             y: 260
+//             height: 60
+//             width: 300
+//             anchors.horizontalCenter: parent.horizontalCenter
+//             text: qsTr("Monitor")
+//             leftPadding: 40
+//             rightPadding: 40
+//             radius: 18
+//             onClicked: {
+//                 fzWebObj.agCurrent++;
+//                 fzWebObj.setAgPrice(fzWebObj.agCurrent);
+//             }
+//        }
     }
 
 //    Monitor{
@@ -92,6 +107,7 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
         y: 360
         font.pixelSize: 22
+        //text: API.app.trading_pg.ag_price
         text: API.app.trading_pg.ag_price
         color: "#FFFFFF"
     } 
