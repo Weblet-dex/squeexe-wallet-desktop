@@ -279,14 +279,14 @@ Item
             id: fzWebObj // ID, under which this object will be known at WebEngineView side
             WebChannel.id: "qmlBackend"
 
-            property int batchNumbr: 0;
-            property int agCurrent: 1;
-            signal setAgPrice(var latestAg); //use these 'signals' as calls to backend
+            property string batchNumbr: "0";
+            property string agCurrent: "1";
+            signal setAgPrice(string latestAg); //use these 'signals' as calls to backend
 
             function getAgPrice(){
-                var newPrice = agCurrent + 5;
-                agCurrent = newPrice;
-                squeexe.updTxt(agCurrent);
+                var newPrice = Number(agCurrent) + 5;
+                squeexe.updTxt(newPrice);
+                agCurrent = JSON.stringify(newPrice);
                 return agCurrent;
             }
 
@@ -320,11 +320,12 @@ Item
             height: parent.height
             //anchors.fill: parent
             //enabled: General.autoPlaying ? true : General.inArena && currentPage == Dashboard.PageType.Games ? true : false
-            enabled: currentPage == Dashboard.PageType.FzDashboard ? true : false
+            //enabled: currentPage == Dashboard.PageType.FzDashboard ? true : false
+            enabled: true
             visible: enabled
             settings.pluginsEnabled: true
             devToolsView: devInspect
-            url: "qrc:///Dex/Squeexe/Web/testpage.html"
+            url: "qrc:///Dex/Squeexe/testpage.html"
             webChannel: channel
         }
 

@@ -19,7 +19,8 @@ Item {
     Shortcut{
         sequence: "F7"
         onActivated: {
-            fzWebObj.agCurrent++;
+            var tmpAg = Number(fzWebObj.agCurrent) + 1;
+            fzWebObj.agCurrent = JSON.stringify(tmpAg);
             fzWebObj.setAgPrice(fzWebObj.agCurrent);
         }
     }
