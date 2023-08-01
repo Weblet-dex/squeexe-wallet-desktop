@@ -51,6 +51,8 @@ Item
 
     property var current_ticker
     property int fz_page: 0
+    property bool isDevToolSmall: false
+    property bool isDevToolLarge: false
 
     property var notifications_list: ([])
 
@@ -98,28 +100,38 @@ Item
         }
     }
 
+    function devToolsSmall(){
+        if(isDevToolSmall === true){
+            isDevToolSmall = false;
+        }else{
+            isDevToolLarge = false;
+            isDevToolSmall = true;
+        }
+    }
+
+    function devToolsLarge(){
+        if(isDevToolLarge === true){
+            isDevToolLarge = false;
+        }else{
+            isDevToolSmall = false;
+            isDevToolLarge = true;
+        }
+    }
+
+    Shortcut {
+        sequence: "F9"
+        onActivated: dashboard.devToolsSmall()
+    }
+
+    Shortcut {
+        sequence: "F10"
+        onActivated: dashboard.devToolsLarge()
+    }
+
     SupportPage.SupportModal { id: support_modal }
 
     // Al settings depends this modal
     SettingsPage.SettingModal { id: setting_modal }
-
-//    function devToolsSmall(){
-//        if(isDevToolSmall === true){
-//            isDevToolSmall = false;
-//        }else{
-//            isDevToolLarge = false;
-//            isDevToolSmall = true;
-//        }
-//    }
-
-//    function devToolsLarge(){
-//        if(isDevToolLarge === true){
-//            isDevToolLarge = false;
-//        }else{
-//            isDevToolSmall = false;
-//            isDevToolLarge = true;
-//        }
-//    }
 
     // Force restart modal: opened when the user has more coins enabled than specified in its configuration
     ForceRestartModal {
@@ -304,25 +316,28 @@ Item
 
         WebEngineView {
             id: fzWebOne
-            anchors.fill: parent
+            width: dashboard.isDevToolLarge ? parent.width - 600 : dashboard.isDevToolSmall ? parent.width - 300 : parent.width
+            height: parent.height
+            //anchors.fill: parent
             //enabled: General.autoPlaying ? true : General.inArena && currentPage == Dashboard.PageType.Games ? true : false
             enabled: currentPage == Dashboard.PageType.FzDashboard ? true : false
             visible: enabled
-            //devToolsView: devInspect
-            url: "qrc:///Dex/Squeexe/Web/dashboard.html"
+            settings.pluginsEnabled: true
+            devToolsView: devInspect
+            url: "qrc:///Dex/Squeexe/Web/testpage.html"
             webChannel: channel
         }
 
-//        WebEngineView {
-//            id: devInspect
-//            width: dashboard.isDevToolLarge ? 600 : dashboard.isDevToolSmall ? 300 : 0
-//            height: parent.height
-//            x: dashboard.isDevToolLarge ? parent.width - 600 : dashboard.isDevToolSmall ? parent.width - 300 : 0
-//            enabled: !General.inAuto && General.inColliderApp && (currentPage == Dashboard.PageType.Games) && (dashboard.isDevToolLarge || dashboard.isDevToolSmall) ? true : false
-//            visible: !General.inAuto && General.inColliderApp && (currentPage == Dashboard.PageType.Games) && (dashboard.isDevToolLarge || dashboard.isDevToolSmall) ? true : false
-//            settings.pluginsEnabled: true
-//            inspectedView: General.inArena ? webIndex : General.inChallenge ? webChallenge : null
-//        }
+        WebEngineView {
+            id: devInspect
+            width: dashboard.isDevToolLarge ? 600 : dashboard.isDevToolSmall ? 300 : 0
+            height: parent.height
+            x: dashboard.isDevToolLarge ? parent.width - 600 : dashboard.isDevToolSmall ? parent.width - 300 : 0
+            enabled: (currentPage == Dashboard.PageType.FzDashboard) && (dashboard.isDevToolLarge || dashboard.isDevToolSmall) ? true : false
+            visible: enabled
+            settings.pluginsEnabled: true
+            inspectedView: fzWebOne
+        }
 
         WebChannel {
             id: channel
