@@ -2,8 +2,8 @@ import QtQuick 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Controls 2.15
 import QtGraphicalEffects 1.0
-import QtWebChannel 1.0
-import QtWebEngine 1.7
+import QtWebChannel 1.15
+import QtWebEngine 1.10
 import QtQuick.Window 2.2
 
 import "../Components"
@@ -127,6 +127,18 @@ Item
         sequence: "F10"
         onActivated: dashboard.devToolsLarge()
     }
+
+//    Timer
+//    {
+//        interval: 2000
+//        repeat: false
+//        running: true
+//        triggeredOnStart: false
+//        onTriggered:{
+//            fzWebOne.url = "qrc:///Dex/Squeexe/testpage.html";
+//            fzWebOne.enabled = true;
+//        }
+//    }
 
     SupportPage.SupportModal { id: support_modal }
 
@@ -277,7 +289,7 @@ Item
         QtObject {
             //id: qmlObj
             id: fzWebObj // ID, under which this object will be known at WebEngineView side
-            WebChannel.id: "qmlBackend"
+            WebChannel.id: "backend"
 
             property string batchNumbr: "0";
             property string agCurrent: "1";
@@ -319,13 +331,12 @@ Item
             width: dashboard.isDevToolLarge ? parent.width - 600 : dashboard.isDevToolSmall ? parent.width - 300 : parent.width
             height: parent.height
             //anchors.fill: parent
-            //enabled: General.autoPlaying ? true : General.inArena && currentPage == Dashboard.PageType.Games ? true : false
-            //enabled: currentPage == Dashboard.PageType.FzDashboard ? true : false
-            enabled: true
+            enabled: currentPage == Dashboard.PageType.FzDashboard ? true : false
             visible: enabled
-            settings.pluginsEnabled: true
+            //settings.pluginsEnabled: true
             devToolsView: devInspect
-            url: "qrc:///Dex/Squeexe/testpage.html"
+            url: "qrc:///Dex/Squeexe/Web/dashboard.html";
+            //url: ""
             webChannel: channel
         }
 
@@ -336,7 +347,7 @@ Item
             x: dashboard.isDevToolLarge ? parent.width - 600 : dashboard.isDevToolSmall ? parent.width - 300 : 0
             enabled: (currentPage == Dashboard.PageType.FzDashboard) && (dashboard.isDevToolLarge || dashboard.isDevToolSmall) ? true : false
             visible: enabled
-            settings.pluginsEnabled: true
+            //settings.pluginsEnabled: true
             inspectedView: fzWebOne
         }
 

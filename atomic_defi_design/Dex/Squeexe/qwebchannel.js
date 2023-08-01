@@ -55,6 +55,7 @@ var QWebChannelMessageTypes = {
 
 var QWebChannel = function(transport, initCallback)
 {
+    console.log("start QWebchannel() - " + Date.now());
     if (typeof transport !== "object" || typeof transport.send !== "function") {
         console.error("The QWebChannel expects a transport object with a send function and onmessage callback property." +
                       " Given is: transport: " + typeof(transport) + ", transport.send: " + typeof(transport.send));
@@ -171,6 +172,7 @@ var QWebChannel = function(transport, initCallback)
         }
         channel.exec({type: QWebChannelMessageTypes.idle});
     });
+    console.log("fin QWebchannel() - " + Date.now());
 };
 
 function QObject(name, data, webChannel)
@@ -185,6 +187,9 @@ function QObject(name, data, webChannel)
     this.__propertyCache__ = {};
 
     var object = this;
+
+    console.log("webchannel objs: " + JSON.stringify(webChannel.objects) + " - " + Date.now());
+    console.log("name: " + name + " - " + Date.now());
 
     // ----------------------------------------------------------------------
 
@@ -438,6 +443,7 @@ function QObject(name, data, webChannel)
     data.signals.forEach(function(signal) { addSignal(signal, false); });
 
     Object.assign(object, data.enums);
+    console.log("fin QObject() - " + Date.now());
 }
 
 //required for use with nodejs
