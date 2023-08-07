@@ -558,6 +558,54 @@ Item
                 }
             }
 
+            // Fiat(Buy) Button
+            Item
+            {
+                visible: !is_dex_banned
+                Layout.preferredWidth: 180
+                Layout.preferredHeight: 48
+
+                DefaultButton
+                {
+                    enabled: !General.isWalletOnly(api_wallet_page.ticker) && activation_progress == 100
+                    anchors.fill: parent
+                    radius: 18
+
+                    // Inner text.
+                    label.text: qsTr("Buy")
+                    label.font.pixelSize: 16
+                    content.anchors.left: content.parent.left
+                    content.anchors.leftMargin: enabled ? 23 : 48
+
+                    //onClicked: onClickedSwap()
+
+                    Row
+                    {
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.right: parent.right
+                        anchors.rightMargin: 23
+
+                        Qaterial.Icon
+                        {
+                            icon: General.image_path + "bank-plus.svg"
+                            size: 28
+                            anchors.verticalCenter: parent.verticalCenter
+                            color: Dex.CurrentTheme.okColor
+                        }
+                    }
+
+                }
+
+                // Swap button error icon
+                DefaultAlertIcon
+                {
+                    visible: General.isWalletOnly(api_wallet_page.ticker) || activation_progress != 100
+                    tooltipText: General.isWalletOnly(api_wallet_page.ticker)
+                                    ? api_wallet_page.ticker + qsTr(" is wallet only")
+                                    : api_wallet_page.ticker + qsTr(" Activation: " + activation_progress + "%")
+                }
+            }
+
             Item { Layout.fillWidth: true }
 
             // Rewards Button
