@@ -23,6 +23,7 @@ import "../Support" as SupportPage
 import "../Screens"
 //import "../Addressbook" as Addressbook
 import Dex.Themes 1.0 as Dex
+import Qaterial 1.0 as Qaterial
 import AtomicDEX.TradingMode 1.0
 
 Item
@@ -43,6 +44,7 @@ Item
 
     property alias webEngineView: webEngineView
     property alias fzWebOne: fzWebOne
+    property alias onRamper: onRamper
     //property alias fzWebEngn: fzWebEngn
 
     readonly property int idx_exchange_trade: 0
@@ -53,6 +55,8 @@ Item
     property int fz_page: 0
     property bool isDevToolSmall: false
     property bool isDevToolLarge: false
+    property string rampTickr: ""
+    property string rampAddy: ""
 
     property var notifications_list: ([])
 
@@ -118,6 +122,17 @@ Item
         }
     }
 
+    function popFiat(){
+        pop_fiat.open();
+    }
+
+//    Shortcut{
+//        sequence: "F8"
+//        onActivated: {
+//            pop_fiat.open();
+//        }
+//    }
+
     Shortcut {
         sequence: "F9"
         onActivated: dashboard.devToolsSmall()
@@ -181,46 +196,6 @@ Item
 //        onLoaded: item.address_field.text = address
 //        sourceComponent: SendModal {
 //            address_field.readOnly: true
-//        }
-//    }
-
-//    Popup {
-//        id: arena_info
-//        x: 70
-//        y: 50
-//        width: parent.width - 140
-//        height: parent.height - 100
-//        modal: true
-//        focus: true
-//        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
-//        onOpened: {
-//            arena_info_web.enabled = true;
-//            arena_info_web.url = someObject.popUrl;
-//        }
-//        onClosed: {
-//            arena_info_web.url = "";
-//            arena_info_web.enabled = false;
-//        }
-//        WebEngineView {
-//            id: arena_info_web
-//            enabled: false
-//            width: parent.width
-//            height: parent.height
-//            url: ""
-//        }
-//        Qaterial.FlatButton{
-//            x: parent.width - 89
-//            y: 8
-//            topInset: 0
-//            leftInset: 0
-//            rightInset: 0
-//            bottomInset: 0
-//            radius: 0
-//            opacity: 1.0
-//            accentRipple: Qaterial.Colors.red
-//            foregroundColor: Dex.CurrentTheme.foregroundColor
-//            icon.source: Qaterial.Icons.windowClose
-//            onClicked: arena_info.close()
 //        }
 //    }
 
@@ -305,6 +280,10 @@ Item
             function focusBatch(bach){
                 squeexe.updTxt(bach);
             }
+
+            function reqFiat(){
+                pop_fiat.open();
+            }
         }
 
 //        Component
@@ -336,7 +315,12 @@ Item
             //settings.pluginsEnabled: true
             devToolsView: devInspect
             url: "qrc:///Dex/Squeexe/Web/dashboard.html";
+            //url: "qrc:///Dex/Squeexe/Web/framp.html";
             //url: ""
+            settings.allowRunningInsecureContent: true
+            //settings.fullscreenSupportEnabled: true
+            settings.localContentCanAccessRemoteUrls: true
+            settings.showScrollBars: false
             webChannel: channel
         }
 
@@ -377,6 +361,69 @@ Item
             {
                 anchors.centerIn: parent
                 running: !loader.visible
+            }
+        }
+
+        Popup {
+            id: pop_fiat
+            x: (parent.width / 2) - 212
+            y: (parent.height / 2) - 317
+            width: 424
+            height: 634
+            padding: 0
+            topInset: 0
+            bottomInset: 0
+            leftInset: 0
+            rightInset: 0
+            modal: true
+            focus: true
+            closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+            onOpened: {
+                onRamper.enabled = true;
+                var fiat_html = `
+                <iframe
+                  src="https://buy.onramper.com/?themeName=dark&containerColor=161515ff&primaryColor=c43402ff&secondaryColor=333030ff&cardColor=2b2929ff&primaryTextColor=ffffff&secondaryTextColor=ff6700ff"
+                  style="border-radius:4px;border:2px solid #ff6700;margin:-8;height:630px;width:420px;max-width:420px;"
+                  title="Onramper widget"
+                  allow="accelerometer; autoplay; camera; gyroscope; payment">
+                </iframe>`
+                onRamper.loadHtml(fiat_html);
+                //onRamper.url = "qrc:///Dex/Squeexe/Web/framp.html";
+            }
+            onClosed: {
+                //onRamper.url = "";
+                onRamper.enabled = false;
+            }
+            WebEngineView {
+                id: onRamper
+                enabled: false
+                visible: enabled
+                width: 424
+                height: 634
+                settings.allowRunningInsecureContent: true
+                //settings.fullscreenSupportEnabled: true
+                settings.localContentCanAccessRemoteUrls: true
+                settings.showScrollBars: false
+                //url: ""
+            }
+            Item{
+                x: parent.width - 24
+                Qaterial.AppBarButton{
+                    topInset: 0
+                    leftInset: 0
+                    rightInset: 0
+                    bottomInset: 0
+                    radius: 0
+                    opacity: 1.0
+                    width: 24
+                    height: 24
+                    Qaterial.Icon{
+                        icon: Qaterial.Icons.windowClose
+                        size: 24
+                        color: Dex.CurrentTheme.accentColor
+                    }
+                    onClicked: pop_fiat.close()
+                }
             }
         }
 

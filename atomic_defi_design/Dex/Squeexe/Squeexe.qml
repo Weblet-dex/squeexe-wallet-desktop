@@ -25,13 +25,28 @@ Item {
         }
     }
 
-    Shortcut{
-        sequence: "F8"
-        onActivated: {
-            //API.app.trading_pg.upt_ag_price()
-            //sqx_labl.text = silvrep
-        }
-    }
+//    Shortcut{
+//        sequence: "F8"
+//        onActivated: {
+//            var fiat_html = `
+//            <!DOCTYPE html>
+//            <html>
+//            <body>
+//              <iframe
+//                style="border-radius: 4px; border: 1px solid #58585f; margin: auto;max-width: 420px"
+//                src="https://buy.onramper.com"
+//                height="630px"
+//                width="420px"
+//                title="Onramper widget"
+//                allow="accelerometer; autoplay; camera; gyroscope; payment">
+//              </iframe>
+//            </body>
+//            </html>`
+//            dashboard.onRamper.loadHtml(fiat_html);
+//            //API.app.trading_pg.upt_ag_price()
+//            //sqx_labl.text = silvrep
+//        }
+//    }
 
     function updTxt(nwTxt){
         sqx_labl.text = "" + nwTxt;

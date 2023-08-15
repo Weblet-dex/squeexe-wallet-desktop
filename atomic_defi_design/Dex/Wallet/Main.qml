@@ -577,7 +577,11 @@ Item
                     content.anchors.left: content.parent.left
                     content.anchors.leftMargin: enabled ? 23 : 48
 
-                    //onClicked: onClickedSwap()
+                    onClicked: {
+                        dashboard.rampTickr = api_wallet_page.ticker;
+                        dashboard.rampAddy = current_ticker_infos.address;
+                        dashboard.popFiat();
+                    }
 
                     Row
                     {
