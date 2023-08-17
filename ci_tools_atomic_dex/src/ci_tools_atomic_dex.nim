@@ -29,7 +29,7 @@ Options:
   --version     Show version.
 """
 
-proc main() =
+proc main() {.gcsafe.} =
   let args = docopt(doc, version = "Atomic Dex CI Tools 0.0.1")
   vcpkg_prepare()
 
