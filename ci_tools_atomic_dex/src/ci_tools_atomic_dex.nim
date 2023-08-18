@@ -29,8 +29,8 @@ Options:
   --version     Show version.
 """
 
-proc main() {.gcsafe.} =
-  let args = docopt(doc, version = "Atomic Dex CI Tools 0.0.1")
+proc main() =
+  let args = docopt(doc, version = "Atomic Dex CI Tools 0.0.1", quit = false)
   vcpkg_prepare()
 
   if args["--install_vcpkg"]:
