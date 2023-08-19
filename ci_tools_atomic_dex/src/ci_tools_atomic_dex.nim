@@ -30,7 +30,7 @@ Options:
 """
 
 proc main() =
-  let args = docopt(doc, version = "Atomic Dex CI Tools 0.0.1", quit = false)
+  let args = docopt(doc, version = "Atomic Dex CI Tools 0.0.1")
   vcpkg_prepare()
 
   if args["--install_vcpkg"]:
