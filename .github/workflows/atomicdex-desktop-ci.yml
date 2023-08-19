@@ -163,6 +163,17 @@ jobs:
           export PATH=/home/runner/.nimble/bin:$PATH
           chmod +x /home/runner/.choosenim/toolchains/nim-1.6.10/bin/*
 
+      - name: Install nim (Mac)
+        if: runner.os == 'Linux'
+        run: |
+          echo "CHOOSENIM_CHOOSE_VERSION=1.6.10" >> $GITHUB_ENV
+          export CHOOSENIM_CHOOSE_VERSION=1.6.10
+          curl https://nim-lang.org/choosenim/init.sh > choosenim.sh
+          chmod +x choosenim.sh
+          ./choosenim.sh -y
+          export PATH=/Users/runner/.nimble/bin:$PATH
+          chmod +x /Users/runner/.choosenim/toolchains/nim-1.6.10/bin/*
+
       - name: Install deps (Linux)
         if: runner.os == 'Linux'
         run: |
@@ -229,24 +240,25 @@ jobs:
           export ASC_PUBLIC_ID="${{ secrets.ASC_PUBLIC_ID }}"
           export QT_INSTALL_CMAKE_PATH=${{ github.workspace }}/Qt/${{ matrix.qt }}/clang_64/lib/cmake
           export QT_ROOT=${{ github.workspace }}/Qt/${{ matrix.qt }}
+          export PATH=/Users/runner/.nimble/bin:$PATH
           export MACOSX_DEPLOYMENT_TARGET=12.1
           export CC=clang
           export CXX=clang++
-          # ls /Users/runner
-          # mkdir /Users/runner/.nimble
-          # ls /Users/runner
-          # echo $nimbleDir
-          # ls $nimbleDir
-          # cp /Users/runner/work/squeexe-wallet-desktop/squeexe-wallet-desktop/ci_tools_atomic_dex/packages.json /Users/runner/.nimble/packages.json
-          # ls /Users/runner/.nimble
-          # cd ci_tools_atomic_dex
-          # nimble build -y --verbose
-          mkdir build
-          cd build
-          cmake -DCMAKE_BUILD_TYPE=${{ matrix.type }} ../ 
-          cmake --build . --config ${{ matrix.type }} --target squeexe-wallet
-          cd bin
-          7z a mac-${{ matrix.type }}.7z *
+          ls /Users/runner
+          mkdir /Users/runner/.nimble
+          ls /Users/runner
+          echo $nimbleDir
+          ls $nimbleDir
+          cp /Users/runner/work/squeexe-wallet-desktop/squeexe-wallet-desktop/ci_tools_atomic_dex/packages.json /Users/runner/.nimble/packages.json
+          ls /Users/runner/.nimble
+          cd ci_tools_atomic_dex
+          nimble build -y --verbose
+          # mkdir build
+          # cd build
+          # cmake -DCMAKE_BUILD_TYPE=${{ matrix.type }} ../ 
+          # cmake --build . --config ${{ matrix.type }} --target squeexe-wallet
+          # cd bin
+          # 7z a mac-${{ matrix.type }}.7z *
           # ./ci_tools_atomic_dex bundle ${{ matrix.type }} --osx_sdk=$HOME/sdk/MacOSX12.1.sdk --compiler=clang++
 
 
