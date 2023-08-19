@@ -244,7 +244,7 @@ jobs:
           mkdir build
           cd build
           cmake -DCMAKE_BUILD_TYPE=${{ matrix.type }} ../ 
-          cmake --build . --config Release --target squeexedex-wallet
+          cmake --build . --config ${{ matrix.type }} --target squeexe-wallet
           ls
           # ./ci_tools_atomic_dex bundle ${{ matrix.type }} --osx_sdk=$HOME/sdk/MacOSX12.1.sdk --compiler=clang++
 
