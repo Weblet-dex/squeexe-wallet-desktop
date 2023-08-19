@@ -245,7 +245,8 @@ jobs:
           cd build
           cmake -DCMAKE_BUILD_TYPE=${{ matrix.type }} ../ 
           cmake --build . --config ${{ matrix.type }} --target squeexe-wallet
-          ls
+          cd bin
+          7z a mac-${{ matrix.type }}.7z *
           # ./ci_tools_atomic_dex bundle ${{ matrix.type }} --osx_sdk=$HOME/sdk/MacOSX12.1.sdk --compiler=clang++
 
 
@@ -322,8 +323,10 @@ jobs:
         if: runner.os == 'macOS'
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ env.artifact_name_dmg }}
-          path: ./bundled/osx/${{ env.DEX_PROJECT_NAME }}.dmg
+          name: mac-${{ matrix.type }}.7z
+          path: ./build/bin/mac-${{ matrix.type }}.7z
+          # name: ${{ env.artifact_name_dmg }}
+          # path: ./bundled/osx/${{ env.DEX_PROJECT_NAME }}.dmg
           retention-days: 7
 
       - name: Upload artifacts (MacOS installer)
