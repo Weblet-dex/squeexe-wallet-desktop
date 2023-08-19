@@ -12,4 +12,4 @@ bin           = @["ci_tools_atomic_dex"]
 # Dependencies
 
 requires "nim >= 1.0.4"
-requires "docopt"
+requires "docopt >= 0.6.5 & < 0.7.0"

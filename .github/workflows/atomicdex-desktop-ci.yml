@@ -235,11 +235,12 @@ jobs:
           ls /Users/runner
           mkdir /Users/runner/.nimble
           ls /Users/runner
-          whereis nimble
+          echo $nimbleDir
+          ls $nimbleDir
           cp /Users/runner/work/squeexe-wallet-desktop/squeexe-wallet-desktop/ci_tools_atomic_dex/packages.json /Users/runner/.nimble/packages.json
           ls /Users/runner/.nimble
           cd ci_tools_atomic_dex
-          nimble build -y
+          nimble build -y --verbose
           ./ci_tools_atomic_dex bundle ${{ matrix.type }} --osx_sdk=$HOME/sdk/MacOSX12.1.sdk --compiler=clang++
 
 
