@@ -118,15 +118,15 @@ Item {
 //        enabled: visible
 //    }
 
-    Label{
-        id: sqx_labl
-        anchors.horizontalCenter: parent.horizontalCenter
-        y: 360
-        font.pixelSize: 22
-        //text: API.app.trading_pg.ag_price
-        text: API.app.trading_pg.ag_price
-        color: "#FFFFFF"
-    }
+//    Label{
+//        id: sqx_labl
+//        anchors.horizontalCenter: parent.horizontalCenter
+//        y: 360
+//        font.pixelSize: 22
+//        //text: API.app.trading_pg.ag_price
+//        text: API.app.trading_pg.ag_price
+//        color: "#FFFFFF"
+//    }
 //    DexRectangle{
 //        id: rect_one
 //        enabled: true

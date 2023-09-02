@@ -324,6 +324,26 @@ Item
             webChannel: channel
         }
 
+        Item{
+            anchors.fill: parent
+            WebEngineView {
+                id: fzTradVw
+                //width: parent.width
+                height: (parent.height * 0.59)
+                //anchors.fill: parent
+                enabled: currentPage == Dashboard.PageType.FzDashboard ? true : false
+                visible: enabled
+                //devToolsView: devInspect
+                url: "qrc:///Dex/Squeexe/Web/tradinview.html";
+    //            settings.pluginsEnabled: true
+    //            settings.allowRunningInsecureContent: true
+    //            settings.localContentCanAccessRemoteUrls: true
+                settings.fullscreenSupportEnabled: true
+                settings.showScrollBars: false
+                //webChannel: channel
+            }
+        }
+
         WebEngineView {
             id: devInspect
             width: dashboard.isDevToolLarge ? 600 : dashboard.isDevToolSmall ? 300 : 0

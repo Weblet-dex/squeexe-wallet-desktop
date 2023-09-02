@@ -708,22 +708,22 @@ Item {
         onClicked: dashboard.fz_page = 0;
     }
 
-    Component.onCompleted:
-    {
-        try
-        {
-            loadWebOne()
-        }
-        catch (e) { console.error(e) }
-    }
+//    Component.onCompleted:
+//    {
+//        try
+//        {
+//            loadWebOne()
+//        }
+//        catch (e) { console.error(e) }
+//    }
 
-    onWidthChanged: {
-        try
-        {
-            loadWebOne()
-        }
-        catch (e) { console.error(e) }
-    }
+//    onWidthChanged: {
+//        try
+//        {
+//            loadWebOne()
+//        }
+//        catch (e) { console.error(e) }
+//    }
 }
 
 //    FzChart{
