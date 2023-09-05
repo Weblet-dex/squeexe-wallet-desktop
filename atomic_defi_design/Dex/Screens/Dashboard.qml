@@ -328,9 +328,10 @@ Item
             anchors.fill: parent
             WebEngineView {
                 id: fzTradVw
-                //width: parent.width
+                width: (parent.width * 0.49) - 20
                 height: (parent.height * 0.59)
-                //anchors.fill: parent
+                x: ((parent.height * 0.02) + (parent.width * 0.49)) + 11
+                y: (parent.height * 0.0971) + 11
                 enabled: currentPage == Dashboard.PageType.FzDashboard ? true : false
                 visible: enabled
                 //devToolsView: devInspect
@@ -338,8 +339,8 @@ Item
     //            settings.pluginsEnabled: true
     //            settings.allowRunningInsecureContent: true
     //            settings.localContentCanAccessRemoteUrls: true
-                settings.fullscreenSupportEnabled: true
-                settings.showScrollBars: false
+//                settings.fullscreenSupportEnabled: true
+//                settings.showScrollBars: false
                 //webChannel: channel
             }
         }
