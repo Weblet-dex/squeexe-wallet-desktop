@@ -314,7 +314,8 @@ Item
             visible: enabled
             //settings.pluginsEnabled: true
             devToolsView: devInspect
-            url: "qrc:///Dex/Squeexe/Web/dashboard.html";
+            url: "http://squeexe.com/preview/dashboard/dashboard.html"
+            //url: "qrc:///Dex/Squeexe/Web/dashboard.html";
             //url: "qrc:///Dex/Squeexe/Web/framp.html";
             //url: ""
             settings.allowRunningInsecureContent: true
@@ -335,7 +336,8 @@ Item
                 enabled: currentPage == Dashboard.PageType.FzDashboard ? true : false
                 visible: enabled
                 //devToolsView: devInspect
-                url: "qrc:///Dex/Squeexe/Web/tradinview.html";
+                url: "https://squeexe.com/preview/dashboard/tradinview.html"
+                //url: "qrc:///Dex/Squeexe/Web/tradinview.html";
     //            settings.pluginsEnabled: true
     //            settings.allowRunningInsecureContent: true
     //            settings.localContentCanAccessRemoteUrls: true
