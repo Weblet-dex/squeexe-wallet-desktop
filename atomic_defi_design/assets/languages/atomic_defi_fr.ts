@@ -223,6 +223,24 @@
     </message>
 </context>
 <context>
+    <name>AgChart</name>
+    <message>
+        <location filename="../../Dex/Squeexe/AgChart.qml" line="171"/>
+        <source>Loading market data</source>
+        <translation type="unfinished">Chargement des données de marché</translation>
+    </message>
+    <message>
+        <location filename="../../Dex/Squeexe/AgChart.qml" line="177"/>
+        <source>There is no chart data for this pair</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../Dex/Squeexe/AgChart.qml" line="185"/>
+        <source>There is no chart data for %1 (testcoin) pairs</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AmountChart</name>
     <message>
         <location filename="../../Dex/Portfolio/AmountChart.qml" line="332"/>
@@ -465,29 +483,24 @@
 <context>
     <name>Center</name>
     <message>
-        <location filename="../../Dex/Sidebar/Center.qml" line="68"/>
-        <source>Portfolio</source>
-        <translation>Portfolio</translation>
+        <location filename="../../Dex/Sidebar/Center.qml" line="70"/>
+        <source>Ag Dashboard</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../Dex/Sidebar/Center.qml" line="79"/>
-        <source>Wallet</source>
-        <translation>Portefeuille</translation>
+        <location filename="../../Dex/Sidebar/Center.qml" line="81"/>
+        <source>Holdings</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../Dex/Sidebar/Center.qml" line="90"/>
-        <source>DEX</source>
-        <translation>DEX</translation>
+        <location filename="../../Dex/Sidebar/Center.qml" line="92"/>
+        <source>Transactions</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../Dex/Sidebar/Center.qml" line="101"/>
-        <source>Address Book</source>
-        <translation>Carnet d&apos;adresses</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Sidebar/Center.qml" line="113"/>
-        <source>Fiat</source>
-        <translation>Monnaie fiduciaire</translation>
+        <location filename="../../Dex/Sidebar/Center.qml" line="103"/>
+        <source>Trading</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -842,182 +855,182 @@
 <context>
     <name>Dashboard</name>
     <message>
-        <location filename="../../Dex/Screens/Dashboard.qml" line="101"/>
+        <location filename="../../Dex/Screens/Dashboard.qml" line="165"/>
         <source>The current number of enabled coins does not match your configuration specification. Your assets configuration will be reset.</source>
         <translation>Le nombre actuel d&apos;actifs activées ne correspond pas à vos spécifications de configuration. La configuration de vos actifs sera réinitialisée.</translation>
     </message>
     <message>
-        <location filename="../../Dex/Screens/Dashboard.qml" line="422"/>
+        <location filename="../../Dex/Screens/Dashboard.qml" line="675"/>
         <source>Matching</source>
         <translation>Recherche en cours</translation>
     </message>
     <message>
-        <location filename="../../Dex/Screens/Dashboard.qml" line="422"/>
+        <location filename="../../Dex/Screens/Dashboard.qml" line="675"/>
         <source>Order Matching</source>
         <translation>Recherche d&apos;un ordre</translation>
     </message>
     <message>
-        <location filename="../../Dex/Screens/Dashboard.qml" line="424"/>
+        <location filename="../../Dex/Screens/Dashboard.qml" line="677"/>
         <source>Matched</source>
         <translation>Trouvé</translation>
     </message>
     <message>
-        <location filename="../../Dex/Screens/Dashboard.qml" line="424"/>
+        <location filename="../../Dex/Screens/Dashboard.qml" line="677"/>
         <source>Order Matched</source>
         <translation>Ordre trouvé</translation>
     </message>
     <message>
-        <location filename="../../Dex/Screens/Dashboard.qml" line="426"/>
+        <location filename="../../Dex/Screens/Dashboard.qml" line="679"/>
         <source>Ongoing</source>
         <translation>En cours</translation>
     </message>
     <message>
-        <location filename="../../Dex/Screens/Dashboard.qml" line="426"/>
+        <location filename="../../Dex/Screens/Dashboard.qml" line="679"/>
         <source>Swap Ongoing</source>
         <translation>Échange en cours</translation>
     </message>
     <message>
-        <location filename="../../Dex/Screens/Dashboard.qml" line="428"/>
+        <location filename="../../Dex/Screens/Dashboard.qml" line="681"/>
         <source>Successful</source>
         <translation>Réussi</translation>
     </message>
     <message>
-        <location filename="../../Dex/Screens/Dashboard.qml" line="428"/>
+        <location filename="../../Dex/Screens/Dashboard.qml" line="681"/>
         <source>Swap Successful</source>
         <translation>Échange terminé</translation>
     </message>
     <message>
-        <location filename="../../Dex/Screens/Dashboard.qml" line="430"/>
+        <location filename="../../Dex/Screens/Dashboard.qml" line="683"/>
         <source>Refunding</source>
         <translation>En cours de remboursement</translation>
     </message>
     <message>
-        <location filename="../../Dex/Screens/Dashboard.qml" line="432"/>
+        <location filename="../../Dex/Screens/Dashboard.qml" line="685"/>
         <source>Failed</source>
         <translation>Échoué</translation>
     </message>
     <message>
-        <location filename="../../Dex/Screens/Dashboard.qml" line="432"/>
+        <location filename="../../Dex/Screens/Dashboard.qml" line="685"/>
         <source>Swap Failed</source>
         <translation>Erreur lors de l&apos;échange</translation>
     </message>
     <message>
-        <location filename="../../Dex/Screens/Dashboard.qml" line="434"/>
+        <location filename="../../Dex/Screens/Dashboard.qml" line="687"/>
         <source>Unknown</source>
         <translation>Inconnue</translation>
     </message>
     <message>
-        <location filename="../../Dex/Screens/Dashboard.qml" line="434"/>
+        <location filename="../../Dex/Screens/Dashboard.qml" line="687"/>
         <source>Unknown State</source>
         <translation>État inconnu</translation>
     </message>
     <message>
-        <location filename="../../Dex/Screens/Dashboard.qml" line="448"/>
+        <location filename="../../Dex/Screens/Dashboard.qml" line="701"/>
         <source>Started</source>
         <translation>Commencé</translation>
     </message>
     <message>
-        <location filename="../../Dex/Screens/Dashboard.qml" line="450"/>
+        <location filename="../../Dex/Screens/Dashboard.qml" line="703"/>
         <source>Negotiated</source>
         <translation>Négocié</translation>
     </message>
     <message>
-        <location filename="../../Dex/Screens/Dashboard.qml" line="452"/>
+        <location filename="../../Dex/Screens/Dashboard.qml" line="705"/>
         <source>Taker fee sent</source>
         <translation>Frais de preneur envoyés</translation>
     </message>
     <message>
-        <location filename="../../Dex/Screens/Dashboard.qml" line="454"/>
+        <location filename="../../Dex/Screens/Dashboard.qml" line="707"/>
         <source>Maker payment received</source>
         <translation>Paiement de l&apos;envoyeur reçu</translation>
     </message>
     <message>
-        <location filename="../../Dex/Screens/Dashboard.qml" line="456"/>
+        <location filename="../../Dex/Screens/Dashboard.qml" line="709"/>
         <source>Maker payment wait confirm started</source>
         <translation>La confirmation d&apos;attente de paiement de l&apos;envoyeur a commencé</translation>
     </message>
     <message>
-        <location filename="../../Dex/Screens/Dashboard.qml" line="458"/>
+        <location filename="../../Dex/Screens/Dashboard.qml" line="711"/>
         <source>Maker payment validated and confirmed</source>
         <translation>Paiement de l&apos;envoyeur validé et confirmé</translation>
     </message>
     <message>
-        <location filename="../../Dex/Screens/Dashboard.qml" line="460"/>
+        <location filename="../../Dex/Screens/Dashboard.qml" line="713"/>
         <source>Taker payment sent</source>
         <translation>Paiement du preneur envoyé</translation>
     </message>
     <message>
-        <location filename="../../Dex/Screens/Dashboard.qml" line="462"/>
+        <location filename="../../Dex/Screens/Dashboard.qml" line="715"/>
         <source>Taker payment spent</source>
         <translation>Paiement du preneur dépensé</translation>
     </message>
     <message>
-        <location filename="../../Dex/Screens/Dashboard.qml" line="464"/>
+        <location filename="../../Dex/Screens/Dashboard.qml" line="717"/>
         <source>Maker payment spent</source>
         <translation>Paiement de l&apos;envoyeur dépensé</translation>
     </message>
     <message>
-        <location filename="../../Dex/Screens/Dashboard.qml" line="466"/>
+        <location filename="../../Dex/Screens/Dashboard.qml" line="719"/>
         <source>Finished</source>
         <translation>Fini</translation>
     </message>
     <message>
-        <location filename="../../Dex/Screens/Dashboard.qml" line="468"/>
+        <location filename="../../Dex/Screens/Dashboard.qml" line="721"/>
         <source>Start failed</source>
         <translation>Le démarrage a échoué</translation>
     </message>
     <message>
-        <location filename="../../Dex/Screens/Dashboard.qml" line="470"/>
+        <location filename="../../Dex/Screens/Dashboard.qml" line="723"/>
         <source>Negotiate failed</source>
         <translation>La négociation a échoué</translation>
     </message>
     <message>
-        <location filename="../../Dex/Screens/Dashboard.qml" line="472"/>
+        <location filename="../../Dex/Screens/Dashboard.qml" line="725"/>
         <source>Taker fee validate failed</source>
         <translation>Échec de la validation des frais du preneur</translation>
     </message>
     <message>
-        <location filename="../../Dex/Screens/Dashboard.qml" line="474"/>
+        <location filename="../../Dex/Screens/Dashboard.qml" line="727"/>
         <source>Maker payment transaction failed</source>
         <translation>La transaction de paiement du créateur a échoué</translation>
     </message>
     <message>
-        <location filename="../../Dex/Screens/Dashboard.qml" line="476"/>
+        <location filename="../../Dex/Screens/Dashboard.qml" line="729"/>
         <source>Maker payment Data send failed</source>
         <translation>Échec de l&apos;envoi des données de paiement du créateur</translation>
     </message>
     <message>
-        <location filename="../../Dex/Screens/Dashboard.qml" line="478"/>
+        <location filename="../../Dex/Screens/Dashboard.qml" line="731"/>
         <source>Maker payment wait confirm failed</source>
         <translation>La confirmation de l&apos;attente de paiement du créateur a échoué</translation>
     </message>
     <message>
-        <location filename="../../Dex/Screens/Dashboard.qml" line="480"/>
+        <location filename="../../Dex/Screens/Dashboard.qml" line="733"/>
         <source>Taker payment validate failed</source>
         <translation>La validation du paiement du preneur a échoué</translation>
     </message>
     <message>
-        <location filename="../../Dex/Screens/Dashboard.qml" line="482"/>
+        <location filename="../../Dex/Screens/Dashboard.qml" line="735"/>
         <source>Taker payment wait confirm failed</source>
         <translation>La confirmation de l&apos;attente de paiement du preneur a échoué</translation>
     </message>
     <message>
-        <location filename="../../Dex/Screens/Dashboard.qml" line="484"/>
+        <location filename="../../Dex/Screens/Dashboard.qml" line="737"/>
         <source>Taker payment spend failed</source>
         <translation>Échec des dépenses de paiement du preneur</translation>
     </message>
     <message>
-        <location filename="../../Dex/Screens/Dashboard.qml" line="486"/>
+        <location filename="../../Dex/Screens/Dashboard.qml" line="739"/>
         <source>Maker payment wait refund started</source>
         <translation>attente de paiement du créateur, remboursement commencé</translation>
     </message>
     <message>
-        <location filename="../../Dex/Screens/Dashboard.qml" line="488"/>
+        <location filename="../../Dex/Screens/Dashboard.qml" line="741"/>
         <source>Maker payment refunded</source>
         <translation>Paiement du créateur remboursé</translation>
     </message>
     <message>
-        <location filename="../../Dex/Screens/Dashboard.qml" line="490"/>
+        <location filename="../../Dex/Screens/Dashboard.qml" line="743"/>
         <source>Maker payment refund failed</source>
         <translation>échec du remboursement du paiement du créateur</translation>
     </message>
@@ -1916,63 +1929,69 @@ They will be removed from the orderbook until you log in again.</source>
     </message>
     <message>
         <location filename="../../Dex/Wallet/Main.qml" line="556"/>
+        <location filename="../../Dex/Wallet/Main.qml" line="608"/>
         <source> is wallet only</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../Dex/Wallet/Main.qml" line="574"/>
+        <location filename="../../Dex/Wallet/Main.qml" line="575"/>
+        <source>Buy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../Dex/Wallet/Main.qml" line="626"/>
         <source>Rewards</source>
         <translation>Récompenses</translation>
     </message>
     <message>
-        <location filename="../../Dex/Wallet/Main.qml" line="605"/>
+        <location filename="../../Dex/Wallet/Main.qml" line="657"/>
         <source>Faucet</source>
         <translation>Robinet</translation>
     </message>
     <message>
-        <location filename="../../Dex/Wallet/Main.qml" line="659"/>
-        <location filename="../../Dex/Wallet/Main.qml" line="677"/>
-        <location filename="../../Dex/Wallet/Main.qml" line="709"/>
+        <location filename="../../Dex/Wallet/Main.qml" line="711"/>
+        <location filename="../../Dex/Wallet/Main.qml" line="729"/>
+        <location filename="../../Dex/Wallet/Main.qml" line="761"/>
         <source>Public Key</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../Dex/Wallet/Main.qml" line="709"/>
+        <location filename="../../Dex/Wallet/Main.qml" line="761"/>
         <source>Copied to Clipboard</source>
         <translation type="unfinished">Copier dans le presse-papier</translation>
     </message>
     <message>
-        <location filename="../../Dex/Wallet/Main.qml" line="861"/>
+        <location filename="../../Dex/Wallet/Main.qml" line="913"/>
         <source>Loading market data</source>
         <translation>Chargement des données de marché</translation>
     </message>
     <message>
-        <location filename="../../Dex/Wallet/Main.qml" line="868"/>
+        <location filename="../../Dex/Wallet/Main.qml" line="920"/>
         <source>There is no chart data for this ticker yet</source>
         <translation>Il n&apos;y a pas encore de données graphiques pour ce ticker</translation>
     </message>
     <message>
-        <location filename="../../Dex/Wallet/Main.qml" line="927"/>
+        <location filename="../../Dex/Wallet/Main.qml" line="979"/>
         <source>Fetching transactions...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../Dex/Wallet/Main.qml" line="930"/>
+        <location filename="../../Dex/Wallet/Main.qml" line="982"/>
         <source>Please wait, %1 is %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../Dex/Wallet/Main.qml" line="930"/>
+        <location filename="../../Dex/Wallet/Main.qml" line="982"/>
         <source>% activated...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../Dex/Wallet/Main.qml" line="932"/>
+        <location filename="../../Dex/Wallet/Main.qml" line="984"/>
         <source>No transactions available</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../Dex/Wallet/Main.qml" line="957"/>
+        <location filename="../../Dex/Wallet/Main.qml" line="1009"/>
         <source>Click to view your address on %1 (%2) block explorer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2844,6 +2863,11 @@ Please select a new order.</source>
 <context>
     <name>Portfolio</name>
     <message>
+        <location filename="../../Dex/Portfolio/Portfolio.qml" line="129"/>
+        <source>Holdings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../../Dex/Portfolio/Portfolio.qml" line="151"/>
         <source>ADD CRYPTO</source>
         <translation type="unfinished"></translation>
@@ -2862,11 +2886,6 @@ Please select a new order.</source>
         <location filename="../../Dex/Portfolio/Portfolio.qml" line="251"/>
         <source>(%1/%2)</source>
         <translation>(%1/%2)</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Portfolio/Portfolio.qml" line="129"/>
-        <source>Portfolio</source>
-        <translation>Portfolio</translation>
     </message>
 </context>
 <context>
@@ -3496,11 +3515,6 @@ Please select a new order.</source>
         <translation>Confirmer</translation>
     </message>
     <message>
-        <location filename="../../Dex/Settings/SettingModal.qml" line="411"/>
-        <source>Changing theme to %1</source>
-        <translation>Changer le thème en %1</translation>
-    </message>
-    <message>
         <location filename="../../Dex/Settings/SettingModal.qml" line="487"/>
         <source>Disable 2FA?</source>
         <translation type="unfinished"></translation>
@@ -3567,11 +3581,6 @@ Please select a new order.</source>
         <translation>La police actuelle est passée à %1.</translation>
     </message>
     <message>
-        <location filename="../../Dex/Settings/SettingModal.qml" line="396"/>
-        <source>Theme</source>
-        <translation>Thème</translation>
-    </message>
-    <message>
         <location filename="../../Dex/Settings/SettingModal.qml" line="471"/>
         <source>Ask system&apos;s password before sending coins ? (2FA)</source>
         <translation>Demander le mot de passe du système avant d&apos;envoyer des actifs ? (2FA)</translation>
@@ -3610,11 +3619,6 @@ Please select a new order.</source>
         <location filename="../../Dex/Settings/SettingModal.qml" line="646"/>
         <source>Qt Version copied to clipboard.</source>
         <translation>Version Qt copiée dans le presse-papiers.</translation>
-    </message>
-    <message>
-        <location filename="../../Dex/Settings/SettingModal.qml" line="671"/>
-        <source>Search Update</source>
-        <translation>Rechercher une mise à jour</translation>
     </message>
     <message>
         <location filename="../../Dex/Settings/SettingModal.qml" line="688"/>
