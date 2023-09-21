@@ -19,9 +19,9 @@ Item {
     Shortcut{
         sequence: "F7"
         onActivated: {
-            var tmpAg = Number(fzWebObj.agCurrent) + 1;
-            fzWebObj.agCurrent = JSON.stringify(tmpAg);
-            fzWebObj.setAgPrice(fzWebObj.agCurrent);
+            var tmpAg = Number(agWebObj.agCurrent) + 1;
+            agWebObj.agCurrent = JSON.stringify(tmpAg);
+            agWebObj.setAgPrice(agWebObj.agCurrent);
         }
     }
 
@@ -53,9 +53,9 @@ Item {
     }
 
     Item{
-        id: fzdboard
+        id: agdboard
         anchors.fill: parent
-        visible: dashboard.fz_page == 0 ? true : false;
+        visible: dashboard.ag_page == 0 ? true : false;
         enabled: visible
 
 //         GradientButton{
@@ -65,7 +65,7 @@ Item {
 //             anchors.horizontalCenter: parent.horizontalCenter
 //             radius: width
 //             text: qsTr("Monitor")
-//             onClicked: dashboard.fz_page = 0;
+//             onClicked: dashboard.ag_page = 0;
 //         }
 
 //         DexGradientAppButton{
@@ -78,7 +78,7 @@ Item {
 //             padding: 25
 //             font: DexTypo.body2
 //             text: qsTr("Monitor")
-//             onClicked: dashboard.fz_page = 0;
+//             onClicked: dashboard.ag_page = 0;
 //         }
 
 //         DefaultButton{
@@ -92,7 +92,7 @@ Item {
 //             content.anchors.centerIn: content.parent
 //             content.anchors.leftMargin: enabled ? 23 : 48
 //             content.anchors.rightMargin: 23
-//             onClicked: dashboard.fz_page = 0;
+//             onClicked: dashboard.ag_page = 0;
 //         }
 
 //         DexAppOutlineButton{
@@ -105,8 +105,8 @@ Item {
 //             rightPadding: 40
 //             radius: 18
 //             onClicked: {
-//                 fzWebObj.agCurrent++;
-//                 fzWebObj.setAgPrice(fzWebObj.agCurrent);
+//                 agWebObj.agCurrent++;
+//                 agWebObj.setAgPrice(agWebObj.agCurrent);
 //             }
 //        }
     }
@@ -114,7 +114,7 @@ Item {
 //    Monitor{
 //        id: monitr
 //        anchors.fill: parent
-//        visible: dashboard.fz_page == 1 ? true : false;
+//        visible: dashboard.ag_page == 1 ? true : false;
 //        enabled: visible
 //    }
 

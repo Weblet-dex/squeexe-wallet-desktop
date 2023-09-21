@@ -126,7 +126,7 @@ Item {
                 {
                     font: DexTypo.head6
                     anchors.verticalCenter: parent.verticalCenter
-                    text: qsTr("Portfolio")
+                    text: qsTr("Holdings")
                 }
             }
 

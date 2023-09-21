@@ -32,27 +32,27 @@ Item
 
     enum PageType
     {
-        FzDashboard,
+        AgDashboard,
         Portfolio,
         Wallet,
         DEX          // DEX == Trading page
         //Addressbook
     }
 
-    property var currentPage: Dashboard.PageType.FzDashboard
+    property var currentPage: Dashboard.PageType.AgDashboard
     property var availablePages: [squeexe, portfolio, wallet, exchange]
 
     property alias webEngineView: webEngineView
-    property alias fzWebOne: fzWebOne
+    property alias agWebOne: agWebOne
     property alias onRamper: onRamper
-    //property alias fzWebEngn: fzWebEngn
+    //property alias agWebEngn: agWebEngn
 
     readonly property int idx_exchange_trade: 0
     readonly property int idx_exchange_orders: 1
     readonly property int idx_exchange_history: 2
 
     property var current_ticker
-    property int fz_page: 0
+    property int ag_page: 0
     property bool isDevToolSmall: false
     property bool isDevToolLarge: false
     property string rampTickr: ""
@@ -150,8 +150,8 @@ Item
 //        running: true
 //        triggeredOnStart: false
 //        onTriggered:{
-//            fzWebOne.url = "qrc:///Dex/Squeexe/testpage.html";
-//            fzWebOne.enabled = true;
+//            agWebOne.url = "qrc:///Dex/Squeexe/testpage.html";
+//            agWebOne.enabled = true;
 //        }
 //    }
 
@@ -263,7 +263,7 @@ Item
         //run batch focus (& change property too)
         QtObject {
             //id: qmlObj
-            id: fzWebObj // ID, under which this object will be known at WebEngineView side
+            id: agWebObj // ID, under which this object will be known at WebEngineView side
             WebChannel.id: "backend"
 
             property string batchNumbr: "0";
@@ -295,7 +295,7 @@ Item
 
 //        WebEngineView
 //        {
-//            id: fzWebEngn
+//            id: agWebEngn
 //            backgroundColor: "transparent"
 //        }
 
@@ -306,11 +306,11 @@ Item
         }
 
         WebEngineView {
-            id: fzWebOne
+            id: agWebOne
             width: dashboard.isDevToolLarge ? parent.width - 600 : dashboard.isDevToolSmall ? parent.width - 300 : parent.width
             height: parent.height
             //anchors.fill: parent
-            enabled: currentPage == Dashboard.PageType.FzDashboard ? true : false
+            enabled: currentPage == Dashboard.PageType.AgDashboard ? true : false
             visible: enabled
             //settings.pluginsEnabled: true
             devToolsView: devInspect
@@ -328,21 +328,21 @@ Item
         Item{
             anchors.fill: parent
             WebEngineView {
-                id: fzTradVw
+                id: agTradVw
                 width: (parent.width * 0.49) - 20
                 height: (parent.height * 0.59)
                 x: ((parent.height * 0.02) + (parent.width * 0.49)) + 11
                 y: (parent.height * 0.0971) + 11
-                enabled: currentPage == Dashboard.PageType.FzDashboard ? true : false
+                enabled: currentPage == Dashboard.PageType.AgDashboard ? true : false
                 visible: enabled
                 //devToolsView: devInspect
                 url: "https://squeexe.com/preview/dashboard/tradinview.html"
                 //url: "qrc:///Dex/Squeexe/Web/tradinview.html";
     //            settings.pluginsEnabled: true
-    //            settings.allowRunningInsecureContent: true
-    //            settings.localContentCanAccessRemoteUrls: true
+                settings.allowRunningInsecureContent: true
+                settings.localContentCanAccessRemoteUrls: true
 //                settings.fullscreenSupportEnabled: true
-//                settings.showScrollBars: false
+                settings.showScrollBars: false
                 //webChannel: channel
             }
         }
@@ -352,15 +352,15 @@ Item
             width: dashboard.isDevToolLarge ? 600 : dashboard.isDevToolSmall ? 300 : 0
             height: parent.height
             x: dashboard.isDevToolLarge ? parent.width - 600 : dashboard.isDevToolSmall ? parent.width - 300 : 0
-            enabled: (currentPage == Dashboard.PageType.FzDashboard) && (dashboard.isDevToolLarge || dashboard.isDevToolSmall) ? true : false
+            enabled: (currentPage == Dashboard.PageType.AgDashboard) && (dashboard.isDevToolLarge || dashboard.isDevToolSmall) ? true : false
             visible: enabled
             //settings.pluginsEnabled: true
-            inspectedView: fzWebOne
+            inspectedView: agWebOne
         }
 
         WebChannel {
             id: channel
-            registeredObjects: [fzWebObj]
+            registeredObjects: [agWebObj]
         }
 
         DefaultLoader

@@ -11,7 +11,7 @@ Item
 
     enum LineType
     {
-        FzDashboard,
+        AgDashboard,
         Portfolio,
         Wallet,
         DEX,         // DEX == Trading page
@@ -21,7 +21,7 @@ Item
 
     property bool   isExpanded: true
     property real   lineHeight: 44
-    property var    currentLineType: Main.LineType.FzDashboard
+    property var    currentLineType: Main.LineType.AgDashboard
     property alias  _selectionCursor: _selectionCursor
     property bool   containsMouse: mouseArea.containsMouse
 
@@ -42,8 +42,8 @@ Item
 //        triggeredOnStart: false
 //        running: true
 //        onTriggered: {
-//            currentLineType = Main.LineType.FzDash;
-//            root.lineSelected(Main.LineType.FzDash);
+//            currentLineType = Main.LineType.AgDash;
+//            root.lineSelected(Main.LineType.AgDash);
 //        }
 //    }
 

@@ -24,7 +24,7 @@ MouseArea
             if (isExpanded) waitForSidebarExpansionAnimation.start();
             else
             {
-                _fzdashLine.label.opacity = 0;
+                _agdashLine.label.opacity = 0;
                 _portfolioLine.label.opacity = 0;
                 _walletLine.label.opacity = 0;
                 _dexLine.label.opacity = 0;
@@ -37,7 +37,7 @@ MouseArea
     NumberAnimation
     {
         id: waitForSidebarExpansionAnimation
-        targets: [_fzdashLine.label, _portfolioLine.label, _walletLine.label, _dexLine.label]//_addressBookLine.label, _fiatLine.label]
+        targets: [_agdashLine.label, _portfolioLine.label, _walletLine.label, _dexLine.label]//_addressBookLine.label, _fiatLine.label]
         properties: "opacity"
         duration: 200
         from: 0
@@ -48,7 +48,7 @@ MouseArea
     NumberAnimation
     {
         id: labelsOpacityAnimation
-        targets: [_fzdashLine.label, _portfolioLine.label, _walletLine.label, _dexLine.label]//_addressBookLine.label, _fiatLine.label]
+        targets: [_agdashLine.label, _portfolioLine.label, _walletLine.label, _dexLine.label]//_addressBookLine.label, _fiatLine.label]
         properties: "opacity"
         duration: 350
         from: 0.0
@@ -62,12 +62,12 @@ MouseArea
         anchors.fill: parent
         FigurativeLine
         {
-            id: _fzdashLine
+            id: _agdashLine
 
             //label.enabled: true
             Layout.fillWidth: true
-            type: Main.LineType.FzDashboard
-            label.text: isExpanded ? qsTr("Fz Dashboard") : ""
+            type: Main.LineType.AgDashboard
+            label.text: isExpanded ? qsTr("Ag Dashboard") : ""
             icon.source: General.image_path + "bill.svg"
             onClicked: lineSelected(type)
         }
@@ -78,7 +78,7 @@ MouseArea
 
             Layout.fillWidth: true
             type: Main.LineType.Portfolio
-            label.text: isExpanded ? qsTr("Portfolio") : ""
+            label.text: isExpanded ? qsTr("Holdings") : ""
             icon.source: General.image_path + "menu-assets-portfolio.svg"
             onClicked: lineSelected(type)
         }
@@ -89,7 +89,7 @@ MouseArea
 
             Layout.fillWidth: true
             type: Main.LineType.Wallet
-            label.text: isExpanded ? qsTr("Wallet") : ""
+            label.text: isExpanded ? qsTr("Transactions") : ""
             icon.source: General.image_path + "menu-assets-white.svg"
             onClicked: lineSelected(type)
         }
@@ -100,7 +100,7 @@ MouseArea
 
             Layout.fillWidth: true
             type: Main.LineType.DEX
-            label.text: isExpanded ? qsTr("DEX") : ""
+            label.text: isExpanded ? qsTr("Trading") : ""
             icon.source: General.image_path + "menu-exchange-white.svg"
             onClicked: lineSelected(type)
         }

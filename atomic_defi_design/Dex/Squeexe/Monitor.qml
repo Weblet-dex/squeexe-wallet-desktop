@@ -12,7 +12,7 @@ import Dex.Themes 1.0 as Dex
 
 Item {
     id: monitor
-    visible: dashboard.fz_page == 1 ? true : false;
+    visible: dashboard.ag_page == 1 ? true : false;
     enabled: visible
 
     function loadWebOne(){
@@ -694,8 +694,8 @@ Item {
           </script>
         </body>
         `
-        dashboard.fzWebOne.enabled = true;
-        dashboard.fzWebOne.loadHtml(web_one_html);
+        dashboard.agWebOne.enabled = true;
+        dashboard.agWebOne.loadHtml(web_one_html);
     }
 
     SquareButton{
@@ -705,7 +705,7 @@ Item {
         height: 48
         icon.source: Qaterial.Icons.chevronLeft
         Layout.alignment: Qt.AlignVCenter
-        onClicked: dashboard.fz_page = 0;
+        onClicked: dashboard.ag_page = 0;
     }
 
 //    Component.onCompleted:
@@ -726,8 +726,8 @@ Item {
 //    }
 }
 
-//    FzChart{
-//        id: fzchart
+//    AgChart{
+//        id: agchart
 //        x: parent.width * 0.52
 //        y: parent.height * 0.136
 //        width: parent.width * 0.44
@@ -752,7 +752,7 @@ Item {
 //        radius: width
 //        width: 200
 //        text: qsTr("Back")
-//        onClicked: dashboard.fz_page = 0;
+//        onClicked: dashboard.ag_page = 0;
 //    }
 //    DexRectangle{
 //        id: rect_one
