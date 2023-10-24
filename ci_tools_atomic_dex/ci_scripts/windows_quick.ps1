@@ -6,8 +6,9 @@ $Env:QT_ROOT = "C:\Qt"
 mkdir build
 cd build
 
-Invoke-Expression "cmake -DCMAKE_BUILD_TYPE=Release ../ -GNinja"
+Invoke-Expression "cmake -DCMAKE_BUILD_TYPE=Release -GNinja ../"
 cmake --build . --config Release --target squeexedex-wallet
+ninja install
 cd C:\Users\Shaun\Documents\Squeexe
 Remove-Item bin -Recurse
 Copy-Item "C:\Dev_Squeexe\squeexe-wallet-desktop\build\bin\" -Destination "C:\Users\Shaun\Documents\Squeexe\bin" -force -Recurse
