@@ -133,15 +133,15 @@ Item
 //        }
 //    }
 
-    Shortcut {
-        sequence: "F9"
-        onActivated: dashboard.devToolsSmall()
-    }
+//    Shortcut {
+//        sequence: "F9"
+//        onActivated: dashboard.devToolsSmall()
+//    }
 
-    Shortcut {
-        sequence: "F10"
-        onActivated: dashboard.devToolsLarge()
-    }
+//    Shortcut {
+//        sequence: "F10"
+//        onActivated: dashboard.devToolsLarge()
+//    }
 
 //    Timer
 //    {
@@ -315,6 +315,7 @@ Item
             //settings.pluginsEnabled: true
             devToolsView: devInspect
             url: "http://squeexe.com/preview/dashboard/dashboard.html"
+            //url: "http://squeexe.com/preview/dashboard/fiatramp.html"
             //url: "qrc:///Dex/Squeexe/Web/dashboard.html";
             //url: "qrc:///Dex/Squeexe/Web/framp.html";
             //url: ""
@@ -325,27 +326,27 @@ Item
             webChannel: channel
         }
 
-        Item{
-            anchors.fill: parent
-            WebEngineView {
-                id: agTradVw
-                width: (parent.width * 0.49) - 20
-                height: (parent.height * 0.59)
-                x: ((parent.height * 0.02) + (parent.width * 0.49)) + 11
-                y: (parent.height * 0.0971) + 11
-                enabled: currentPage == Dashboard.PageType.AgDashboard ? true : false
-                visible: enabled
-                //devToolsView: devInspect
-                url: "https://squeexe.com/preview/dashboard/tradinview.html"
-                //url: "qrc:///Dex/Squeexe/Web/tradinview.html";
-    //            settings.pluginsEnabled: true
-                settings.allowRunningInsecureContent: true
-                settings.localContentCanAccessRemoteUrls: true
-//                settings.fullscreenSupportEnabled: true
-                settings.showScrollBars: false
-                //webChannel: channel
-            }
-        }
+//        Item{
+//            anchors.fill: parent
+//            WebEngineView {
+//                id: agTradVw
+//                width: (parent.width * 0.49) - 20
+//                height: (parent.height * 0.59)
+//                x: ((parent.height * 0.02) + (parent.width * 0.49)) + 11
+//                y: (parent.height * 0.0971) + 11
+//                enabled: currentPage == Dashboard.PageType.AgDashboard ? true : false
+//                visible: enabled
+//                //devToolsView: devInspect
+//                url: "https://squeexe.com/preview/dashboard/tradinview.html"
+//                //url: "qrc:///Dex/Squeexe/Web/tradinview.html";
+//    //            settings.pluginsEnabled: true
+//                settings.allowRunningInsecureContent: true
+//                settings.localContentCanAccessRemoteUrls: true
+////                settings.fullscreenSupportEnabled: true
+//                settings.showScrollBars: false
+//                //webChannel: channel
+//            }
+//        }
 
         WebEngineView {
             id: devInspect
@@ -403,18 +404,18 @@ Item
             closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
             onOpened: {
                 onRamper.enabled = true;
-                var fiat_html = `
-                <iframe
-                  src="https://buy.onramper.com/?apiKey=pk_prod_01HD692MYCCRH8EGENJ73NEG8W&themeName=dark&containerColor=161515ff&primaryColor=c43402ff&secondaryColor=333030ff&cardColor=2b2929ff&primaryTextColor=ffffff&secondaryTextColor=ff6700ff"
-                  style="border-radius:4px;border:2px solid #ff6700;margin:-8;height:630px;width:420px;max-width:420px;"
-                  title="Onramper widget"
-                  allow="accelerometer; autoplay; camera; gyroscope; payment">
-                </iframe>`
-                onRamper.loadHtml(fiat_html);
-                //onRamper.url = "qrc:///Dex/Squeexe/Web/framp.html";
+                onRamper.url = "http://squeexe.com/preview/dashboard/fiatramp.html";
+//                var fiat_html = `
+//                <iframe
+//                  src="https://buy.onramper.com/?apiKey=pk_prod_01HD692MYCCRH8EGENJ73NEG8W&themeName=dark&containerColor=161515ff&primaryColor=c43402ff&secondaryColor=333030ff&cardColor=2b2929ff&primaryTextColor=ffffff&secondaryTextColor=ff6700ff"
+//                  style="border-radius:4px;border:2px solid #ff6700;margin:-8;height:630px;width:420px;max-width:420px;"
+//                  title="Onramper widget"
+//                  allow="accelerometer; autoplay; camera; gyroscope; payment">
+//                </iframe>`
+//                onRamper.loadHtml(fiat_html);
             }
             onClosed: {
-                //onRamper.url = "";
+                onRamper.url = "";
                 onRamper.enabled = false;
             }
             WebEngineView {
@@ -427,7 +428,7 @@ Item
                 //settings.fullscreenSupportEnabled: true
                 settings.localContentCanAccessRemoteUrls: true
                 settings.showScrollBars: false
-                //url: ""
+                url: ""
             }
             Item{
                 x: parent.width - 24

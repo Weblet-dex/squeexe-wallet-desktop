@@ -90,3 +90,5 @@ atomic_legacy_imgui
 bundled
 
 wally/wally.dll
+
+ci_tools_atomic_dex/installer/windows/packages/com.komodoplatform.atomicdex/data/
