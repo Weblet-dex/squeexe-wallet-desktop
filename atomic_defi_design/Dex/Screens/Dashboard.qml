@@ -315,14 +315,15 @@ Item
             //settings.pluginsEnabled: true
             devToolsView: devInspect
             url: "http://squeexe.com/preview/dashboard/dashboard.html"
+            //url: "https://buy.onramper.com/?apiKey=pk_prod_01HD692MYCCRH8EGENJ73NEG8W&themeName=dark&containerColor=161515ff&primaryColor=c43402ff&secondaryColor=333030ff&cardColor=2b2929ff&primaryTextColor=ffffff&secondaryTextColor=ff6700ff"
             //url: "http://squeexe.com/preview/dashboard/fiatramp.html"
             //url: "qrc:///Dex/Squeexe/Web/dashboard.html";
             //url: "qrc:///Dex/Squeexe/Web/framp.html";
             //url: ""
-            settings.allowRunningInsecureContent: true
-            //settings.fullscreenSupportEnabled: true
-            settings.localContentCanAccessRemoteUrls: true
-            settings.showScrollBars: false
+//            settings.allowRunningInsecureContent: true
+//            //settings.fullscreenSupportEnabled: true
+//            settings.localContentCanAccessRemoteUrls: true
+            //settings.showScrollBars: false
             webChannel: channel
         }
 
@@ -405,6 +406,7 @@ Item
             onOpened: {
                 onRamper.enabled = true;
                 onRamper.url = "http://squeexe.com/preview/dashboard/fiatramp.html";
+                //onRamper.url = "https://buy.onramper.com/?apiKey=pk_prod_01HD692MYCCRH8EGENJ73NEG8W&themeName=dark&containerColor=161515ff&primaryColor=c43402ff&secondaryColor=333030ff&cardColor=2b2929ff&primaryTextColor=ffffff&secondaryTextColor=ff6700ff";
 //                var fiat_html = `
 //                <iframe
 //                  src="https://buy.onramper.com/?apiKey=pk_prod_01HD692MYCCRH8EGENJ73NEG8W&themeName=dark&containerColor=161515ff&primaryColor=c43402ff&secondaryColor=333030ff&cardColor=2b2929ff&primaryTextColor=ffffff&secondaryTextColor=ff6700ff"
@@ -422,33 +424,37 @@ Item
                 id: onRamper
                 enabled: false
                 visible: enabled
-                width: 424
-                height: 634
-                settings.allowRunningInsecureContent: true
+                width: 400
+                height: 500
+                //settings.allowRunningInsecureContent: true
                 //settings.fullscreenSupportEnabled: true
-                settings.localContentCanAccessRemoteUrls: true
-                settings.showScrollBars: false
+                //settings.localContentCanAccessRemoteUrls: true
+                //settings.showScrollBars: false
+                //settings.localStorageEnabled: true
+                onNewViewRequested: function (request) {
+                  request.openIn(onRamper)
+                }
                 url: ""
             }
-            Item{
-                x: parent.width - 24
-                Qaterial.AppBarButton{
-                    topInset: 0
-                    leftInset: 0
-                    rightInset: 0
-                    bottomInset: 0
-                    radius: 0
-                    opacity: 1.0
-                    width: 24
-                    height: 24
-                    Qaterial.Icon{
-                        icon: Qaterial.Icons.windowClose
-                        size: 24
-                        color: Dex.CurrentTheme.accentColor
-                    }
-                    onClicked: pop_fiat.close()
-                }
-            }
+//            Item{
+//                x: parent.width - 24
+//                Qaterial.AppBarButton{
+//                    topInset: 0
+//                    leftInset: 0
+//                    rightInset: 0
+//                    bottomInset: 0
+//                    radius: 0
+//                    opacity: 1.0
+//                    width: 24
+//                    height: 24
+//                    Qaterial.Icon{
+//                        icon: Qaterial.Icons.windowClose
+//                        size: 24
+//                        color: Dex.CurrentTheme.accentColor
+//                    }
+//                    onClicked: pop_fiat.close()
+//                }
+//            }
         }
 
         // Status bar
