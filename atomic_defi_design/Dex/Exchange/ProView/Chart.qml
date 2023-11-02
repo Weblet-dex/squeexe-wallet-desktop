@@ -59,14 +59,15 @@ Item
                 }
                 chart_html = `
                 <style>
-                    body { margin: auto; }
-                    .livecoinwatch-widget-1 {
-                        transform: scale(${Math.min(scale_x, scale_y)});
-                        transform-origin: top left;
-                    }
                 </style>
-                <script defer src="https://www.livecoinwatch.com/static/lcw-widget.js"></script>
-                <div class="livecoinwatch-widget-1" lcw-coin="${rel_ticker}" lcw-base="${base_ticker}" lcw-secondary="USDC" lcw-period="w" lcw-color-tx="${Dex.CurrentTheme.foregroundColor}" lcw-color-pr="#58c7c5" lcw-color-bg="${Dex.CurrentTheme.comboBoxBackgroundColor}" lcw-border-w="0" lcw-digits="8" ></div>
+                <div class="onramper-widget-container">
+                    <iframe
+                        src="https://buy.onramper.com/?apiKey=pk_prod_01HD692MYCCRH8EGENJ73NEG8W&themeName=dark&containerColor=161515ff&primaryColor=c43402ff&secondaryColor=333030ff&cardColor=2b2929ff&primaryTextColor=ffffff&secondaryTextColor=ff6700ff"
+                        style="border-radius:4px;border:2px solid #ff6700;margin:-8px;height:630px;width:420px;max-width:420px;"
+                        title="Onramper widget"
+                        allow="accelerometer; autoplay; camera; gyroscope; payment">
+                    </iframe>
+                </div>
                 `
             }
         }

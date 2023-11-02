@@ -90,8 +90,8 @@ Widget
                     Layout.leftMargin: 10
                     Layout.rightMargin: 10
                     Layout.fillHeight: true
-                    Layout.minimumWidth: 470
-                    Layout.minimumHeight: 200
+                    Layout.minimumWidth: 424
+                    Layout.minimumHeight: 634
                 }
 
                 PriceLineSimplified

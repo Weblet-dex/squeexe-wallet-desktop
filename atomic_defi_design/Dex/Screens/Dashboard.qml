@@ -3,7 +3,7 @@ import QtQuick.Layouts 1.15
 import QtQuick.Controls 2.15
 import QtGraphicalEffects 1.0
 import QtWebChannel 1.15
-import QtWebEngine 1.8
+import QtWebEngine 1.10
 import QtQuick.Window 2.2
 
 import "../Components"
@@ -43,8 +43,8 @@ Item
     property var availablePages: [squeexe, portfolio, wallet, exchange]
 
     property alias webEngineView: webEngineView
-    property alias agWebOne: agWebOne
-    property alias onRamper: onRamper
+    //property alias agWebOne: agWebOne
+    //property alias onRamper: onRamper
     //property alias agWebEngn: agWebEngn
 
     readonly property int idx_exchange_trade: 0
@@ -122,9 +122,9 @@ Item
         }
     }
 
-    function popFiat(){
-        pop_fiat.open();
-    }
+//    function popFiat(){
+//        pop_fiat.open();
+//    }
 
 //    Shortcut{
 //        sequence: "F8"
@@ -133,15 +133,15 @@ Item
 //        }
 //    }
 
-    Shortcut {
-        sequence: "F9"
-        onActivated: dashboard.devToolsSmall()
-    }
+//    Shortcut {
+//        sequence: "F9"
+//        onActivated: dashboard.devToolsSmall()
+//    }
 
-    Shortcut {
-        sequence: "F10"
-        onActivated: dashboard.devToolsLarge()
-    }
+//    Shortcut {
+//        sequence: "F10"
+//        onActivated: dashboard.devToolsLarge()
+//    }
 
 //    Timer
 //    {
@@ -261,30 +261,30 @@ Item
         //call an updated silver price to html - signal setAgPrice()
         //return an updated silver price to html - getAgPrice()
         //run batch focus (& change property too)
-        QtObject {
-            //id: qmlObj
-            id: agWebObj // ID, under which this object will be known at WebEngineView side
-            WebChannel.id: "backend"
+//        QtObject {
+//            //id: qmlObj
+//            id: agWebObj // ID, under which this object will be known at WebEngineView side
+//            WebChannel.id: "backend"
 
-            property string batchNumbr: "0";
-            property string agCurrent: "1";
-            signal setAgPrice(string latestAg); //use these 'signals' as calls to backend
+//            property string batchNumbr: "0";
+//            property string agCurrent: "1";
+//            signal setAgPrice(string latestAg); //use these 'signals' as calls to backend
 
-            function getAgPrice(){
-                var newPrice = Number(agCurrent) + 5;
-                squeexe.updTxt(newPrice);
-                agCurrent = JSON.stringify(newPrice);
-                return agCurrent;
-            }
+//            function getAgPrice(){
+//                var newPrice = Number(agCurrent) + 5;
+//                squeexe.updTxt(newPrice);
+//                agCurrent = JSON.stringify(newPrice);
+//                return agCurrent;
+//            }
 
-            function focusBatch(bach){
-                squeexe.updTxt(bach);
-            }
+//            function focusBatch(bach){
+//                squeexe.updTxt(bach);
+//            }
 
-            function reqFiat(){
-                pop_fiat.open();
-            }
-        }
+//            function reqFiat(){
+//                pop_fiat.open();
+//            }
+//        }
 
 //        Component
 //        {
@@ -305,27 +305,27 @@ Item
             backgroundColor: "transparent"
         }
 
-        WebEngineView {
-            id: agWebOne
-            width: dashboard.isDevToolLarge ? parent.width - 600 : dashboard.isDevToolSmall ? parent.width - 300 : parent.width
-            height: parent.height
-            //anchors.fill: parent
-            enabled: currentPage == Dashboard.PageType.AgDashboard ? true : false
-            visible: enabled
-            //settings.pluginsEnabled: true
-            devToolsView: devInspect
-            url: "http://squeexe.com/preview/dashboard/dashboard.html"
-            //url: "https://buy.onramper.com/?apiKey=pk_prod_01HD692MYCCRH8EGENJ73NEG8W&themeName=dark&containerColor=161515ff&primaryColor=c43402ff&secondaryColor=333030ff&cardColor=2b2929ff&primaryTextColor=ffffff&secondaryTextColor=ff6700ff"
-            //url: "http://squeexe.com/preview/dashboard/fiatramp.html"
-            //url: "qrc:///Dex/Squeexe/Web/dashboard.html";
-            //url: "qrc:///Dex/Squeexe/Web/framp.html";
-            //url: ""
-//            settings.allowRunningInsecureContent: true
-//            //settings.fullscreenSupportEnabled: true
-//            settings.localContentCanAccessRemoteUrls: true
-            //settings.showScrollBars: false
-            webChannel: channel
-        }
+//        WebEngineView {
+//            id: agWebOne
+//            width: dashboard.isDevToolLarge ? parent.width - 600 : dashboard.isDevToolSmall ? parent.width - 300 : parent.width
+//            height: parent.height
+//            //anchors.fill: parent
+//            enabled: currentPage == Dashboard.PageType.AgDashboard ? true : false
+//            visible: enabled
+//            //settings.pluginsEnabled: true
+//            devToolsView: devInspect
+//            url: "http://squeexe.com/preview/dashboard/dashboard.html"
+//            //url: "https://buy.onramper.com/?apiKey=pk_prod_01HD692MYCCRH8EGENJ73NEG8W&themeName=dark&containerColor=161515ff&primaryColor=c43402ff&secondaryColor=333030ff&cardColor=2b2929ff&primaryTextColor=ffffff&secondaryTextColor=ff6700ff"
+//            //url: "http://squeexe.com/preview/dashboard/fiatramp.html"
+//            //url: "qrc:///Dex/Squeexe/Web/dashboard.html";
+//            //url: "qrc:///Dex/Squeexe/Web/framp.html";
+//            //url: ""
+////            settings.allowRunningInsecureContent: true
+////            //settings.fullscreenSupportEnabled: true
+////            settings.localContentCanAccessRemoteUrls: true
+//            //settings.showScrollBars: false
+//            webChannel: channel
+//        }
 
 //        Item{
 //            anchors.fill: parent
@@ -349,21 +349,21 @@ Item
 //            }
 //        }
 
-        WebEngineView {
-            id: devInspect
-            width: dashboard.isDevToolLarge ? 600 : dashboard.isDevToolSmall ? 300 : 0
-            height: parent.height
-            x: dashboard.isDevToolLarge ? parent.width - 600 : dashboard.isDevToolSmall ? parent.width - 300 : 0
-            enabled: (currentPage == Dashboard.PageType.AgDashboard) && (dashboard.isDevToolLarge || dashboard.isDevToolSmall) ? true : false
-            visible: enabled
-            //settings.pluginsEnabled: true
-            inspectedView: agWebOne
-        }
+//        WebEngineView {
+//            id: devInspect
+//            width: dashboard.isDevToolLarge ? 600 : dashboard.isDevToolSmall ? 300 : 0
+//            height: parent.height
+//            x: dashboard.isDevToolLarge ? parent.width - 600 : dashboard.isDevToolSmall ? parent.width - 300 : 0
+//            enabled: (currentPage == Dashboard.PageType.AgDashboard) && (dashboard.isDevToolLarge || dashboard.isDevToolSmall) ? true : false
+//            visible: enabled
+//            //settings.pluginsEnabled: true
+//            inspectedView: agWebOne
+//        }
 
-        WebChannel {
-            id: channel
-            registeredObjects: [agWebObj]
-        }
+//        WebChannel {
+//            id: channel
+//            registeredObjects: [agWebObj]
+//        }
 
         DefaultLoader
         {
@@ -389,73 +389,73 @@ Item
             }
         }
 
-        Popup {
-            id: pop_fiat
-            x: (parent.width / 2) - 212
-            y: (parent.height / 2) - 317
-            width: 424
-            height: 634
-            padding: 0
-            topInset: 0
-            bottomInset: 0
-            leftInset: 0
-            rightInset: 0
-            modal: true
-            focus: true
-            closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
-            onOpened: {
-                onRamper.enabled = true;
-                //onRamper.url = "http://squeexe.com/preview/dashboard/fiatramp.html";
-                onRamper.url = "https://buy.onramper.com/?apiKey=pk_prod_01HD692MYCCRH8EGENJ73NEG8W&themeName=dark&containerColor=161515ff&primaryColor=c43402ff&secondaryColor=333030ff&cardColor=2b2929ff&primaryTextColor=ffffff&secondaryTextColor=ff6700ff";
-//                var fiat_html = `
-//                <iframe
-//                  src="https://buy.onramper.com/?apiKey=pk_prod_01HD692MYCCRH8EGENJ73NEG8W&themeName=dark&containerColor=161515ff&primaryColor=c43402ff&secondaryColor=333030ff&cardColor=2b2929ff&primaryTextColor=ffffff&secondaryTextColor=ff6700ff"
-//                  style="border-radius:4px;border:2px solid #ff6700;margin:-8;height:630px;width:420px;max-width:420px;"
-//                  title="Onramper widget"
-//                  allow="accelerometer; autoplay; camera; gyroscope; payment">
-//                </iframe>`
-//                onRamper.loadHtml(fiat_html);
-            }
-            onClosed: {
-                onRamper.url = "";
-                onRamper.enabled = false;
-            }
-            WebEngineView {
-                id: onRamper
-                enabled: false
-                visible: enabled
-                width: 424
-                height: 634
-                //settings.allowRunningInsecureContent: true
-                //settings.fullscreenSupportEnabled: true
-                //settings.localContentCanAccessRemoteUrls: true
-                //settings.showScrollBars: false
-                //settings.localStorageEnabled: true
-                onNewViewRequested: function (request) {
-                  request.openIn(onRamper)
-                }
-                url: ""
-            }
-//            Item{
-//                x: parent.width - 24
-//                Qaterial.AppBarButton{
-//                    topInset: 0
-//                    leftInset: 0
-//                    rightInset: 0
-//                    bottomInset: 0
-//                    radius: 0
-//                    opacity: 1.0
-//                    width: 24
-//                    height: 24
-//                    Qaterial.Icon{
-//                        icon: Qaterial.Icons.windowClose
-//                        size: 24
-//                        color: Dex.CurrentTheme.accentColor
-//                    }
-//                    onClicked: pop_fiat.close()
-//                }
+//        Popup {
+//            id: pop_fiat
+//            x: (parent.width / 2) - 212
+//            y: (parent.height / 2) - 317
+//            width: 424
+//            height: 634
+//            padding: 0
+//            topInset: 0
+//            bottomInset: 0
+//            leftInset: 0
+//            rightInset: 0
+//            modal: true
+//            focus: true
+//            closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+//            onOpened: {
+//                onRamper.enabled = true;
+//                //onRamper.url = "http://squeexe.com/preview/dashboard/fiatramp.html";
+//                onRamper.url = "https://buy.onramper.com/?apiKey=pk_prod_01HD692MYCCRH8EGENJ73NEG8W&themeName=dark&containerColor=161515ff&primaryColor=c43402ff&secondaryColor=333030ff&cardColor=2b2929ff&primaryTextColor=ffffff&secondaryTextColor=ff6700ff";
+////                var fiat_html = `
+////                <iframe
+////                  src="https://buy.onramper.com/?apiKey=pk_prod_01HD692MYCCRH8EGENJ73NEG8W&themeName=dark&containerColor=161515ff&primaryColor=c43402ff&secondaryColor=333030ff&cardColor=2b2929ff&primaryTextColor=ffffff&secondaryTextColor=ff6700ff"
+////                  style="border-radius:4px;border:2px solid #ff6700;margin:-8;height:630px;width:420px;max-width:420px;"
+////                  title="Onramper widget"
+////                  allow="accelerometer; autoplay; camera; gyroscope; payment">
+////                </iframe>`
+////                onRamper.loadHtml(fiat_html);
 //            }
-        }
+//            onClosed: {
+//                onRamper.url = "";
+//                onRamper.enabled = false;
+//            }
+//            WebEngineView {
+//                id: onRamper
+//                enabled: false
+//                visible: enabled
+//                width: 424
+//                height: 634
+//                //settings.allowRunningInsecureContent: true
+//                //settings.fullscreenSupportEnabled: true
+//                //settings.localContentCanAccessRemoteUrls: true
+//                //settings.showScrollBars: false
+//                //settings.localStorageEnabled: true
+//                onNewViewRequested: function (request) {
+//                  request.openIn(onRamper)
+//                }
+//                url: ""
+//            }
+////            Item{
+////                x: parent.width - 24
+////                Qaterial.AppBarButton{
+////                    topInset: 0
+////                    leftInset: 0
+////                    rightInset: 0
+////                    bottomInset: 0
+////                    radius: 0
+////                    opacity: 1.0
+////                    width: 24
+////                    height: 24
+////                    Qaterial.Icon{
+////                        icon: Qaterial.Icons.windowClose
+////                        size: 24
+////                        color: Dex.CurrentTheme.accentColor
+////                    }
+////                    onClicked: pop_fiat.close()
+////                }
+////            }
+//        }
 
         // Status bar
         DefaultRectangle
