@@ -3,7 +3,7 @@ import QtQuick.Layouts 1.15
 import QtQuick.Controls 2.15
 import QtGraphicalEffects 1.0
 import QtWebChannel 1.15
-import QtWebEngine 1.10
+import QtWebEngine 1.8
 import QtQuick.Window 2.2
 
 import "../Components"
@@ -133,15 +133,15 @@ Item
 //        }
 //    }
 
-//    Shortcut {
-//        sequence: "F9"
-//        onActivated: dashboard.devToolsSmall()
-//    }
+    Shortcut {
+        sequence: "F9"
+        onActivated: dashboard.devToolsSmall()
+    }
 
-//    Shortcut {
-//        sequence: "F10"
-//        onActivated: dashboard.devToolsLarge()
-//    }
+    Shortcut {
+        sequence: "F10"
+        onActivated: dashboard.devToolsLarge()
+    }
 
 //    Timer
 //    {
@@ -405,8 +405,8 @@ Item
             closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
             onOpened: {
                 onRamper.enabled = true;
-                onRamper.url = "http://squeexe.com/preview/dashboard/fiatramp.html";
-                //onRamper.url = "https://buy.onramper.com/?apiKey=pk_prod_01HD692MYCCRH8EGENJ73NEG8W&themeName=dark&containerColor=161515ff&primaryColor=c43402ff&secondaryColor=333030ff&cardColor=2b2929ff&primaryTextColor=ffffff&secondaryTextColor=ff6700ff";
+                //onRamper.url = "http://squeexe.com/preview/dashboard/fiatramp.html";
+                onRamper.url = "https://buy.onramper.com/?apiKey=pk_prod_01HD692MYCCRH8EGENJ73NEG8W&themeName=dark&containerColor=161515ff&primaryColor=c43402ff&secondaryColor=333030ff&cardColor=2b2929ff&primaryTextColor=ffffff&secondaryTextColor=ff6700ff";
 //                var fiat_html = `
 //                <iframe
 //                  src="https://buy.onramper.com/?apiKey=pk_prod_01HD692MYCCRH8EGENJ73NEG8W&themeName=dark&containerColor=161515ff&primaryColor=c43402ff&secondaryColor=333030ff&cardColor=2b2929ff&primaryTextColor=ffffff&secondaryTextColor=ff6700ff"
@@ -424,8 +424,8 @@ Item
                 id: onRamper
                 enabled: false
                 visible: enabled
-                width: 400
-                height: 500
+                width: 424
+                height: 634
                 //settings.allowRunningInsecureContent: true
                 //settings.fullscreenSupportEnabled: true
                 //settings.localContentCanAccessRemoteUrls: true
