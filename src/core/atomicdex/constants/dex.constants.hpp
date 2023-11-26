@@ -10,6 +10,8 @@ namespace atomic_dex
     inline const std::vector<std::string> g_default_coins{
         g_primary_dex_coin,
         g_second_primary_dex_coin,
+        "AG1T4-PLG20",
+        "AG47T4-PLG20",
         "BTC-segwit",
         "LTC-segwit",
         "DGB-segwit"
