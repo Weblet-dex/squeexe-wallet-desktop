@@ -32,7 +32,6 @@
 #include <QtQml>
 #include <QFontDatabase>
 #include <QtWebEngine>
-#include <QtWebView>
 
 //! Qaterial
 #include <Qaterial/Qaterial.hpp>
@@ -407,7 +406,6 @@ run_app(int argc, char** argv)
     QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
     QApplication::setAttribute(Qt::AA_UseSoftwareOpenGL);
     QtWebEngine::initialize();
-    QtWebView::initialize();
     std::shared_ptr<QApplication> app = std::make_shared<QApplication>(argc, argv);
 
     app->setWindowIcon(QIcon(":/assets/images/logo/dex-logo.png"));
