@@ -4,6 +4,7 @@ import QtQuick.Controls 2.15
 import QtGraphicalEffects 1.0
 import QtWebChannel 1.15
 import QtWebEngine 1.10
+import QtWebView 1.1
 import QtQuick.Window 2.2
 
 import "../Components"
@@ -43,7 +44,7 @@ Item
     property var availablePages: [squeexe, portfolio, wallet, exchange]
 
     property alias webEngineView: webEngineView
-    //property alias agWebOne: agWebOne
+    property alias agWebOne: agWebOne
     //property alias onRamper: onRamper
     //property alias agWebEngn: agWebEngn
 
@@ -133,15 +134,15 @@ Item
 //        }
 //    }
 
-//    Shortcut {
-//        sequence: "F9"
-//        onActivated: dashboard.devToolsSmall()
-//    }
+    Shortcut {
+        sequence: "F9"
+        onActivated: dashboard.devToolsSmall()
+    }
 
-//    Shortcut {
-//        sequence: "F10"
-//        onActivated: dashboard.devToolsLarge()
-//    }
+    Shortcut {
+        sequence: "F10"
+        onActivated: dashboard.devToolsLarge()
+    }
 
 //    Timer
 //    {
@@ -305,6 +306,18 @@ Item
             backgroundColor: "transparent"
         }
 
+        WebView {
+            id: agWebOne
+            anchors.fill: parent
+            enabled: currentPage == Dashboard.PageType.AgDashboard ? true : false
+            visible: enabled
+            url: "https://weblet-dex.github.io/dashboard/"
+            onLoadingChanged: {
+                if (loadRequest.errorString)
+                    console.error(loadRequest.errorString);
+            }
+        }
+
 //        WebEngineView {
 //            id: agWebOne
 //            width: dashboard.isDevToolLarge ? parent.width - 600 : dashboard.isDevToolSmall ? parent.width - 300 : parent.width
@@ -314,17 +327,18 @@ Item
 //            visible: enabled
 //            //settings.pluginsEnabled: true
 //            devToolsView: devInspect
-//            url: "http://squeexe.com/preview/dashboard/dashboard.html"
+//            url: "https://weblet-dex.github.io/dashboard/"
+//            backgroundColor: "transparent"
 //            //url: "https://buy.onramper.com/?apiKey=pk_prod_01HD692MYCCRH8EGENJ73NEG8W&themeName=dark&containerColor=161515ff&primaryColor=c43402ff&secondaryColor=333030ff&cardColor=2b2929ff&primaryTextColor=ffffff&secondaryTextColor=ff6700ff"
 //            //url: "http://squeexe.com/preview/dashboard/fiatramp.html"
 //            //url: "qrc:///Dex/Squeexe/Web/dashboard.html";
 //            //url: "qrc:///Dex/Squeexe/Web/framp.html";
 //            //url: ""
-////            settings.allowRunningInsecureContent: true
-////            //settings.fullscreenSupportEnabled: true
-////            settings.localContentCanAccessRemoteUrls: true
+//            settings.allowRunningInsecureContent: true
+//            //settings.fullscreenSupportEnabled: true
+//            settings.localContentCanAccessRemoteUrls: true
 //            //settings.showScrollBars: false
-//            webChannel: channel
+//            //webChannel: channel
 //        }
 
 //        Item{

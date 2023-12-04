@@ -155,29 +155,29 @@ To protect you from this, %1 will mark any transaction that it detects as potent
 There is a toggle in settings where you can turn on/off the display of these transactions.').arg(API.app_name)
                 }
 
-                FAQLine
-                {
-                    title: qsTr("Do you provide user support?")
-                    text: qsTr('Yes! %1 offers support through the <a href="%2">%1 Discord server</a>. The team and the community are always happy to help!').arg(API.app_name).arg(API.app_discord_url)
-                }
+//                FAQLine
+//                {
+//                    title: qsTr("Do you provide user support?")
+//                    text: qsTr('Yes! %1 offers support through the <a href="%2">%1 Discord server</a>. The team and the community are always happy to help!').arg(API.app_name).arg(API.app_discord_url)
+//                }
 
-                FAQLine
-                {
-                    title: qsTr("Who is behind %1?").arg(API.app_name)
-                    text: qsTr("%1 is developed by the Komodo team. Komodo is one of the most established blockchain projects working on innovative solutions like atomic swaps, Delayed Proof of Work, and an interoperable multi-chain architecture.").arg(API.app_name)
-                }
+//                FAQLine
+//                {
+//                    title: qsTr("Who is behind %1?").arg(API.app_name)
+//                    text: qsTr("%1 is developed by the Komodo team. Komodo is one of the most established blockchain projects working on innovative solutions like atomic swaps, Delayed Proof of Work, and an interoperable multi-chain architecture.").arg(API.app_name)
+//                }
 
-                FAQLine
-                {
-                    title: qsTr("Is it possible to develop my own white-label exchange on %1?").arg(API.app_name)
-                    text: qsTr("Absolutely! You can read our developer documentation for more details or contact us with your partnership inquiries. Have a specific technical question? The %1 developer community is always ready to help!").arg(API.app_name)
-                }
+//                FAQLine
+//                {
+//                    title: qsTr("Is it possible to develop my own white-label exchange on %1?").arg(API.app_name)
+//                    text: qsTr("Absolutely! You can read our developer documentation for more details or contact us with your partnership inquiries. Have a specific technical question? The %1 developer community is always ready to help!").arg(API.app_name)
+//                }
 
-                FAQLine
-                {
-                    title: qsTr("Which devices can I use %1 on?").arg(API.app_name)
-                    text: qsTr('%1 is available for mobile on both <a href="%2">Android and iPhone, and for desktop on Windows, Mac, and Linux</a> operating systems.').arg(API.app_name).arg(API.app_website_url)
-                }
+//                FAQLine
+//                {
+//                    title: qsTr("Which devices can I use %1 on?").arg(API.app_name)
+//                    text: qsTr('%1 is available for mobile on both <a href="%2">Android and iPhone, and for desktop on Windows, Mac, and Linux</a> operating systems.').arg(API.app_name).arg(API.app_website_url)
+//                }
 
                 FAQLine
                 {
@@ -196,58 +196,58 @@ There is a toggle in settings where you can turn on/off the display of these tra
             Layout.leftMargin: 32
             property var filler_width: (parent.width - links_row.width - changelog_button.width - logs_btn.width) / 2 - 14
 
-            LinksRow { id: links_row }
+            //LinksRow { id: links_row }
 
             Item { Layout.preferredWidth: bottom_row.filler_width }
 
-            DexMouseArea
-            {
-                id: changelog_button
+//            DexMouseArea
+//            {
+//                id: changelog_button
 
-                Layout.preferredWidth: column_layout.width
-                Layout.preferredHeight: column_layout.height
-                hoverEnabled: true
+//                Layout.preferredWidth: column_layout.width
+//                Layout.preferredHeight: column_layout.height
+//                hoverEnabled: true
 
-                onClicked: Qt.openUrlExternally("https://github.com/KomodoPlatform/atomicDEX-Desktop/pull/2296")
+//                onClicked: Qt.openUrlExternally("https://github.com/KomodoPlatform/atomicDEX-Desktop/pull/2296")
 
-                ColumnLayout
-                {
-                    id: column_layout
-                    RowLayout
-                    {
-                        Layout.alignment: Qt.AlignHCenter
+//                ColumnLayout
+//                {
+//                    id: column_layout
+//                    RowLayout
+//                    {
+//                        Layout.alignment: Qt.AlignHCenter
 
-                        Circle
-                        {
-                            Layout.alignment: Qt.AlignVCenter
-                            //color: Qt.lighter(update_needed ? Style.colorOrange : Style.colorGreen, changelog_button.containsMouse ? Style.hoverLightMultiplier : 1.0)
-                        }
+//                        Circle
+//                        {
+//                            Layout.alignment: Qt.AlignVCenter
+//                            //color: Qt.lighter(update_needed ? Style.colorOrange : Style.colorGreen, changelog_button.containsMouse ? Style.hoverLightMultiplier : 1.0)
+//                        }
 
-                        DexLabel
-                        {
-                            Layout.alignment: Qt.AlignVCenter
-                            //text_value: //update_needed ? qsTr("Update available") : qsTr("Up to date")
-                            color: changelog_text.color
-                        }
-                    }
+//                        DexLabel
+//                        {
+//                            Layout.alignment: Qt.AlignVCenter
+//                            //text_value: //update_needed ? qsTr("Update available") : qsTr("Up to date")
+//                            color: changelog_text.color
+//                        }
+//                    }
 
-                    DexLabel
-                    {
-                        Layout.alignment: Qt.AlignHCenter
-                        text_value: General.version_string
-                        font.pixelSize: Style.textSizeSmall3
-                        color: changelog_text.color
-                    }
+//                    DexLabel
+//                    {
+//                        Layout.alignment: Qt.AlignHCenter
+//                        text_value: General.version_string
+//                        font.pixelSize: Style.textSizeSmall3
+//                        color: changelog_text.color
+//                    }
 
-                    DexLabel
-                    {
-                        id: changelog_text
-                        Layout.alignment: Qt.AlignHCenter
-                        text_value: General.cex_icon + ' ' + qsTr('Changelog')
-                        font.pixelSize: Style.textSizeSmall2
-                    }
-                }
-            }
+//                    DexLabel
+//                    {
+//                        id: changelog_text
+//                        Layout.alignment: Qt.AlignHCenter
+//                        text_value: General.cex_icon + ' ' + qsTr('Changelog')
+//                        font.pixelSize: Style.textSizeSmall2
+//                    }
+//                }
+//            }
 
             Item { Layout.preferredWidth: bottom_row.filler_width }
 

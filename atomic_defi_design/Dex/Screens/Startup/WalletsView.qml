@@ -290,15 +290,15 @@ SetupPage
         {}
     }
 
-    LinksRow
-    {
-        Layout.alignment: Qt.AlignHCenter
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 20
+//    LinksRow
+//    {
+//        Layout.alignment: Qt.AlignHCenter
+//        anchors.bottom: parent.bottom
+//        anchors.bottomMargin: 20
 
-        anchors.horizontalCenter: parent.horizontalCenter
+//        anchors.horizontalCenter: parent.horizontalCenter
 
-    }
+//    }
 
     GaussianBlur
     {

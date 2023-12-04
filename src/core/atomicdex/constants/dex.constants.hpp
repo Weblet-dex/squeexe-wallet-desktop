@@ -12,6 +12,7 @@ namespace atomic_dex
         g_second_primary_dex_coin,
         "AG1T4-PLG20",
         "AG47T4-PLG20",
+        "MATIC",
         "BTC-segwit",
         "LTC-segwit",
         "DGB-segwit"

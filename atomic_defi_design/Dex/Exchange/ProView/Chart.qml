@@ -11,6 +11,7 @@ import AtomicDEX.MarketMode 1.0
 Item
 {
     id: root
+    Layout.fillWidth: true
 
     readonly property string theme: Dex.CurrentTheme.getColorMode() === Dex.CurrentTheme.ColorMode.Dark ? "dark" : "light"
     property string loaded_symbol
@@ -18,7 +19,7 @@ Item
     property string selected_testcoin
     onPair_supportedChanged: if (!pair_supported) webEngineViewPlaceHolder.visible = false
 
-    function loadChart(right_ticker, left_ticker, force = false, source="livecoinwatch")
+    function loadChart(right_ticker, left_ticker, force = false, source="tv")
     {
 
         // <script defer src="https://www.livecoinwatch.com/static/lcw-widget.js"></script> <div class="livecoinwatch-widget-1" lcw-coin="BTC" lcw-base="USD" lcw-secondary="BTC" lcw-period="w" lcw-color-tx="#ffffff" lcw-color-pr="#58c7c5" lcw-color-bg="#1f2434" lcw-border-w="1" lcw-digits="8" ></div>
@@ -59,16 +60,18 @@ Item
                 }
                 chart_html = `
                 <style>
+                    body { margin: auto; }
+                    .livecoinwatch-widget-1 {
+                        transform: scale(${Math.min(scale_x, scale_y)});
+                        transform-origin: top left;
+                    }
                 </style>
-                <div class="onramper-widget-container">
-                    <iframe
-                        src="https://buy.onramper.com/?apiKey=pk_prod_01HD692MYCCRH8EGENJ73NEG8W&themeName=dark&containerColor=161515ff&primaryColor=c43402ff&secondaryColor=333030ff&cardColor=2b2929ff&primaryTextColor=ffffff&secondaryTextColor=ff6700ff"
-                        style="border-radius:4px;border:2px solid #ff6700;margin:-8px;height:630px;width:420px;max-width:420px;"
-                        title="Onramper widget"
-                        allow="accelerometer; autoplay; camera; gyroscope; payment">
-                    </iframe>
-                </div>
+                <script defer src="https://www.livecoinwatch.com/static/lcw-widget.js"></script>
+                <div class="livecoinwatch-widget-1" lcw-coin="${rel_ticker}" lcw-base="${base_ticker}" lcw-secondary="USDC" lcw-period="w" lcw-color-tx="${Dex.CurrentTheme.foregroundColor}" lcw-color-pr="#58c7c5" lcw-color-bg="${Dex.CurrentTheme.comboBoxBackgroundColor}" lcw-border-w="0" lcw-digits="8" ></div>
                 `
+            }
+            else {
+                console.log("no chart for empty ticker(s)", left_ticker, right_ticker)
             }
         }
         // console.log(chart_html)
@@ -138,15 +141,16 @@ Item
         catch (e) { console.error(e) }
     }
 
-    onWidthChanged: {
-        try
-        {
-            loadChart(left_ticker?? atomic_app_primary_coin,
-                      right_ticker?? atomic_app_secondary_coin)
-        }
-        catch (e) { console.error(e) }
-    }
+//    onWidthChanged: {
+//        try
+//        {
+//            loadChart(left_ticker?? atomic_app_primary_coin,
+//                      right_ticker?? atomic_app_secondary_coin)
+//        }
+//        catch (e) { console.error(e) }
+//    }
 
+    // Chart Loading spinners
     RowLayout
     {
         anchors.fill: parent
@@ -164,7 +168,7 @@ Item
         DefaultText
         {
             visible: pair_supported
-            text_value: qsTr("Loading market data") + "..."
+            text_value: qsTr("Loading chart data") + "..."
         }
 
         DefaultText
@@ -184,37 +188,45 @@ Item
         }
     }
 
-    Item
-    {
-        id: webEngineViewPlaceHolder
+    ColumnLayout{
         anchors.fill: parent
-        visible: false
-
-        Component.onCompleted:
+        spacing: 2
+        // Chart Area
+        DexRectangle
         {
-            dashboard.webEngineView.parent = webEngineViewPlaceHolder
-            dashboard.webEngineView.anchors.fill = webEngineViewPlaceHolder
-        }
-        Component.onDestruction:
-        {
-            dashboard.webEngineView.visible = false
-            dashboard.webEngineView.stop()
-        }
-        onVisibleChanged: dashboard.webEngineView.visible = visible
-
-        Connections
-        {
-            target: dashboard.webEngineView
-
-            function onLoadingChanged(webEngineLoadReq)
+            id: webEngineViewPlaceHolder
+            width: parent.width
+            height: parent.height
+            color: 'transparent'
+            visible: true
+            
+            Component.onCompleted:
             {
-                if (webEngineLoadReq.status === WebEngineView.LoadSucceededStatus)
+                dashboard.webEngineView.parent = webEngineViewPlaceHolder
+                dashboard.webEngineView.anchors.fill = webEngineViewPlaceHolder
+            }
+            Component.onDestruction:
+            {
+                dashboard.webEngineView.visible = false
+                dashboard.webEngineView.stop()
+            }
+            onVisibleChanged: dashboard.webEngineView.visible = visible
+
+            Connections
+            {
+                target: dashboard.webEngineView
+
+                function onLoadingChanged(webEngineLoadReq)
                 {
-                    webEngineViewPlaceHolder.visible = true
+                    if (webEngineLoadReq.status === WebEngineView.LoadSucceededStatus)
+                    {
+                        webEngineViewPlaceHolder.visible = true
+                    }
+                    else webEngineViewPlaceHolder.visible = false
                 }
-                else webEngineViewPlaceHolder.visible = false
             }
         }
+        
     }
 
     Connections
