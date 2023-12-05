@@ -405,7 +405,6 @@ run_app(int argc, char** argv)
     //! QT
     QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
     QApplication::setAttribute(Qt::AA_UseSoftwareOpenGL);
-    QtWebEngine::initialize();
     std::shared_ptr<QApplication> app = std::make_shared<QApplication>(argc, argv);
 
     app->setWindowIcon(QIcon(":/assets/images/logo/dex-logo.png"));
@@ -414,6 +413,7 @@ run_app(int argc, char** argv)
     QQmlApplicationEngine engine;
 
     atomic_app.set_qt_app(app, &engine);
+    QtWebEngine::initialize();
     SPDLOG_INFO("post set_qt_app");
 
     //! QT QML
